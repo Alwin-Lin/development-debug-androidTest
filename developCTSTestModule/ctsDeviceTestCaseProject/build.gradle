@@ -1,0 +1,74 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    // Points projectRoot to where the source code is, used in sourceSets
+    def projectRoot = 'C:/Users/alwin/ws/CTS/cts-refs_heads_pie-cts-release/tests/sample'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        applicationId 'android.sample.cts'
+        minSdkVersion 23
+        targetSdkVersion 28
+        // As far as of right now, the only one needed
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    sourceSets {
+        main {
+            // This looks for the manifest source
+            manifest.srcFile projectRoot + './AndroidManifest.xml'
+            // This looks for the Java source, gets SampleDeviceActivity
+            java.srcDirs = [projectRoot + '/src/android/sample']
+            // res.srcDirs = [projectRoot + '/res']
+        }
+        androidTest {
+            // This looks for the 4 test we have
+            // DeviceReportLog, DeviceResult, DeviceActivity, JUnit4Device
+            java.srcDir projectRoot + '/src/android/sample/cts'
+        }
+    }
+}
+
+dependencies {
+    // Your might already have other librarires/dependencies here you should leave them
+    // as they are and just add your on new line
+    //noinspection GradlePath
+
+    // compatibility-device-util-axt.jar needs to be added for all this
+    api files('C:/Users/alwin/ws/CTS/compatibility-device-util-axt.jar')
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+}
