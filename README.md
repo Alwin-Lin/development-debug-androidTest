@@ -9,11 +9,13 @@ Tools to accelerate Android device test development and debug.
 * Download CTS [over here](https://source.android.com/compatibility/cts/downloads)
 * Add in the .bat file found in this project
     * On the topic of that .bat file, it is coppied from [here](https://scottj.idv.tw/blog/2017/05/07/android-cts-v2-under-windows/), and [here](https://github.com/northbright/Notes/blob/master/Android/cts/Run_CTS_under_Windows.md)
-* Edit the .bat file so that it points to your local repository instead of mine
+* Edit the .bat file so that it points to your local repository instead of mine, it's on the first few line, really hard to miss.
 * Add CTS to path in windows
 * Check if all those work with by launching the .bat
+### Straight up debugging in Android studio ###
+Before you start, make sure you have CTS downloaded
 
-After uppacking the targeted APK, Android studio will promt that you add in the java libaries
+Open up Android Studio, top left corner, File> Profile or debug APK. Pick an APK form the testcases folder, and let Android Studio do it's work. After that is done, you should be able to manually atatch a debugger onto the java code, if you provided the java libaries it required.
 ## Develop CTS test model by Android Studio
 ### Gradle ###
 * Project Root
