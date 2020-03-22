@@ -23,7 +23,7 @@ def appID = 'android.sample.cts'
 def srcRoot = '../ctsSource/tests/sample'
 def appSrc = srcRoot + '/src/android/sample'
 def testSrc = srcRoot + '/src/android/sample/cts'
-def compatibilitylib = '../compatibility-device-util-axt.jar'
+def compatibilitylib = '../libs/compatibility-device-util-axt.jar'
 
 // Android APK Build Configuration File 
 // Check details: https://developer.android.com/studio/build#top-level
