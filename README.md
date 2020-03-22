@@ -13,7 +13,7 @@ Tools to accelerate Android device test development and debug.
 * Add CTS to path in windows
 * Check if all those work with by launching the .bat
 ### Straight up debugging in Android studio ###
-Before you start, make sure you have CTS downloaded
+Android Studio allows debuging without source or libaries. Before you start, make sure you have CTS downloaded
 
 Open up Android Studio, top left corner, File> Profile or debug APK. Pick an APK form the testcases folder, and let Android Studio do it's work. After that is done, you should be able to manually atatch a debugger onto the java code, if you provided the java libaries it required.
 ## Develop CTS test model by Android Studio
