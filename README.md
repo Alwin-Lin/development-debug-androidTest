@@ -19,12 +19,18 @@ Tools to accelerate Android device test development and debug.
        * ```C:\Users\[User_ID]\AppData\Local\Android\Sdk\build-tools\28.0.2```
        * ```D:\Google cloud SDK\google-cloud-sdk\bin```
 * Check if all those work with by launching CTS.bat
-### Straight up debugging in Android studio ###
-Android Studio allows debuging without source or libaries. Before you start, make sure you have CTS downloaded. Since 
+### Debugging in Android studio without source ###
+Android Studio allows debuging an APK without the source. Before you start, make sure you have Setup CTS to run. 
 
-Open up Android Studio, top left corner, File> Profile or debug APK. Pick an APK form the testcases folder, and let Android Studio do it's work. After that is done, you should be able to manually atatch a debugger onto the java code, if you provided the java libaries it required.
-## Develop CTS test model by Android Studio
-### Gradle ###
+Open Android Studio, File> Profile or debug APK. Pick an APK form the testcases folder, and let Android Studio do it's work. After that is done, you should be able to manually atatch a debugger onto the java code.
+
+Since some test does have relativly short run time, it is possible that you might not be able to atatch debugger in time. You could try a test that takes more time to run, or build CTS in Android Studio
+
+## Develop a CTS test module in Android Studio
+It is easier to develope and debug with Android Studio. [CTS](https://cs.android.com/android/platform/superproject/+/master:cts/;l=1?q=cts) is open source, it is possible to do so. However, CTS uses [a different build system](https://source.android.com/setup/build). You can create Android Studio [Build configuration file](https://developer.android.com/studio/build#build-files) to develope and debug the test module.
+
+### Build Configuration File ###
+
 * Project Root
     * This is where the project is located
     * Source and targeted Java version
