@@ -42,7 +42,19 @@ CtsSampleDeviceTestCases is a CTS sample test. To make it work on Android Studio
  2. Open ctsDeviceTestCaseProject with Android Studio
  3. You should be able to build and debug the test module in Android Studio 
  
-### Build Configuration File 
+### Create The Android Studio Project
+A [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/developCTSTestModule/ctsDeviceTestCaseProject/build.gradle) file is the easiest way to create Android Studio project, because Android Studio will generate all nessasary files acordingly. 
+
+#### Build Configuration File - build.gradle 
+* Project Variables
+    * appID = 'android.sample.cts'
+    * srcRoot = '../ctsSource/tests/sample'
+    * appSrc = srcRoot + '/src/android/sample'
+    * testSrc = srcRoot + '/src/android/sample/cts'
+    * compatibilitylib = '../libs/compatibility-device-util-axt.jar'
+* Android APK Build Configuration File Template
+    * The template can be reused, you only need to change Project Variables
+    * To learn more check out [The top-level build file](https://developer.android.com/studio/build#top-level)
 
 * Project Root
     * This is where the project is located
