@@ -19,7 +19,7 @@ Tools to accelerate Android device test development and debug.
        * ```C:\Users\[User_ID]\AppData\Local\Android\Sdk\build-tools\28.0.2```
        * ```D:\Google cloud SDK\google-cloud-sdk\bin```
 * Check if all those work with by launching CTS.bat
-### Debugging in Android studio without source ###
+### Debugging in Android studio without source 
 Android Studio allows debuging an APK without the source. Before you start, make sure you have Setup CTS to run. 
 
 Open Android Studio, File> Profile or debug APK. Pick an APK form the testcases folder, and let Android Studio do it's work. After that is done, you should be able to manually atatch a debugger onto the java code.
@@ -29,7 +29,7 @@ Since some test does have relativly short run time, it is possible that you migh
 ## Develop a CTS test module in Android Studio
 It is easier to develope and debug with Android Studio. [CTS](https://cs.android.com/android/platform/superproject/+/master:cts/;l=1?q=cts) is open source, it is possible to do so. However, CTS uses [a different build system](https://source.android.com/setup/build). You can create Android Studio [Build configuration file](https://developer.android.com/studio/build#build-files) to develope and debug the test module.
 
-### Example: CtsSampleDeviceTestCases ###  
+### Example: CtsSampleDeviceTestCases   
 CtsSampleDeviceTestCases is a CTS sample test. To make it work on Android Studio, there are three parts in [developCTSTestModule](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule): 
 * [ctsDeviceTestCaseProject](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule/ctsDeviceTestCaseProject) 
     * This is Android Studio project folder. 
@@ -37,7 +37,12 @@ CtsSampleDeviceTestCases is a CTS sample test. To make it work on Android Studio
     * This is modified CTS test module source code.
 * [libs](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule/libs)
     * Additional libaries that CTS requires 
-### Build Configuration File ###
+#### Steps: 
+ 1. Clone this project to your workspace
+ 2. Open ctsDeviceTestCaseProject with Android Studio
+ 3. You should be able to build and debug the test module in Android Studio 
+ 
+### Build Configuration File 
 
 * Project Root
     * This is where the project is located
@@ -50,7 +55,7 @@ CtsSampleDeviceTestCases is a CTS sample test. To make it work on Android Studio
     * api files('C:/Users/your-user-name/where-you-stored-it/compatibility-device-util-axt.jar')
     * androidTestImplementation 'androidx.test:<no emoji>runner:1.2.0'
     * androidTestImplementation 'androidx.test:rules:1.2.0'
-### Java Codes ###
+### Java Codes 
 Follow the template for [JUnit4 rules](https://developer.android.com/training/testing/junit-rules)
 * Here is the template
     * ``` 
