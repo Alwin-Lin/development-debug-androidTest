@@ -63,8 +63,9 @@ Source files can be found after you downloaded CTS, under tests
     * [AndroidManifest.xml](https://developer.android.com/guide/topics/manifest/manifest-intro) discribes the app name, content of the app, permision, and requirements
     * [AndroidTest.xml](https://source.android.com/devices/tech/test_infra/tradefed/testing/through-suite/android-test-structure) is the test configuration file
     
-* 
-* Moddified Test Files
+* SampleDeviceActivity.java
+    * This does not need to be changed
+* Moddified Test Files - SampleDeviceResultTest.java, SampleDeviceTest.java, and SampleJUnit4DeviceTest.java
     * The test files are modified so that we can run this on Android Studio
        * Follow this template  [JUnit4 rules](https://developer.android.com/training/testing/junit-rules)
           * ``` 
@@ -81,7 +82,8 @@ Source files can be found after you downloaded CTS, under tests
            * Most of the test classes are originaly private, remember to change that
            * If the test you have contains `setUp()` and `tearDown`
               * Remove the `@Override` and replace with `@Before` and `After`
-
+### Libs
+Curently there is only compatibility-device-util-axt.jar in there. Do no remove it, or else it won't work
 
 * Project Root
     * This is where the project is located
