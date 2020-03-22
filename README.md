@@ -57,27 +57,30 @@ A [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob
     * To learn more check out [The top-level build file](https://developer.android.com/studio/build#top-level)
 #### Modified CTS Source File 
 Source files can be found after you downloaded CTS, under tests
-* Anroid.mk, AndroidManifest.xml, AndroidTest.xml
-    * These are 
+* Anroid.mk, AndroidManifest.xml,and AndroidTest.xml
+    * These do not be changed
+    * [Anroid.mk](https://developer.android.com/ndk/guides/android_mk) discribes sources and libaries to build system
+    * [AndroidManifest.xml](https://developer.android.com/guide/topics/manifest/manifest-intro) discribes the app name, content of the app, permision, and requirements
+    * [AndroidTest.xml](https://source.android.com/devices/tech/test_infra/tradefed/testing/through-suite/android-test-structure) is the test configuration file
+    
 * 
 * Moddified Test Files
-    * The test files are modified so that i can run on Android Studio
-       * Follow the template for [JUnit4 rules](https://developer.android.com/training/testing/junit-rules)
-         * Here is the template
-             * ``` 
-                @RunWith(AndroidJUnit4.class)
-                @LargeTest
-                 public class MyClassTest {
-                     @Rule
-                     public ActivityTestRule<MyClass> activityRule =
-                             new ActivityTestRule(MyClass.class);
+    * The test files are modified so that we can run this on Android Studio
+       * Follow this template  [JUnit4 rules](https://developer.android.com/training/testing/junit-rules)
+          * ``` 
+             @RunWith(AndroidJUnit4.class)
+             @LargeTest
+              public class MyClassTest {
+                  @Rule
+                  public ActivityTestRule<MyClass> activityRule =
+                          new ActivityTestRule(MyClass.class);
 
-                     @Test
-                     public void myClassMethod_ReturnsTrue() { ... }}
-              * @RunWith is required only if you use a mix of JUnit3 and JUnit4
-              * Most of the test classes are originaly private, remember to change that
-              * If the test you have contains `setUp()` and `tearDown`
-                 * Remove the `@Override` and replace with `@Before` and `After`
+                  @Test
+                  public void myClassMethod_ReturnsTrue() { ... }}
+           * @RunWith is required only if you use a mix of JUnit3 and JUnit4
+           * Most of the test classes are originaly private, remember to change that
+           * If the test you have contains `setUp()` and `tearDown`
+              * Remove the `@Override` and replace with `@Before` and `After`
 
 
 * Project Root
