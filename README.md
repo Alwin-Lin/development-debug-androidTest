@@ -55,6 +55,30 @@ A [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob
 * Android APK Build Configuration File Template
     * The template can be reused, you only need to change Project Variables
     * To learn more check out [The top-level build file](https://developer.android.com/studio/build#top-level)
+#### Modified CTS Source File 
+Source files can be found after you downloaded CTS, under tests
+* Anroid.mk, AndroidManifest.xml, AndroidTest.xml
+    * These are 
+* 
+* Moddified Test Files
+    * The test files are modified so that i can run on Android Studio
+       * Follow the template for [JUnit4 rules](https://developer.android.com/training/testing/junit-rules)
+         * Here is the template
+             * ``` 
+                @RunWith(AndroidJUnit4.class)
+                @LargeTest
+                 public class MyClassTest {
+                     @Rule
+                     public ActivityTestRule<MyClass> activityRule =
+                             new ActivityTestRule(MyClass.class);
+
+                     @Test
+                     public void myClassMethod_ReturnsTrue() { ... }}
+              * @RunWith is required only if you use a mix of JUnit3 and JUnit4
+              * Most of the test classes are originaly private, remember to change that
+              * If the test you have contains `setUp()` and `tearDown`
+                 * Remove the `@Override` and replace with `@Before` and `After`
+
 
 * Project Root
     * This is where the project is located
