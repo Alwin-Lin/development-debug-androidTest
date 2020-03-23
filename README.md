@@ -55,61 +55,20 @@ A [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob
 * Android APK Build Configuration File Template
     * The template can be reused, you only need to change Project Variables
     * To learn more check out [The top-level build file](https://developer.android.com/studio/build#top-level)
-#### Modified CTS Source File 
-Source files can be found after you downloaded CTS, under tests
-* Anroid.mk, AndroidManifest.xml,and AndroidTest.xml
-    * These do not be changed
-    * [Anroid.mk](https://developer.android.com/ndk/guides/android_mk) discribes sources and libaries to build system
-    * [AndroidManifest.xml](https://developer.android.com/guide/topics/manifest/manifest-intro) discribes the app name, content of the app, permision, and requirements
-    * [AndroidTest.xml](https://source.android.com/devices/tech/test_infra/tradefed/testing/through-suite/android-test-structure) is the test configuration file
-    
-* SampleDeviceActivity.java
-    * This does not need to be changed
-* Moddified Test Files - SampleDeviceResultTest.java, SampleDeviceTest.java, and SampleJUnit4DeviceTest.java
-    * The test files are modified so that we can run this on Android Studio
-       * Follow this template  [JUnit4 rules](https://developer.android.com/training/testing/junit-rules)
-          * ``` 
-             @RunWith(AndroidJUnit4.class)
-             @LargeTest
-              public class MyClassTest {
-                  @Rule
-                  public ActivityTestRule<MyClass> activityRule =
-                          new ActivityTestRule(MyClass.class);
-
-                  @Test
-                  public void myClassMethod_ReturnsTrue() { ... }}
-           * @RunWith is required only if you use a mix of JUnit3 and JUnit4
-           * Most of the test classes are originaly private, remember to change that
-           * If the test you have contains `setUp()` and `tearDown`
-              * Remove the `@Override` and replace with `@Before` and `After`
+#### Modify CTS Test Modules 
+* Downloaded CtsSampleDeviceTestCases source from [Pi AOSP Git](https://android.googlesource.com/platform/cts/+/refs/heads/pie-cts-release/tests/sample/), click tgz and unzip to your workspace.
+* Modify follows to be buildable in Android Studio.
+    1. SampleDeviceResultTest.java
+      * Change to use activityRule insdead of ```extends ActivityInstrumentationTestCase2```
+      * Remove unnessasary dependencies, such as ```SampleDeviceResultTest()```
+      * Add ```@Test``` anotations to test cases
+    2. SampleDeviceTest.java, besides changes in 1.
+      * Remove ```@Override```
+      * For ```setUp()```, change to public, and anotate ```@Before```
+      * For ```tearDown()```, change to public, and anotate ```@After```
+    3. For SampleJUnit4DeviceTest.java and SampleDeviceReportLogTest.java, similar to 1.
+    4. Refrence [JUnit4 rules](https://developer.android.com/training/testing/junit-rules).
 ### Libs
-Curently there is only compatibility-device-util-axt.jar in there. Do no remove it, or else it won't work
-
-* Project Root
-    * This is where the project is located
-    * Source and targeted Java version
-* Source sets
-    * Points to your manifest
-    * Points to your Java source
-    * This points to the targeted test that is going to be debug
-* Depenencies
-    * api files('C:/Users/your-user-name/where-you-stored-it/compatibility-device-util-axt.jar')
-    * androidTestImplementation 'androidx.test:<no emoji>runner:1.2.0'
-    * androidTestImplementation 'androidx.test:rules:1.2.0'
-### Java Codes 
-Follow the template for [JUnit4 rules](https://developer.android.com/training/testing/junit-rules)
-* Here is the template
-    * ``` 
-       @RunWith(AndroidJUnit4.class)
-       @LargeTest
-        public class MyClassTest {
-            @Rule
-            public ActivityTestRule<MyClass> activityRule =
-                    new ActivityTestRule(MyClass.class);
-
-            @Test
-            public void myClassMethod_ReturnsTrue() { ... }}
-     * @RunWith is required only if you use a mix of JUnit3 and JUnit4
-     * Most of the test classes are originaly private, remember to change that
-     * If the test you have contains `setUp()` and `tearDown`
-        * Remove the `@Override` and replace with `@Before` and `After`
+   * CTS module depends on compatibility-device-util-axt.jar
+   * It is [built from CTS](https://source.android.com/compatibility/cts/development)
+   * This [libary](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule/libs) can be used in case you can't build CTS.
