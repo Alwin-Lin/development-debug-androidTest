@@ -30,12 +30,12 @@ Since some test does have relativly short run time, it is possible that you migh
 It is easier to develope and debug with Android Studio. [CTS](https://cs.android.com/android/platform/superproject/+/master:cts/;l=1?q=cts) is open source, it is possible to do so. However, CTS uses [a different build system](https://source.android.com/setup/build). You can create Android Studio [Build configuration file](https://developer.android.com/studio/build#build-files) to develope and debug the test module.
 
 ### Example: CtsSampleDeviceTestCases   
-CtsSampleDeviceTestCases is a CTS sample test. To make it work on Android Studio, there are three parts in [developCTSTestModule](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule): 
-* [ctsDeviceTestCaseProject](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule/ctsDeviceTestCaseProject) 
+CtsSampleDeviceTestCases is a CTS sample test. To make it work on Android Studio, there are three parts in [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases): 
+* [ctsDeviceTestCaseProject](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases/ctsDeviceTestCaseProject) 
     * This is Android Studio project folder. 
-* [ctsSource/tests/sample](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule/ctsSource/tests/sample)
+* [ctsSource/tests/sample](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases/ctsSource/tests/sample)
     * This is modified CTS test module source code.
-* [libs](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule/libs)
+* [libs](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases/libs)
     * Additional libaries that CTS requires 
 #### Steps: 
  1. Clone this project to your workspace
@@ -43,7 +43,7 @@ CtsSampleDeviceTestCases is a CTS sample test. To make it work on Android Studio
  3. You should be able to build and debug the test module in Android Studio 
  
 ### Create The Android Studio Project
-A [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/developCTSTestModule/ctsDeviceTestCaseProject/build.gradle) file is the easiest way to create Android Studio project, because Android Studio will generate all nessasary files acordingly. 
+A [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsSampleDeviceTestCases/ctsDeviceTestCaseProject/build.gradle) file is the easiest way to create Android Studio project, because Android Studio will generate all nessasary files acordingly. 
 
 #### Build Configuration File - build.gradle 
 * Project Variables
