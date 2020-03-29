@@ -9,6 +9,8 @@ CtsCarTestCase is a testing module for automotives. To make it work on Android S
 #### Steps: 
  1. Clone this project to your workspace
  2. Open CtsCarTestCaseProject with Android Studio
+    * Similar to [development-debug-androidTest](https://github.com/Alwin-Lin/development-debug-androidTest), build.gradle is setup such that you dont have to change anything
+    * The two gradle fiils only differ in the source path
  3. You should be able to build and debug the test module in Android Studio 
  
  ### Status:
