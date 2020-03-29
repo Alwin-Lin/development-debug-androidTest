@@ -20,7 +20,7 @@ apply plugin: 'com.android.application'
 
 // These are variables that needs to be changed bassed on your project.
 def appID = 'android.car.cts'
-def srcRoot = '../ctsSource/tests/car'
+def srcRoot = '../ctsSource'
 def appSrc = srcRoot + '/src/android/car'
 def testSrc = srcRoot + '/src/android/car/cts'
 def compatibilitylib = '../libs/compatibility-device-util-axt.jar'
