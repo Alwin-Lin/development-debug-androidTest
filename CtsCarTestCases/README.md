@@ -16,4 +16,4 @@ CtsCarTestCase is a testing module for automotives. To make it work on Android S
  
  ### ToDo:
  1. Fix dependecy issues to be able ot build APK
-
+    * You can try and manualy attatch debugger onto a running test. However this test does not allow such action because it's short run time, hence the need to build 
