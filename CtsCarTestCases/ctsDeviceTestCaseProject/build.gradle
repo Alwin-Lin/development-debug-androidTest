@@ -22,8 +22,9 @@ apply plugin: 'com.android.application'
 def appID = 'android.car.cts'
 def srcRoot = '../ctsSource'
 def appSrc = srcRoot + '/src/android/car'
-def testSrc = srcRoot + '/src/android/car/cts'
+def testSrc = srcRoot + '/test'
 def compatibilitylib = '../libs/compatibility-device-util-axt.jar'
+def javaSrc = srcRoot + '/src'
 
 // Android APK Build Configuration File 
 // Check details: https://developer.android.com/studio/build#top-level
@@ -54,9 +55,10 @@ android {
     sourceSets {
         main {
             // This looks for the manifest source
-            manifest.srcFile srcRoot + './AndroidManifest.xml'
+            manifest.srcFile srcRoot + '/AndroidManifest.xml'
+            // C:\Users\alwin\ws\CTS Testting\development-debug-androidTest\CtsCarTestCases\ctsSource
             // This looks for the Java source, gets SampleDeviceActivity
-            java.srcDirs = [srcRoot + '/src/android/sample']
+            java.srcDirs = [javaSrc]
             // res.srcDirs = [srcRoot + '/res']
         }
         androidTest {
