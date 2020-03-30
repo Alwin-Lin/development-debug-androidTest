@@ -17,11 +17,16 @@ CtsCarTestCase is a testing module for automotives. To make it work on Android S
  # Manual run test and attatch debugger
  The whole test modle only takes a few seconds to run. There is not enought time to manually attatch debugger. Alternativly you can manual run test and attatch debugger. In command line:
  1. ``` adb install %cts_Location%\android-cts\testcases\CtsCarTestCases.apk ```
- 2. ```adb shell am instrument -w -r    -e debug true -e class 'android.car.cts.CarTest' android.car.cts/androidx.test.runner.AndroidJUnitRunner```
+ 2. ``` adb shell am instrument -w -r -e debug true -e class 'android.car.cts.CarTest' android.car.cts/androidx.test.runner.AndroidJUnitRunner ```
+    * Run a test case without waiting for debuging
+       * ``` adb shell am instrument -w -r -e debug false -e class 'android.car.cts.CarTest' android.car.cts/androidx.test.runner.AndroidJUnitRunner ```
  3. Attatch debugger with in android studio
     * There is a function to [view and configure breakpoints](https://developer.android.com/studio/debug#breakPointsView) in order to catch exceptions
 
  
  # ToDo:
- 1. Fix dependecy issues to be able ot build APK
+ 1. The test module is not [debuggable](https://developer.android.com/guide/topics/manifest/application-element), therefore manual attatch only works on an user debug build. e.g. AVD target Android 9.0(Google APIs)
+   * Note: AVD Andorid 9.0(Automotive) is a user build, therefore not debuggable
+ 2. Fix dependecy issues to be able ot build APK
     * You can try and manualy attatching debugger onto a running test. However this test does not allow such action because of it's short run time, hence the need to build an APK
+ 
