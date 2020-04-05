@@ -1,6 +1,7 @@
 # CTSVerifier
-CTS Verifier provides tests for APIs and functions that can't be tested on a stationary device without manual input.
-Similar to [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases), there are three parts in [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases): 
+[CTS Verifier](https://source.android.com/compatibility/cts/verifier) provides tests for APIs and functions that can't be tested on a stationary device without manual input.
+Similar to [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases), there are three parts in ctsVerifier
+
 * [ctsVProj](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/ctsVerifier/ctsVProj) 
     * This is Android Studio project folder.
     * Different from the ones in [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases) and [CtsCarTestCases](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCases), ```res.srcDirs ```is added.
