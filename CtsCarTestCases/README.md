@@ -29,4 +29,4 @@ CtsCarTestCase is a testing module for automotives. To make it work on Android S
    * Note: AVD Andorid 9.0(Automotive) is a user build, therefore not debuggable.
  2. Fix dependecy issues to be able ot build APK.
     * You can try and manualy attatching debugger onto a running test. However this test does not allow such action because of it's short run time, hence the need to build an APK.
- 
+ 3. Provide an end to end example to debug APK, set breakpoint and triggered by manual run test.
