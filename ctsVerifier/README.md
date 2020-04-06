@@ -21,7 +21,7 @@ Similar to [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-d
  3. File > Sync Project With Gradle File should be succsesfull
  4. Now you can use Android Studio IDE to explore the project and [manual run test and attatch debugger](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCases#manual-run-test-and-attatch-debugger).
     * To manualy atatch debugger, you will need [CTS Verifier](https://source.android.com/compatibility/cts/downloads) APK, building from this project will result in errors.
-    * For setting breakpoints
+    * For setting breakpoints, more on [inspecting breakpoints](https://developer.android.com/studio/debug#breakPointsView)
        1. In Android Studio>Help>Find actions> "view Breakpoints"
        2. Check the box for Exceptions>Done.
        3. Run CTS Verifier.
