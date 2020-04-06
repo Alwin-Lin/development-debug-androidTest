@@ -10,7 +10,7 @@ Similar to [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-d
        * ```@+idandroid:/list```-->```@android:id/list```
        * ```@+idandroid:/empty```-->```@android:id/empty```
        * ```@+idandroid:/test1```-->```@+id/test1```
-    * This is downloaded from [Google Git](https://android.googlesource.com/platform/cts/+/master/apps/CtsVerifier/). Curently it does not work with API 28 or 29. More on this in ToDo
+    * This is downloaded from [Google Git](https://android.googlesource.com/platform/cts/+/refs/heads/pie-cts-release/apps/CtsVerifier/).
 * [libs](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCase/libs)
     * Additional libaries that CTS requires 
 # Steps: 
@@ -22,5 +22,4 @@ Similar to [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-d
  4. Now you can use Android Studio IDE to explore the project and [manual run test and attatch debugger](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCases#manual-run-test-and-attatch-debugger).
  
  # ToDo:
- 1. Update CTS verifier source for API 28
- 2. After #1, build APK
+ 1. Curently there are around 100 dependecy issues to fix
