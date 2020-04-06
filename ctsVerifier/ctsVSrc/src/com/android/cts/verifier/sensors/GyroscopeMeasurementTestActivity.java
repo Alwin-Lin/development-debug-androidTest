@@ -47,7 +47,8 @@ public class GyroscopeMeasurementTestActivity extends SensorCtsVerifierTestActiv
     private final GLRotationGuideRenderer mRenderer = new GLRotationGuideRenderer();
 
     public GyroscopeMeasurementTestActivity() {
-        super(GyroscopeMeasurementTestActivity.class, true);
+        super(GyroscopeMeasurementTestActivity.class);
+        mEnableRetry = true;
     }
 
     @Override
@@ -109,9 +110,12 @@ public class GyroscopeMeasurementTestActivity extends SensorCtsVerifierTestActiv
     public String testCalibratedAndUncalibrated() throws Throwable {
         setRendererRotation(Z_AXIS, false);
 
-        setFirstExecutionInstruction(R.string.snsr_keep_device_rotating_clockwise);
-
-        getTestLogger().logWaitForSound();
+        SensorTestLogger logger = getTestLogger();
+        if (!mShouldRetry) {
+            logger.logInstructions(R.string.snsr_keep_device_rotating_clockwise);
+            waitForUserToBegin();
+        }
+        logger.logWaitForSound();
 
         TestSensorEnvironment calibratedEnvironment = new TestSensorEnvironment(
                 getApplicationContext(),
@@ -146,9 +150,12 @@ public class GyroscopeMeasurementTestActivity extends SensorCtsVerifierTestActiv
             throws Throwable {
         setRendererRotation(rotationAxis, expectationDeg >= 0);
 
-        setFirstExecutionInstruction(instructionsResId);
-
-        getTestLogger().logWaitForSound();
+        SensorTestLogger logger = getTestLogger();
+        if (!mShouldRetry) {
+            logger.logInstructions(instructionsResId);
+            waitForUserToBegin();
+        }
+        logger.logWaitForSound();
 
         TestSensorEnvironment environment = new TestSensorEnvironment(
                 getApplicationContext(),

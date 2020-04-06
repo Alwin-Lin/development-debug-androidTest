@@ -19,13 +19,13 @@
     android:orientation="vertical">
 
     <ListView
-        android:id="@android:id/list"
+        android:id="@+id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/android:empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

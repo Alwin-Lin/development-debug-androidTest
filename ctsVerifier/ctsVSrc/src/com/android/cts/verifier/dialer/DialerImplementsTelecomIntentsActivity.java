@@ -91,9 +91,7 @@ public class DialerImplementsTelecomIntentsActivity extends PassFailButtons.Acti
     mLaunchAccessibilitySettingsButton.setOnClickListener(
         (View unused) ->
             startActivity(new Intent(TelecomManager.ACTION_SHOW_CALL_ACCESSIBILITY_SETTINGS)));
-    if (!mTelephonyManager.isHearingAidCompatibilitySupported()
-        && !mTelephonyManager.isTtyModeSupported()
-        && !mTelephonyManager.isRttSupported()) {
+    if (!mTelephonyManager.isHearingAidCompatibilitySupported() && !mTelephonyManager.isTtyModeSupported()) {
         mLaunchAccessibilitySettingsButton.setVisibility(View.INVISIBLE);
         mLaunchAccessibilitySettingsCheckBox.setVisibility(View.INVISIBLE);
         mLaunchAccessibilitySettingsCheckBox.setChecked(true);

@@ -210,11 +210,9 @@ public class CommandReceiverActivity extends Activity {
                 case COMMAND_SET_AUTO_TIME_REQUIRED: {
                     mDpm.setAutoTimeRequired(mAdmin,
                             intent.getBooleanExtra(EXTRA_ENFORCED, false));
-                    break;
                 }
                 case COMMAND_SET_LOCK_SCREEN_INFO: {
                     mDpm.setDeviceOwnerLockScreenInfo(mAdmin, intent.getStringExtra(EXTRA_VALUE));
-                    break;
                 }
                 case COMMAND_SET_MAXIMUM_TO_LOCK: {
                     final long timeInSeconds = Long.parseLong(intent.getStringExtra(EXTRA_VALUE));
@@ -305,9 +303,8 @@ public class CommandReceiverActivity extends Activity {
                     if (!mDpm.isDeviceOwnerApp(getPackageName())) {
                         return;
                     }
-                    int iconRes = intent.getIntExtra(EXTRA_VALUE,
-                            com.android.cts.verifier.R.drawable.icon);
-                    mDpm.setUserIcon(mAdmin, BitmapFactory.decodeResource(getResources(), iconRes));
+                    mDpm.setUserIcon(mAdmin, BitmapFactory.decodeResource(getResources(),
+                            com.android.cts.verifier.R.drawable.icon));
                 } break;
                 case COMMAND_RETRIEVE_NETWORK_LOGS: {
                     if (!mDpm.isDeviceOwnerApp(getPackageName())) {
@@ -359,7 +356,12 @@ public class CommandReceiverActivity extends Activity {
                 case COMMAND_ADD_PERSISTENT_PREFERRED_ACTIVITIES: {
                     final ComponentName componentName =
                             EnterprisePrivacyTestDefaultAppActivity.COMPONENT_NAME;
-                    IntentFilter filter;
+                    // Browser
+                    IntentFilter filter = new IntentFilter();
+                    filter.addAction(Intent.ACTION_VIEW);
+                    filter.addCategory(Intent.CATEGORY_BROWSABLE);
+                    filter.addDataScheme("http");
+                    mDpm.addPersistentPreferredActivity(mAdmin, filter, componentName);
                     // Camera
                     filter = new IntentFilter();
                     filter.addAction(MediaStore.ACTION_IMAGE_CAPTURE);

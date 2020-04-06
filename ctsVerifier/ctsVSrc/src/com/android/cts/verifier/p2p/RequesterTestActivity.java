@@ -142,7 +142,7 @@ public abstract class RequesterTestActivity  extends PassFailButtons.Activity
          * the target device list on the dialog.
          * After the user selection, the specified test will be executed.
          */
-        if (sTargetAddr == null && !isNoPeerDiscoveryOnResume()) {
+        if (sTargetAddr == null) {
             searchTarget();
             return;
         }
@@ -212,21 +212,6 @@ public abstract class RequesterTestActivity  extends PassFailButtons.Activity
     }
 
     /**
-     * Do peer searching only, don't do peer selection.
-     * For requester test which do not need to select a peer first.
-     */
-    protected boolean isSearchOnlyOnResume() {
-        return false;
-    }
-
-    /** Do peer discovery or not
-     *  For requester test which do not need to discover peer first.
-     */
-    protected boolean isNoPeerDiscoveryOnResume() {
-        return false;
-    }
-
-    /**
      * Search devices and show the found devices on the dialog.
      * After user selection, the specified test will be executed.
      */
@@ -260,11 +245,7 @@ public abstract class RequesterTestActivity  extends PassFailButtons.Activity
                                     mTextView.setText(
                                             R.string.p2p_target_not_found_error);
                                 } else {
-                                    if (isSearchOnlyOnResume()) {
-                                        mTestCase.start(getTestCaseListener());
-                                    } else {
-                                        showSelectTargetDialog(peers);
-                                    }
+                                    showSelectTargetDialog(peers);
                                 }
                             }
                         });

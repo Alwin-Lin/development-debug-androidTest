@@ -17,7 +17,6 @@
 package com.android.cts.verifier.notifications;
 
 import static android.app.NotificationManager.IMPORTANCE_LOW;
-import static android.app.NotificationManager.IMPORTANCE_MAX;
 import static android.app.NotificationManager.IMPORTANCE_NONE;
 import static android.provider.Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS;
 import static android.provider.Settings.EXTRA_APP_PACKAGE;
@@ -26,7 +25,6 @@ import static android.provider.Settings.EXTRA_CHANNEL_ID;
 import static com.android.cts.verifier.notifications.MockListener.JSON_FLAGS;
 import static com.android.cts.verifier.notifications.MockListener.JSON_ICON;
 import static com.android.cts.verifier.notifications.MockListener.JSON_ID;
-import static com.android.cts.verifier.notifications.MockListener.JSON_LAST_AUDIBLY_ALERTED;
 import static com.android.cts.verifier.notifications.MockListener.JSON_PACKAGE;
 import static com.android.cts.verifier.notifications.MockListener.JSON_REASON;
 import static com.android.cts.verifier.notifications.MockListener.JSON_STATS;
@@ -36,10 +34,12 @@ import static com.android.cts.verifier.notifications.MockListener.REASON_LISTENE
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -47,12 +47,11 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.service.notification.StatusBarNotification;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import androidx.core.app.NotificationCompat;
 
 import com.android.cts.verifier.R;
 
@@ -69,26 +68,21 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         implements Runnable {
     private static final String TAG = "NoListenerVerifier";
     private static final String NOTIFICATION_CHANNEL_ID = TAG;
-    private static final String NOISY_NOTIFICATION_CHANNEL_ID = TAG + "Noisy";
     protected static final String PREFS = "listener_prefs";
     final int NUM_NOTIFICATIONS_SENT = 3; // # notifications sent by sendNotifications()
 
     private String mTag1;
     private String mTag2;
     private String mTag3;
-    private String mTag4;
     private int mIcon1;
     private int mIcon2;
     private int mIcon3;
-    private int mIcon4;
     private int mId1;
     private int mId2;
     private int mId3;
-    private int mId4;
     private long mWhen1;
     private long mWhen2;
     private long mWhen3;
-    private long mWhen4;
     private int mFlag1;
     private int mFlag2;
     private int mFlag3;
@@ -118,7 +112,6 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
             tests.add(new ServiceStartedTest());
             tests.add(new NotificationReceivedTest());
             tests.add(new DataIntactTest());
-            tests.add(new AudiblyAlertedTest());
             tests.add(new DismissOneTest());
             tests.add(new DismissOneWithReasonTest());
             tests.add(new DismissOneWithStatsTest());
@@ -144,19 +137,14 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         return tests;
     }
 
-    private void createChannels() {
+    private void createChannel() {
         NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
                 NOTIFICATION_CHANNEL_ID, IMPORTANCE_LOW);
-        NotificationChannel noisyChannel = new NotificationChannel(NOISY_NOTIFICATION_CHANNEL_ID,
-                NOISY_NOTIFICATION_CHANNEL_ID, IMPORTANCE_MAX);
-        noisyChannel.setVibrationPattern(new long[]{100, 0, 100});
         mNm.createNotificationChannel(channel);
-        mNm.createNotificationChannel(noisyChannel);
     }
 
-    private void deleteChannels() {
+    private void deleteChannel() {
         mNm.deleteNotificationChannel(NOTIFICATION_CHANNEL_ID);
-        mNm.deleteNotificationChannel(NOISY_NOTIFICATION_CHANNEL_ID);
     }
 
     @SuppressLint("NewApi")
@@ -217,26 +205,6 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         mFlag3 = Notification.FLAG_ONLY_ALERT_ONCE | Notification.FLAG_AUTO_CANCEL;
     }
 
-    private void sendNoisyNotification() {
-        mTag4 = UUID.randomUUID().toString();
-        Log.d(TAG, "Sending " + mTag4);
-
-        mWhen4 = System.currentTimeMillis() + 4;
-        mIcon4 = R.drawable.ic_stat_charlie;
-        mId4 = NOTIFICATION_ID + 4;
-        mPackageString = "com.android.cts.verifier";
-
-        Notification n1 = new Notification.Builder(mContext, NOISY_NOTIFICATION_CHANNEL_ID)
-                .setContentTitle("NoisyTest 1")
-                .setContentText(mTag4)
-                .setSmallIcon(mIcon4)
-                .setWhen(mWhen4)
-                .setDeleteIntent(makeIntent(4, mTag4))
-                .setCategory(Notification.CATEGORY_REMINDER)
-                .build();
-        mNm.notify(mTag4, mId4, n1);
-    }
-
     // Tests
     private class NotificationReceivedTest extends InteractiveTestCase {
         @Override
@@ -247,7 +215,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
         }
@@ -256,7 +224,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         protected void tearDown() {
             mNm.cancelAll();
             MockListener.getInstance().resetData();
-            deleteChannels();
+            deleteChannel();
         }
 
         @Override
@@ -573,7 +541,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
         }
@@ -639,72 +607,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         protected void tearDown() {
             mNm.cancelAll();
             MockListener.getInstance().resetData();
-            deleteChannels();
-        }
-    }
-
-    private class AudiblyAlertedTest extends InteractiveTestCase {
-        @Override
-        protected View inflate(ViewGroup parent) {
-            return createAutoItem(parent, R.string.nls_audibly_alerted);
-        }
-
-        @Override
-        protected void setUp() {
-            createChannels();
-            sendNotifications();
-            sendNoisyNotification();
-            status = READY;
-        }
-
-        @Override
-        protected void test() {
-            List<JSONObject> result = new ArrayList<>(MockListener.getInstance().getPosted());
-
-            Set<String> found = new HashSet<>();
-            if (result.size() == 0) {
-                status = FAIL;
-                return;
-            }
-            boolean pass = true;
-            for (JSONObject payload : result) {
-                try {
-                    String tag = payload.getString(JSON_TAG);
-                    if (mTag4.equals(tag)) {
-                        found.add(mTag4);
-                        boolean lastAudiblyAlertedSet
-                                = payload.getLong(JSON_LAST_AUDIBLY_ALERTED) > -1;
-                        if (!lastAudiblyAlertedSet) {
-                            logWithStack(
-                                    "noisy notification test: getLastAudiblyAlertedMillis not set");
-                        }
-                        pass &= lastAudiblyAlertedSet;
-                    } else if (payload.getString(JSON_PACKAGE).equals(mPackageString)) {
-                        found.add(tag);
-                        boolean lastAudiblyAlertedSet
-                                = payload.getLong(JSON_LAST_AUDIBLY_ALERTED) > -1;
-                        if (lastAudiblyAlertedSet) {
-                            logWithStack(
-                                    "noisy notification test: getLastAudiblyAlertedMillis set "
-                                            + "incorrectly");
-                        }
-                        pass &= !lastAudiblyAlertedSet;
-                    }
-                } catch (JSONException e) {
-                    pass = false;
-                    Log.e(TAG, "failed to unpack data from mocklistener", e);
-                }
-            }
-
-            pass &= found.size() >= 4;
-            status = pass ? PASS : FAIL;
-        }
-
-        @Override
-        protected void tearDown() {
-            mNm.cancelAll();
-            MockListener.getInstance().resetData();
-            deleteChannels();
+            deleteChannel();
         }
     }
 
@@ -716,7 +619,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
         }
@@ -744,7 +647,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             MockListener.getInstance().resetData();
         }
     }
@@ -759,7 +662,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
         }
@@ -805,7 +708,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             MockListener.getInstance().resetData();
         }
     }
@@ -820,7 +723,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
         }
@@ -860,7 +763,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             MockListener.getInstance().resetData();
         }
     }
@@ -873,7 +776,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
         }
@@ -900,7 +803,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             MockListener.getInstance().resetData();
         }
     }
@@ -975,7 +878,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
         }
@@ -999,7 +902,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             if (MockListener.getInstance() != null) {
                 MockListener.getInstance().resetData();
             }
@@ -1018,7 +921,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void setUp() {
             status = READY;
-            MockListener.getInstance().requestListenerHints(
+            MockListener.getInstance().requestInterruptionFilter(
                     MockListener.HINT_HOST_DISABLE_CALL_EFFECTS);
         }
 
@@ -1115,7 +1018,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
             state = READY_TO_SNOOZE;
@@ -1170,7 +1073,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             MockListener.getInstance().resetData();
             delay();
         }
@@ -1196,7 +1099,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             tag = mTag1;
             status = READY;
@@ -1246,7 +1149,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             MockListener.getInstance().resetData();
         }
     }
@@ -1265,7 +1168,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendNotifications();
             status = READY;
             state = READY_TO_SNOOZE;
@@ -1330,7 +1233,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             MockListener.getInstance().resetData();
             delay();
         }
@@ -1350,7 +1253,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
 
         @Override
         protected void setUp() {
-            createChannels();
+            createChannel();
             sendMessagingNotification();
             status = READY;
         }
@@ -1358,7 +1261,7 @@ public class NotificationListenerVerifierActivity extends InteractiveVerifierAct
         @Override
         protected void tearDown() {
             mNm.cancelAll();
-            deleteChannels();
+            deleteChannel();
             delay();
         }
 

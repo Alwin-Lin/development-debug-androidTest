@@ -140,7 +140,7 @@ public class HifiUltrasoundSpeakerTestActivity extends PassFailButtons.Activity 
     instruWindow = new PopupWindow(
         instruView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-    final AudioRecordHelper audioRecorder = AudioRecordHelper.getInstance();
+    final com.android.cts.verifier.audio.AudioRecordHelper audioRecorder = com.android.cts.verifier.audio.AudioRecordHelper.getInstance();
     final int recordRate = audioRecorder.getSampleRate();
 
     recorderButton = (Button) findViewById(R.id.recorder_button);
@@ -181,11 +181,11 @@ public class HifiUltrasoundSpeakerTestActivity extends PassFailButtons.Activity 
               @Override
               public void run() {
                 Double recordingDuration_millis = new Double(1000 * (2.5
-                    + Common.PREFIX_LENGTH_S
-                    + Common.PAUSE_BEFORE_PREFIX_DURATION_S
-                    + Common.PAUSE_AFTER_PREFIX_DURATION_S
-                    + Common.PIP_NUM * (Common.PIP_DURATION_S + Common.PAUSE_DURATION_S)
-                    * Common.REPETITIONS));
+                    + com.android.cts.verifier.audio.Common.PREFIX_LENGTH_S
+                    + com.android.cts.verifier.audio.Common.PAUSE_BEFORE_PREFIX_DURATION_S
+                    + com.android.cts.verifier.audio.Common.PAUSE_AFTER_PREFIX_DURATION_S
+                    + com.android.cts.verifier.audio.Common.PIP_NUM * (com.android.cts.verifier.audio.Common.PIP_DURATION_S + com.android.cts.verifier.audio.Common.PAUSE_DURATION_S)
+                    * com.android.cts.verifier.audio.Common.REPETITIONS));
                 Log.d(TAG, "Recording for " + recordingDuration_millis + "ms");
                 try {
                   Thread.sleep(recordingDuration_millis.intValue());
@@ -262,17 +262,17 @@ public class HifiUltrasoundSpeakerTestActivity extends PassFailButtons.Activity 
     XYPlot plot = (XYPlot) popupView.findViewById(R.id.responseChart);
     plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 2000);
 
-    Double[] frequencies = new Double[Common.PIP_NUM];
-    for (int i = 0; i < Common.PIP_NUM; i++) {
-      frequencies[i] = new Double(Common.FREQUENCIES_ORIGINAL[i]);
+    Double[] frequencies = new Double[com.android.cts.verifier.audio.Common.PIP_NUM];
+    for (int i = 0; i < com.android.cts.verifier.audio.Common.PIP_NUM; i++) {
+      frequencies[i] = new Double(com.android.cts.verifier.audio.Common.FREQUENCIES_ORIGINAL[i]);
     }
 
     if (wavAnalyzerTask != null) {
 
       double[][] power = wavAnalyzerTask.getPower();
-      for(int i = 0; i < Common.REPETITIONS; i++) {
-        Double[] powerWrap = new Double[Common.PIP_NUM];
-        for (int j = 0; j < Common.PIP_NUM; j++) {
+      for(int i = 0; i < com.android.cts.verifier.audio.Common.REPETITIONS; i++) {
+        Double[] powerWrap = new Double[com.android.cts.verifier.audio.Common.PIP_NUM];
+        for (int j = 0; j < com.android.cts.verifier.audio.Common.PIP_NUM; j++) {
           powerWrap[j] = new Double(10 * Math.log10(power[j][i]));
         }
         XYSeries series = new SimpleXYSeries(
@@ -287,8 +287,8 @@ public class HifiUltrasoundSpeakerTestActivity extends PassFailButtons.Activity 
       }
 
       double[] noiseDB = wavAnalyzerTask.getNoiseDB();
-      Double[] noiseDBWrap = new Double[Common.PIP_NUM];
-      for (int i = 0; i < Common.PIP_NUM; i++) {
+      Double[] noiseDBWrap = new Double[com.android.cts.verifier.audio.Common.PIP_NUM];
+      for (int i = 0; i < com.android.cts.verifier.audio.Common.PIP_NUM; i++) {
         noiseDBWrap[i] = new Double(noiseDB[i]);
       }
 
@@ -303,8 +303,8 @@ public class HifiUltrasoundSpeakerTestActivity extends PassFailButtons.Activity 
       plot.addSeries(noiseSeries, noiseSeriesFormat);
 
       double[] dB = wavAnalyzerTask.getDB();
-      Double[] dBWrap = new Double[Common.PIP_NUM];
-      for (int i = 0; i < Common.PIP_NUM; i++) {
+      Double[] dBWrap = new Double[com.android.cts.verifier.audio.Common.PIP_NUM];
+      for (int i = 0; i < com.android.cts.verifier.audio.Common.PIP_NUM; i++) {
         dBWrap[i] = new Double(dB[i]);
       }
 
@@ -318,7 +318,7 @@ public class HifiUltrasoundSpeakerTestActivity extends PassFailButtons.Activity 
           R.xml.ultrasound_line_formatter_median);
       plot.addSeries(series, seriesFormat);
 
-      Double[] passX = new Double[] {Common.MIN_FREQUENCY_HZ, Common.MAX_FREQUENCY_HZ};
+      Double[] passX = new Double[] {com.android.cts.verifier.audio.Common.MIN_FREQUENCY_HZ, com.android.cts.verifier.audio.Common.MAX_FREQUENCY_HZ};
       Double[] passY = new Double[] {wavAnalyzerTask.getThreshold(), wavAnalyzerTask.getThreshold()};
       XYSeries passSeries = new SimpleXYSeries(
           Arrays.asList(passX), Arrays.asList(passY), "passing");
@@ -334,7 +334,7 @@ public class HifiUltrasoundSpeakerTestActivity extends PassFailButtons.Activity 
    * Plays the generated pips.
    */
   private void play() {
-    play(SoundGenerator.getInstance().getByte(), Common.PLAYING_SAMPLE_RATE_HZ);
+    play(com.android.cts.verifier.audio.SoundGenerator.getInstance().getByte(), com.android.cts.verifier.audio.Common.PLAYING_SAMPLE_RATE_HZ);
   }
 
   /**
@@ -358,13 +358,13 @@ public class HifiUltrasoundSpeakerTestActivity extends PassFailButtons.Activity 
    * AsyncTask class for the analyzing.
    */
   private class WavAnalyzerTask extends AsyncTask<Void, String, String>
-      implements WavAnalyzer.Listener {
+      implements com.android.cts.verifier.audio.WavAnalyzer.Listener {
 
     private static final String TAG = "WavAnalyzerTask";
-    WavAnalyzer wavAnalyzer;
+    com.android.cts.verifier.audio.WavAnalyzer wavAnalyzer;
 
     public WavAnalyzerTask(byte[] recording) {
-      wavAnalyzer = new WavAnalyzer(recording, Common.RECORDING_SAMPLE_RATE_HZ,
+      wavAnalyzer = new com.android.cts.verifier.audio.WavAnalyzer(recording, com.android.cts.verifier.audio.Common.RECORDING_SAMPLE_RATE_HZ,
           WavAnalyzerTask.this);
     }
 

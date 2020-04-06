@@ -35,7 +35,7 @@
                 android:textSize="16dip" />
 
             <ListView
-                android:id="@android:id/list"
+                android:id="@+id/android:list"
                 android:layout_width="match_parent"
                 android:layout_height="800dip" />
 

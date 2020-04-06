@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 
 import com.android.cts.verifier.ArrayTestListAdapter;
@@ -103,7 +102,7 @@ public class RecentsRedactionActivity extends DialogTestListActivity {
                 /* name */ R.string.provisioning_byod_recents_verify_not_redacted,
                 /* testId */ "BYOD_recents_verify_not_redacted",
                 /* intruction */ R.string.provisioning_byod_recents_verify_not_redacted_instruction,
-                /* action */ new Intent(Settings.ACTION_SECURITY_SETTINGS));
+                /* action */ new Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD));
 
         adapter.add(mVerifyRedacted);
         adapter.add(mVerifyNotRedacted);
@@ -135,7 +134,7 @@ public class RecentsRedactionActivity extends DialogTestListActivity {
                 .setTitle(R.string.provisioning_byod_recents)
                 .setMessage(R.string.provisioning_byod_recents_remove_password)
                 .setPositiveButton(android.R.string.ok, (DialogInterface dialog, int which) -> {
-                    startActivity(new Intent(Settings.ACTION_SECURITY_SETTINGS));
+                    startActivity(new Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD));
                 })
                 .show();
     }

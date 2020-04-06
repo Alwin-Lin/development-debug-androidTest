@@ -21,8 +21,8 @@ apply plugin: 'com.android.application'
 // These are variables that needs to be changed bassed on your project.
 def appID = 'com.android.cts.verifier'
 def srcRoot = '../ctsVSrc/'
-def appSrc = srcRoot + '/android/cts/verifier'
-def testSrc = srcRoot + '/android/cts/verifier/sample'
+def appSrc = srcRoot + '/src/com/android/cts/verifier'
+def testSrc = srcRoot + '/src/com/android/cts/verifier/sample'
 def compatibilitylib = '../libs/compatibility-device-util-axt.jar'
 
 // Android APK Build Configuration File 
@@ -34,7 +34,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    compileSdkVersion 29
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
     defaultConfig {
@@ -56,7 +56,7 @@ android {
             // This looks for the manifest source
             manifest.srcFile srcRoot + './AndroidManifest.xml'
             // This looks for the Java source, gets SampleDeviceActivity
-            java.srcDirs = [srcRoot + '/src/android/sample']
+            java.srcDirs = [appSrc]
             res.srcDirs = [srcRoot + '/res']
         }
         androidTest {

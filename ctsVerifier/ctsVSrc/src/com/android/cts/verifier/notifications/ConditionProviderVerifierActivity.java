@@ -16,7 +16,7 @@
 
 package com.android.cts.verifier.notifications;
 
-import static android.app.NotificationManager.INTERRUPTION_FILTER_PRIORITY;
+import com.android.cts.verifier.R;
 
 import android.app.ActivityManager;
 import android.app.AutomaticZenRule;
@@ -26,13 +26,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
-import android.service.notification.ZenPolicy;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.android.cts.verifier.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +65,7 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
             tests.add(new IsEnabledTest());
             tests.add(new ServiceStartedTest());
             tests.add(new CreateAutomaticZenRuleTest());
-            tests.add(new CreateAutomaticZenRuleWithZenPolicyTest());
             tests.add(new UpdateAutomaticZenRuleTest());
-            tests.add(new UpdateAutomaticZenRuleWithZenPolicyTest());
             tests.add(new GetAutomaticZenRuleTest());
             tests.add(new GetAutomaticZenRulesTest());
             tests.add(new SubscribeAutomaticZenRuleTest());
@@ -287,52 +282,6 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
         }
     }
 
-    private class CreateAutomaticZenRuleWithZenPolicyTest extends InteractiveTestCase {
-        private String id = null;
-
-        @Override
-        protected View inflate(ViewGroup parent) {
-            return createAutoItem(parent, R.string.cp_create_rule_with_zen_policy);
-        }
-
-        @Override
-        protected void test() {
-            AutomaticZenRule ruleToCreate =
-                    createRuleWithZenPolicy("Rule", "value",
-                            new ZenPolicy.Builder().allowReminders(true).build());
-            id = mNm.addAutomaticZenRule(ruleToCreate);
-
-            if (!TextUtils.isEmpty(id)) {
-                AutomaticZenRule rule = mNm.getAutomaticZenRule(id);
-                if (rule != null && ruleToCreate.getName().equals(rule.getName())
-                        && ruleToCreate.getOwner().equals(rule.getOwner())
-                        && ruleToCreate.getConditionId().equals(rule.getConditionId())
-                        && ruleToCreate.isEnabled() == rule.isEnabled()
-                        && ruleToCreate.getInterruptionFilter() == rule.getInterruptionFilter()
-                        && Objects.equals(ruleToCreate.getConfigurationActivity(),
-                        rule.getConfigurationActivity())
-                        && Objects.equals(ruleToCreate.getZenPolicy(), rule.getZenPolicy())) {
-                    status = PASS;
-                } else {
-                    logFail("created rule doesn't equal actual rule");
-                    status = FAIL;
-                }
-            } else {
-                logFail("rule wasn't created");
-                status = FAIL;
-            }
-            next();
-        }
-
-        @Override
-        protected void tearDown() {
-            if (id != null) {
-                mNm.removeAutomaticZenRule(id);
-            }
-            MockConditionProvider.getInstance().resetData();
-        }
-    }
-
     private class UpdateAutomaticZenRuleTest extends InteractiveTestCase {
         private String id = null;
 
@@ -375,89 +324,6 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
         protected void tearDown() {
             if (id != null) {
                 mNm.removeAutomaticZenRule(id);
-            }
-            MockConditionProvider.getInstance().resetData();
-        }
-    }
-
-    private class UpdateAutomaticZenRuleWithZenPolicyTest extends InteractiveTestCase {
-        private String id1 = null; // no zen policy
-        private String id2 = null; // has zen policy
-
-        @Override
-        protected View inflate(ViewGroup parent) {
-            return createAutoItem(parent, R.string.cp_update_rule_use_zen_policy);
-        }
-
-        @Override
-        protected void setUp() {
-            // create rule without a zen policy
-            id1 = mNm.addAutomaticZenRule(createRule("BeforeUpdate1",
-                    "beforeValue1", NotificationManager.INTERRUPTION_FILTER_ALARMS));
-            id2 = mNm.addAutomaticZenRule(createRuleWithZenPolicy(
-                    "BeforeUpdate2", "beforeValue2",
-                    new ZenPolicy.Builder().allowReminders(true).build()));
-            status = READY;
-            delay();
-        }
-
-        @Override
-        protected void test() {
-            ZenPolicy.Builder builder = new ZenPolicy.Builder().allowAlarms(true);
-
-            // update rule with zen policy
-            AutomaticZenRule updated1 = mNm.getAutomaticZenRule(id1);
-            updated1.setName("AfterUpdate1");
-            updated1.setConditionId(MockConditionProvider.toConditionId("afterValue1"));
-            updated1.setInterruptionFilter(INTERRUPTION_FILTER_PRIORITY);
-            updated1.setZenPolicy(builder.build());
-
-            AutomaticZenRule updated2 = mNm.getAutomaticZenRule(id2);
-            updated2.setName("AfterUpdate2");
-            updated2.setConditionId(MockConditionProvider.toConditionId("afterValue2"));
-            updated2.setInterruptionFilter(INTERRUPTION_FILTER_PRIORITY);
-            updated2.setZenPolicy(builder.build());
-
-            try {
-                boolean success1 = mNm.updateAutomaticZenRule(id1, updated1);
-                boolean success2 = mNm.updateAutomaticZenRule(id2, updated2);
-                if (success1 && success2) {
-                    boolean rule1UpdateSuccess =
-                            updated1.equals(mNm.getAutomaticZenRule(id1));
-                    boolean rule2UpdateSuccess =
-                            updated2.equals(mNm.getAutomaticZenRule(id2));
-                    if (rule1UpdateSuccess && rule2UpdateSuccess) {
-                        status = PASS;
-                    } else {
-                        if (!rule1UpdateSuccess) {
-                            logFail("Updated rule1 is not expected expected=" + updated1.toString()
-                                    + " actual=" + mNm.getAutomaticZenRule(id1));
-                        }
-                        if (!rule2UpdateSuccess) {
-                            logFail("Updated rule2 is not expected expected=" + updated2.toString()
-                                    + " actual=" + mNm.getAutomaticZenRule(id2));
-                        }
-                        status = FAIL;
-                    }
-                } else {
-                    logFail("Did not successfully update rules");
-                    status = FAIL;
-                }
-            } catch (Exception e) {
-                logFail("update failed", e);
-                status = FAIL;
-            }
-            next();
-        }
-
-        @Override
-        protected void tearDown() {
-            if (id1 != null) {
-                mNm.removeAutomaticZenRule(id1);
-            }
-
-            if (id2 != null) {
-                mNm.removeAutomaticZenRule(id2);
             }
             MockConditionProvider.getInstance().resetData();
         }
@@ -514,10 +380,8 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
     }
 
     private class GetAutomaticZenRuleTest extends InteractiveTestCase {
-        private String id1 = null;
-        private String id2 = null;
-        private AutomaticZenRule ruleToCreate1; // no zen policy
-        private AutomaticZenRule ruleToCreate2; // has zen policy
+        private String id = null;
+        private AutomaticZenRule ruleToCreate;
 
         @Override
         protected View inflate(ViewGroup parent) {
@@ -526,32 +390,21 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
 
         @Override
         protected void setUp() {
-            ruleToCreate1 = createRule("RuleGet no zen policy", "valueGet",
+            ruleToCreate = createRule("RuleGet", "valueGet",
                     NotificationManager.INTERRUPTION_FILTER_ALARMS);
-            ruleToCreate2 = createRuleWithZenPolicy("RuleGet zen policy", "valueGet",
-                    new ZenPolicy.Builder().allowReminders(true).build());
-            id1 = mNm.addAutomaticZenRule(ruleToCreate1);
-            id2 = mNm.addAutomaticZenRule(ruleToCreate2);
+            id = mNm.addAutomaticZenRule(ruleToCreate);
             status = READY;
             delay();
         }
 
         @Override
         protected void test() {
-            AutomaticZenRule queriedRule1 = mNm.getAutomaticZenRule(id1);
-            AutomaticZenRule queriedRule2 = mNm.getAutomaticZenRule(id2);
-            if (queriedRule1 != null
-                    && ruleToCreate1.getName().equals(queriedRule1.getName())
-                    && ruleToCreate1.getOwner().equals(queriedRule1.getOwner())
-                    && ruleToCreate1.getConditionId().equals(queriedRule1.getConditionId())
-                    && ruleToCreate1.isEnabled() == queriedRule1.isEnabled()
-                    && Objects.equals(ruleToCreate1.getZenPolicy(), queriedRule1.getZenPolicy())
-                    && queriedRule2 != null
-                    && ruleToCreate2.getName().equals(queriedRule2.getName())
-                    && ruleToCreate2.getOwner().equals(queriedRule2.getOwner())
-                    && ruleToCreate2.getConditionId().equals(queriedRule2.getConditionId())
-                    && ruleToCreate2.isEnabled() == queriedRule2.isEnabled()
-                    && Objects.equals(ruleToCreate2.getZenPolicy(), queriedRule2.getZenPolicy())) {
+            AutomaticZenRule queriedRule = mNm.getAutomaticZenRule(id);
+            if (queriedRule != null
+                    && ruleToCreate.getName().equals(queriedRule.getName())
+                    && ruleToCreate.getOwner().equals(queriedRule.getOwner())
+                    && ruleToCreate.getConditionId().equals(queriedRule.getConditionId())
+                    && ruleToCreate.isEnabled() == queriedRule.isEnabled()) {
                 status = PASS;
             } else {
                 logFail();
@@ -562,12 +415,8 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
 
         @Override
         protected void tearDown() {
-            if (id1 != null) {
-                mNm.removeAutomaticZenRule(id1);
-            }
-
-            if (id2 != null) {
-                mNm.removeAutomaticZenRule(id2);
+            if (id != null) {
+                mNm.removeAutomaticZenRule(id);
             }
             MockConditionProvider.getInstance().resetData();
         }
@@ -575,8 +424,8 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
 
     private class GetAutomaticZenRulesTest extends InteractiveTestCase {
         private List<String> ids = new ArrayList<>();
-        private AutomaticZenRule rule1; // no ZenPolicy
-        private AutomaticZenRule rule2; // has ZenPolicy
+        private AutomaticZenRule rule1;
+        private AutomaticZenRule rule2;
 
         @Override
         protected View inflate(ViewGroup parent) {
@@ -585,10 +434,8 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
 
         @Override
         protected void setUp() {
-            rule1 = createRule("Rule without ZenPolicy", "value1",
-                    NotificationManager.INTERRUPTION_FILTER_ALARMS);
-            rule2 = createRuleWithZenPolicy("Rule with ZenPolicy", "value2",
-                    new ZenPolicy.Builder().allowReminders(true).build());
+            rule1 = createRule("Rule1", "value1", NotificationManager.INTERRUPTION_FILTER_ALARMS);
+            rule2 = createRule("Rule2", "value2", NotificationManager.INTERRUPTION_FILTER_NONE);
             ids.add(mNm.addAutomaticZenRule(rule1));
             ids.add(mNm.addAutomaticZenRule(rule2));
             status = READY;
@@ -627,8 +474,7 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
     }
 
     private class DeleteAutomaticZenRuleTest extends InteractiveTestCase {
-        private String id1 = null;
-        private String id2 = null;
+        private String id = null;
 
         @Override
         protected View inflate(ViewGroup parent) {
@@ -637,17 +483,13 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
 
         @Override
         protected void test() {
-            AutomaticZenRule ruleToCreate1 = createRule("RuleDelete without ZenPolicy",
-                    "Deletevalue", NotificationManager.INTERRUPTION_FILTER_ALARMS);
-            AutomaticZenRule ruleToCreate2 = createRule("RuleDelete with ZenPolicy",
-                    "Deletevalue", NotificationManager.INTERRUPTION_FILTER_ALARMS);
-            id1 = mNm.addAutomaticZenRule(ruleToCreate1);
-            id2 = mNm.addAutomaticZenRule(ruleToCreate2);
+            AutomaticZenRule ruleToCreate = createRule("RuleDelete", "Deletevalue",
+                    NotificationManager.INTERRUPTION_FILTER_ALARMS);
+            id = mNm.addAutomaticZenRule(ruleToCreate);
 
-            if (id1 != null && id2 != null) {
-                if (mNm.removeAutomaticZenRule(id1) && mNm.removeAutomaticZenRule(id2)) {
-                    if (mNm.getAutomaticZenRule(id1) == null
-                            && mNm.getAutomaticZenRule(id2) == null) {
+            if (id != null) {
+                if (mNm.removeAutomaticZenRule(id)) {
+                    if (mNm.getAutomaticZenRule(id) == null) {
                         status = PASS;
                     } else {
                         logFail();
@@ -686,7 +528,7 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
         @Override
         protected void setUp() {
             ruleToCreate = createRule("RuleUnsubscribe", "valueUnsubscribe",
-                    INTERRUPTION_FILTER_PRIORITY);
+                    NotificationManager.INTERRUPTION_FILTER_PRIORITY);
             id = mNm.addAutomaticZenRule(ruleToCreate);
             status = READY;
             delay();
@@ -806,15 +648,9 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
     private AutomaticZenRule createRule(String name, String queryValue, int status) {
         return new AutomaticZenRule(name,
                 ComponentName.unflattenFromString(CP_PATH),
-                MockConditionProvider.toConditionId(queryValue), status, true);
-    }
-
-    private AutomaticZenRule createRuleWithZenPolicy(String name, String queryValue,
-            ZenPolicy policy) {
-        return new AutomaticZenRule(name,
-                ComponentName.unflattenFromString(CP_PATH), null,
-                MockConditionProvider.toConditionId(queryValue), policy,
-                INTERRUPTION_FILTER_PRIORITY, true);
+                MockConditionProvider.toConditionId(queryValue),
+                status,
+                true);
     }
 
     private boolean compareRules(AutomaticZenRule rule1, AutomaticZenRule rule2) {
@@ -822,8 +658,7 @@ public class ConditionProviderVerifierActivity extends InteractiveVerifierActivi
                 && Objects.equals(rule1.getName(), rule2.getName())
                 && rule1.getInterruptionFilter() == rule2.getInterruptionFilter()
                 && Objects.equals(rule1.getConditionId(), rule2.getConditionId())
-                && Objects.equals(rule1.getOwner(), rule2.getOwner())
-                && Objects.equals(rule1.getZenPolicy(), rule2.getZenPolicy());
+                && Objects.equals(rule1.getOwner(), rule2.getOwner());
     }
 
     protected View createSettingsItem(ViewGroup parent, int messageId) {

@@ -24,11 +24,9 @@ import android.telecom.CallAudioState;
 import android.telecom.Connection;
 import android.telecom.DisconnectCause;
 import android.telecom.VideoProfile;
-import android.util.ArraySet;
 
 import com.android.cts.verifier.R;
 
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -54,7 +52,7 @@ public class CtsConnection extends Connection {
             "com.android.cts.verifier.telecom.PLAY_CS_AUDIO";
 
     private final boolean mIsIncomingCall;
-    private final Set<Listener> mListener = new ArraySet<>();
+    private final Listener mListener;
     private final MediaPlayer mMediaPlayer;
     private final Context mContext;
     private CountDownLatch mWaitForCallAudioStateChanged = new CountDownLatch(1);
@@ -63,7 +61,7 @@ public class CtsConnection extends Connection {
             Listener listener, boolean hasAudio) {
         mContext = context;
         mIsIncomingCall = isIncomingCall;
-        mListener.add(listener);
+        mListener = listener;
         if (hasAudio) {
             mMediaPlayer = createMediaPlayer();
         } else {
@@ -75,16 +73,12 @@ public class CtsConnection extends Connection {
         return mIsIncomingCall;
     }
 
-    public void addListener(Listener listener) {
-        mListener.add(listener);
-    }
-
     @Override
     public void onDisconnect() {
         setDisconnectedAndDestroy(new DisconnectCause(DisconnectCause.LOCAL));
 
         if (mListener != null) {
-            mListener.forEach(l -> l.onDisconnect(CtsConnection.this));
+            mListener.onDisconnect(this);
         }
     }
 
@@ -94,7 +88,7 @@ public class CtsConnection extends Connection {
         setOnHold();
 
         if (mListener != null) {
-            mListener.forEach(l -> l.onHold(CtsConnection.this));
+            mListener.onHold(this);
         }
     }
 
@@ -103,7 +97,7 @@ public class CtsConnection extends Connection {
         setActive();
 
         if (mListener != null) {
-            mListener.forEach(l -> l.onUnhold(CtsConnection.this));
+            mListener.onUnhold(this);
         }
     }
 
@@ -117,7 +111,7 @@ public class CtsConnection extends Connection {
         }
 
         if (mListener != null) {
-            mListener.forEach(l -> l.onAnswer(CtsConnection.this, videoState));
+            mListener.onAnswer(this, videoState);
         }
     }
 
@@ -131,14 +125,14 @@ public class CtsConnection extends Connection {
         setDisconnectedAndDestroy(new DisconnectCause(DisconnectCause.REJECTED));
 
         if (mListener != null) {
-            mListener.forEach(l -> l.onReject(CtsConnection.this));
+            mListener.onReject(this);
         }
     }
 
     @Override
     public void onShowIncomingCallUi() {
         if (mListener != null) {
-            mListener.forEach(l -> l.onShowIncomingCallUi(CtsConnection.this));
+            mListener.onShowIncomingCallUi(this);
         }
     }
 
@@ -165,7 +159,7 @@ public class CtsConnection extends Connection {
         }
 
         if (mListener != null) {
-            mListener.forEach(l -> l.onDestroyed(CtsConnection.this));
+            mListener.onDestroyed(this);
         }
     }
 

@@ -39,7 +39,6 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.ArraySet;
 import android.util.Log;
@@ -132,17 +131,6 @@ public class UsbDeviceTestActivity extends PassFailButtons.Activity {
                         case UsbManager.ACTION_USB_DEVICE_ATTACHED:
                             if (!AoapInterface.isDeviceInAoapMode(device)) {
                                 mStatus.setText(R.string.usb_device_test_step2);
-                            }
-
-                            if (getApplicationContext().getApplicationInfo().targetSdkVersion
-                                    >= Build.VERSION_CODES.Q) {
-                                try {
-                                    device.getSerialNumber();
-                                    fail("Serial number could be read", null);
-                                    return;
-                                } catch (SecurityException expected) {
-                                    // expected as app cannot read serial number without permission
-                                }
                             }
 
                             mUsbManager.requestPermission(device,
@@ -1955,7 +1943,7 @@ public class UsbDeviceTestActivity extends PassFailButtons.Activity {
     /**
      * Enumerate all known devices and check basic relationship between the properties.
      */
-    private void enumerateDevices(@NonNull UsbDevice companionDevice) throws Exception {
+    private void enumerateDevices() throws Exception {
         Set<Integer> knownDeviceIds = new ArraySet<>();
 
         for (Map.Entry<String, UsbDevice> entry : mUsbManager.getDeviceList().entrySet()) {
@@ -1974,12 +1962,7 @@ public class UsbDeviceTestActivity extends PassFailButtons.Activity {
             device.getManufacturerName();
             device.getProductName();
             device.getVersion();
-
-            // We are only guaranteed to have permission to the companion device.
-            if (device.equals(companionDevice)) {
-                device.getSerialNumber();
-            }
-
+            device.getSerialNumber();
             device.getVendorId();
             device.getProductId();
             device.getDeviceClass();
@@ -2073,7 +2056,7 @@ public class UsbDeviceTestActivity extends PassFailButtons.Activity {
             assertNotNull("No \"Android Accessory Interface\" interface found in " + allInterfaces,
                     iface);
 
-            enumerateDevices(device);
+            enumerateDevices();
 
             UsbDeviceConnection connection = mUsbManager.openDevice(device);
             assertNotNull(connection);

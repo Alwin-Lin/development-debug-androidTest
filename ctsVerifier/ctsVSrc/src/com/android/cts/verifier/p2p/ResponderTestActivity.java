@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -59,9 +58,6 @@ public abstract class ResponderTestActivity extends PassFailButtons.Activity
      */
     private TextView mMyDeviceView;
 
-    private WifiP2pManager mP2pMgr;
-    private Channel mChannel;
-
     /*
      * BroadcastReceiver to obtain own device information.
      */
@@ -96,8 +92,6 @@ public abstract class ResponderTestActivity extends PassFailButtons.Activity
 
         // keep screen on while this activity is front view.
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mP2pMgr = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-        mChannel = mP2pMgr.initialize(this, getMainLooper(), null);
     }
 
     @Override
@@ -105,17 +99,6 @@ public abstract class ResponderTestActivity extends PassFailButtons.Activity
         super.onResume();
         mTestCase.start(this);
         registerReceiver(mReceiver, mIntentFilter);
-        mP2pMgr.requestDeviceInfo(mChannel, wifiP2pDevice -> {
-            if (wifiP2pDevice != null) {
-                // need to show in the GUI thread.
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mMyDeviceView.setText("Device Name: " + wifiP2pDevice.deviceName);
-                    }
-                });
-            }
-        });
     }
 
     @Override

@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -94,10 +93,9 @@ public class PolicySerializationTestActivity extends PassFailButtons.ListActivit
             }
         });
 
-        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_SECURE_LOCK_SCREEN)) {
-            mPolicyItems.add(new MaximumFailedPasswordsForWipePolicy(this));
-        }
-
+        mPolicyItems.add(new PasswordQualityPolicy(this));
+        mPolicyItems.add(new PasswordMinimumLengthPolicy(this));
+        mPolicyItems.add(new MaximumFailedPasswordsForWipePolicy(this));
         mPolicyItems.add(new MaximumTimeToLockPolicy(this));
         mAdapter = new PolicyAdapter(this);
         setListAdapter(mAdapter);

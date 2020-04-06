@@ -40,7 +40,6 @@ public abstract class SensorCtsVerifierTestActivity extends BaseSensorTestActivi
     private volatile int mTestSkippedCounter;
     private volatile int mTestFailedCounter;
     private volatile ISensorTestNode mCurrentTestNode;
-    private volatile boolean mEnableRetry = false;
 
     /**
      * {@inheritDoc}
@@ -48,20 +47,6 @@ public abstract class SensorCtsVerifierTestActivity extends BaseSensorTestActivi
     protected SensorCtsVerifierTestActivity(
             Class<? extends SensorCtsVerifierTestActivity> testClass) {
         super(testClass);
-    }
-
-    /**
-     * {@inheritDoc}
-     * Constructor to be used by subclasses.
-     *
-     * @param testClass   The class that contains the tests. It is dependant on test executor
-     *                    implemented by subclasses.
-     * @param enableRetry Subclass can enable retry mechanism for subtests.
-     */
-    protected SensorCtsVerifierTestActivity(
-        Class<? extends SensorCtsVerifierTestActivity> testClass, boolean enableRetry) {
-        super(testClass);
-        mEnableRetry = enableRetry;
     }
 
     /**
@@ -74,24 +59,22 @@ public abstract class SensorCtsVerifierTestActivity extends BaseSensorTestActivi
         Iterator<Method> testMethodIt = findTestMethods().iterator();
         while (testMethodIt.hasNext()) {
             Method testMethod = testMethodIt.next();
-            boolean isLastSubtest = !testMethodIt.hasNext();
+            mIsLastSubtest = !testMethodIt.hasNext();
+            mRetryCount = 0;
             getTestLogger().logTestStart(testMethod.getName());
             SensorTestDetails testDetails = executeTest(testMethod);
             getTestLogger().logTestDetails(testDetails);
-
             // If tests enable retry and get failed result, trigger the retry process.
             while (mEnableRetry && testDetails.getResultCode().equals(ResultCode.FAIL)) {
-                if (isLastSubtest) {
-                    waitForUserToFinish();
-                } else {
-                    waitForUserToRetry();
-                }
-                if (!getShouldRetry()) {
+                mShouldRetry = true;
+                waitForUserToRetry();
+                if (!mShouldRetry) {
                     break;
                 }
                 mTestFailedCounter--;
                 testDetails = executeTest(testMethod);
                 getTestLogger().logTestDetails(testDetails);
+                mRetryCount++;
             }
         }
         return new SensorTestDetails(
@@ -166,21 +149,6 @@ public abstract class SensorCtsVerifierTestActivity extends BaseSensorTestActivi
         @Override
         public String getName() {
             return mTestClass.getSimpleName() + "_" + mTestMethod.getName();
-        }
-    }
-
-    /**
-     * Show the instruction for the first time execution and wait for user to begin the test.
-     *
-     * @param descriptionResId The description for the first time execution.
-     */
-    protected void setFirstExecutionInstruction(int ... descriptionResId) throws Throwable {
-        if (!getShouldRetry()) {
-            SensorTestLogger logger = getTestLogger();
-            for (int id : descriptionResId) {
-                logger.logInstructions(id);
-            }
-            waitForUserToBegin();
         }
     }
 }

@@ -54,7 +54,8 @@ import junit.framework.Assert;
  */
 public class SignificantMotionTestActivity extends SensorCtsVerifierTestActivity {
     public SignificantMotionTestActivity() {
-        super(SignificantMotionTestActivity.class, true);
+        super(SignificantMotionTestActivity.class);
+        mEnableRetry = true;
     }
 
     // acceptable time difference between event time and system time
@@ -140,12 +141,15 @@ public class SignificantMotionTestActivity extends SensorCtsVerifierTestActivity
 
     @SuppressWarnings("unused")
     public String testTriggerDeactivation() throws Throwable {
-
-        setFirstExecutionInstruction(R.string.snsr_significant_motion_test_deactivation);
+        SensorTestLogger logger = getTestLogger();
+        if (!mShouldRetry) {
+            logger.logInstructions(R.string.snsr_significant_motion_test_deactivation);
+            waitForUserToBegin();
+        }
 
         TriggerVerifier verifier = new TriggerVerifier();
         mSensorManager.requestTriggerSensor(verifier, mSensorSignificantMotion);
-        getTestLogger().logWaitForSound();
+        logger.logWaitForSound();
 
         String result;
         try {
@@ -188,9 +192,11 @@ public class SignificantMotionTestActivity extends SensorCtsVerifierTestActivity
 
     @SuppressWarnings("unused")
     public String testAPWakeUpOnSMDTrigger() throws Throwable {
-
-        setFirstExecutionInstruction(R.string.snsr_significant_motion_ap_suspend);
-
+        SensorTestLogger logger = getTestLogger();
+        if (!mShouldRetry) {
+            logger.logInstructions(R.string.snsr_significant_motion_ap_suspend);
+            waitForUserToBegin();
+        }
         mVerifier = new TriggerVerifier();
         mSensorManager.requestTriggerSensor(mVerifier, mSensorSignificantMotion);
         long testStartTimeNs = SystemClock.elapsedRealtimeNanos();
@@ -241,8 +247,11 @@ public class SignificantMotionTestActivity extends SensorCtsVerifierTestActivity
             boolean isMotionExpected,
             boolean cancelEventNotification,
             boolean vibrate) throws Throwable {
-
-        setFirstExecutionInstruction(instructionsResId);
+        SensorTestLogger logger = getTestLogger();
+        if (!mShouldRetry) {
+            logger.logInstructions(instructionsResId);
+            waitForUserToBegin();
+        }
 
         if (vibrate) {
             vibrate(VIBRATE_DURATION_MILLIS);
@@ -258,7 +267,7 @@ public class SignificantMotionTestActivity extends SensorCtsVerifierTestActivity
                     getString(R.string.snsr_significant_motion_cancelation),
                     mSensorManager.cancelTriggerSensor(verifier, mSensorSignificantMotion));
         }
-        getTestLogger().logWaitForSound();
+        logger.logWaitForSound();
 
         String result;
         try {

@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
-import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -44,7 +43,6 @@ public class P2pBroadcastReceiverTest extends BroadcastReceiver
 
     private WifiP2pDeviceList mPeers;
     private WifiP2pInfo mP2pInfo;
-    private WifiP2pGroup mP2pGroup;
 
     public P2pBroadcastReceiverTest(Context context) {
         this.mContext = context;
@@ -207,8 +205,6 @@ public class P2pBroadcastReceiverTest extends BroadcastReceiver
             synchronized(this) {
                 mP2pInfo = (WifiP2pInfo)intent.getParcelableExtra(
                         WifiP2pManager.EXTRA_WIFI_P2P_INFO);
-                mP2pGroup = (WifiP2pGroup) intent.getParcelableExtra(
-                        WifiP2pManager.EXTRA_WIFI_P2P_GROUP);
                 notifyAll();
             }
         }
@@ -219,9 +215,5 @@ public class P2pBroadcastReceiverTest extends BroadcastReceiver
         Log.d(TAG, "onPeersAvailable()");
         mPeers = peers;
         notifyAll();
-    }
-
-    public synchronized WifiP2pGroup getWifiP2pGroup() {
-        return mP2pGroup;
     }
 }

@@ -70,11 +70,11 @@ public class PolicyTransparencyTestListActivity extends PassFailButtons.TestList
         final String[] settingsIntentActions = new String[] {
             Settings.ACTION_DATE_SETTINGS,
             Settings.ACTION_SETTINGS,
-            Settings.ACTION_DISPLAY_SETTINGS,
+            Settings.ACTION_SECURITY_SETTINGS,
             Settings.ACTION_DISPLAY_SETTINGS,
             Settings.ACTION_SETTINGS,
             Settings.ACTION_ACCESSIBILITY_SETTINGS,
-            Settings.ACTION_SETTINGS
+            Settings.ACTION_INPUT_METHOD_SETTINGS
         };
         final int[] policyLabels = new int[] {
             R.string.set_auto_time_required,

@@ -18,16 +18,12 @@ package com.android.cts.verifier.camera.intents;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.content.pm.PermissionInfo;
 import android.hardware.Camera;
 import android.media.ExifInterface;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,17 +35,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.core.content.FileProvider;
-import android.Manifest;
 
 import com.android.cts.verifier.camera.intents.CameraContentJobService;
 import com.android.cts.verifier.PassFailButtons;
 import com.android.cts.verifier.R;
 import com.android.cts.verifier.TestResult;
-import android.widget.Toast;
-
-import static android.media.MediaMetadataRetriever.METADATA_KEY_HAS_VIDEO;
-import static android.media.MediaMetadataRetriever.METADATA_KEY_LOCATION;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,16 +52,14 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 /**
- * Tests for manual verification of uri trigger and camera intents being fired.
+ * Tests for manual verification of uri trigger being fired.
  *
- * MediaStore.Images.Media.EXTERNAL_CONTENT_URI:
- * android.hardware.Camera.ACTION_NEW_PICTURE:
- *  These should fire when a new picture was captured by the camera app, and
- *  it has been added to the media store.
- * MediaStore.Video.Media.EXTERNAL_CONTENT_URI:
- * android.hardware.Camera.ACTION_NEW_VIDEO:
- *  These should fire when a new video has been captured by the camera app, and
- *  it has been added to the media store.
+ * MediaStore.Images.Media.EXTERNAL_CONTENT_URI - this should fire
+ *  when a new picture was captured by the camera app, and it has been
+ *  added to the media store.
+ * MediaStore.Video.Media.EXTERNAL_CONTENT_URI - this should fire when a new
+ *  video has been captured by the camera app, and it has been added
+ *  to the media store.
  *
  * The tests verify this both by asking the user to manually launch
  *  the camera activity, as well as by programatically launching the camera
@@ -87,41 +78,22 @@ implements OnClickListener, SurfaceHolder.Callback {
     private static final int STATE_STARTED = 1;
     private static final int STATE_SUCCESSFUL = 2;
     private static final int STATE_FAILED = 3;
+    private static final int NUM_STAGES = 4;
+    private static final String STAGE_INDEX_EXTRA = "stageIndex";
 
     private static final int STAGE_APP_PICTURE = 0;
     private static final int STAGE_APP_VIDEO = 1;
     private static final int STAGE_INTENT_PICTURE = 2;
-    private static final int STAGE_INTENT_PICTURE_SECURE = 3;
-    private static final int STAGE_INTENT_VIDEO = 4;
-    private static final int NUM_STAGES = 5;
-    private static final String STAGE_INDEX_EXTRA = "stageIndex";
-
-    private static String[]  EXPECTED_INTENTS = new String[] {
-        Camera.ACTION_NEW_PICTURE,
-        Camera.ACTION_NEW_VIDEO,
-        null,
-        null,
-        Camera.ACTION_NEW_VIDEO
-    };
+    private static final int STAGE_INTENT_VIDEO = 3;
 
     private ImageButton mPassButton;
     private ImageButton mFailButton;
     private Button mStartTestButton;
-    private Button mSettingsButton;
     private File mDebugFolder = null;
     private File mImageTarget = null;
-    private File mVideoTarget = null;
-    private int mState = STATE_OFF;
-    // MediaStore.Images.Media.EXTERNAL_CONTENT_URI or
-    // MediaStore.Video.Media.EXTERNAL_CONTENT_URI are successfully received.
-    private boolean mUriSuccess = false;
-    // android.hardware.Camera.ACTION_NEW_PICTURE or
-    // android.hardware.Camera.ACTION_NEW_VIDEO are successfully received.
-    private boolean mActionSuccess = false;
-    private Object mLock = new Object();
 
-    private BroadcastReceiver mReceiver;
-    private IntentFilter mFilterPicture;
+    private int mState = STATE_OFF;
+
     private boolean mActivityResult = false;
     private boolean mDetectCheating = false;
 
@@ -137,7 +109,6 @@ implements OnClickListener, SurfaceHolder.Callback {
     private static int[] TEST_JOB_TYPES = new int[] {
         JOB_TYPE_IMAGE,
         JOB_TYPE_VIDEO,
-        JOB_TYPE_IMAGE,
         JOB_TYPE_IMAGE,
         JOB_TYPE_VIDEO
     };
@@ -167,55 +138,6 @@ implements OnClickListener, SurfaceHolder.Callback {
         return builder.build();
     }
 
-    /* Callback from mReceiver#onReceive */
-    public void onReceivedIntent(Intent intent) {
-        Log.v(TAG, "Received intent " + intent.toString());
-        synchronized(mLock) {
-            if (mState == STATE_STARTED) {
-
-                /* this can happen if..
-                  the camera apps intent finishes,
-                  user returns to cts verifier,
-                  user leaves cts verifier and tries to fake receiver intents
-                  */
-                if (mDetectCheating) {
-                    Log.w(TAG, "Cheating attempt suppressed");
-
-                    mState = STATE_FAILED;
-                }
-
-                String expectedIntent = EXPECTED_INTENTS[getStageIndex()];
-                if (expectedIntent != intent.getAction()) {
-                    Log.e(TAG, "FAIL: Test # " + getStageIndex()
-                        + " must not broadcast "
-                        + intent.getAction()
-                        + ", expected: "
-                        + (expectedIntent != null ? expectedIntent : "no intent"));
-
-                    mState = STATE_FAILED;
-                }
-
-                if (mState != STATE_FAILED) {
-                    mActionSuccess = true;
-                }
-                updateSuccessState();
-            }
-        }
-    }
-
-    private void updateSuccessState() {
-        if (mActionSuccess && mUriSuccess) {
-            mState = STATE_SUCCESSFUL;
-        }
-
-        setPassButton(mState == STATE_SUCCESSFUL);
-    }
-
-    private void setPassButton(Boolean pass) {
-        mPassButton.setEnabled(pass);
-        mFailButton.setEnabled(!pass);
-    }
-
     private int getStageIndex()
     {
         final int stageIndex = getIntent().getIntExtra(STAGE_INDEX_EXTRA, 0);
@@ -232,9 +154,6 @@ implements OnClickListener, SurfaceHolder.Callback {
         }
         if (stageIndex == STAGE_INTENT_PICTURE) {
             return "Intent Picture";
-        }
-        if (stageIndex == STAGE_INTENT_PICTURE_SECURE) {
-            return "Intent Picture Secure";
         }
         if (stageIndex == STAGE_INTENT_VIDEO) {
             return "Intent Video";
@@ -254,9 +173,6 @@ implements OnClickListener, SurfaceHolder.Callback {
         if (stageIndex == STAGE_INTENT_PICTURE) {
             return android.hardware.Camera.ACTION_NEW_PICTURE;
         }
-        if (stageIndex == STAGE_INTENT_PICTURE_SECURE) {
-            return android.hardware.Camera.ACTION_NEW_PICTURE + " (Secure)";
-        }
         if (stageIndex == STAGE_INTENT_VIDEO) {
             return android.hardware.Camera.ACTION_NEW_VIDEO;
         }
@@ -274,9 +190,6 @@ implements OnClickListener, SurfaceHolder.Callback {
         }
         if (stageIndex == STAGE_INTENT_PICTURE) {
             return getString(R.string.ci_instruction_text_intent_picture_label);
-        }
-        if (stageIndex == STAGE_INTENT_PICTURE_SECURE) {
-            return getString(R.string.ci_instruction_text_intent_picture_secure_label);
         }
         if (stageIndex == STAGE_INTENT_VIDEO) {
             return getString(R.string.ci_instruction_text_intent_video_label);
@@ -296,9 +209,7 @@ implements OnClickListener, SurfaceHolder.Callback {
         mPassButton         = (ImageButton) findViewById(R.id.pass_button);
         mFailButton         = (ImageButton) findViewById(R.id.fail_button);
         mStartTestButton  = (Button) findViewById(R.id.start_test_button);
-        mSettingsButton  = (Button) findViewById(R.id.settings_button);
         mStartTestButton.setOnClickListener(this);
-        mSettingsButton.setOnClickListener(this);
 
         // This activity is reused multiple times
         // to test each camera/intents combination
@@ -336,76 +247,17 @@ implements OnClickListener, SurfaceHolder.Callback {
         cameraExtraLabel.setText(getStageInstructionLabel(getStageIndex()));
 
         mStartTestButton.setEnabled(true);
-        mSettingsButton.setEnabled(true);
-
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                onReceivedIntent(intent);
-            }
-        };
-
-        mFilterPicture = new IntentFilter();
-        mFilterPicture.addAction(Camera.ACTION_NEW_PICTURE);
-        mFilterPicture.addAction(Camera.ACTION_NEW_VIDEO);
-
-        try {
-            mFilterPicture.addDataType("video/*");
-            mFilterPicture.addDataType("image/*");
-        }
-        catch(IntentFilter.MalformedMimeTypeException e) {
-            Log.e(TAG, "Caught exceptione e " + e.toString());
-        }
-        registerReceiver(mReceiver, mFilterPicture);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         Log.v(TAG, "onDestroy");
-        this.unregisterReceiver(mReceiver);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mFailButton.setEnabled(false);
-        /**
-         * If location is not enabled, fail buttons should be disabled, since they take us back to
-         * the original CTS Verifier activity where other tests might depend on these
-         * If we're in STAGE_INTENT_VIDEO even the pass button should be disabled till location
-         * access is turned back on for CTS Verifier.
-         */
-        Boolean locationEnabled = (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED);
-
-        if (getStageIndex() == STAGE_INTENT_VIDEO) {
-                /**
-                 * Don't enable the pass /fail button till the user grants CTS verifier location
-                 * access again.
-                 */
-                if (mActionSuccess) {
-                    mState = STATE_SUCCESSFUL;
-                }
-                mPassButton.setEnabled(false);
-                if (locationEnabled) {
-                    if (mState == STATE_SUCCESSFUL) {
-                        mPassButton.setEnabled(true);
-                    } else {
-                        mFailButton.setEnabled(true);
-                    }
-                } else if (mState != STATE_OFF) {
-                    Toast.makeText(this, R.string.ci_location_permissions_error,
-                            Toast.LENGTH_SHORT).show();
-                }
-        } else {
-            if (locationEnabled) {
-                mFailButton.setEnabled(true);
-            } else {
-                Toast.makeText(this, R.string.ci_location_permissions_fail_error,
-                    Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     @Override
@@ -417,7 +269,6 @@ implements OnClickListener, SurfaceHolder.Callback {
         the intents by taking a photo/video
         */
         if (getStageIndex() == STAGE_INTENT_PICTURE ||
-            getStageIndex() == STAGE_INTENT_PICTURE_SECURE ||
             getStageIndex() == STAGE_INTENT_VIDEO) {
 
             if (mActivityResult && mState == STATE_STARTED) {
@@ -435,20 +286,10 @@ implements OnClickListener, SurfaceHolder.Callback {
         if (requestCode == 1337 + stageIndex) {
             Log.v(TAG, "Activity we launched was finished");
             mActivityResult = true;
-            synchronized(mLock) {
-                if (mState != STATE_FAILED) {
-                    switch (stageIndex) {
-                        case STAGE_INTENT_PICTURE:
-                        case STAGE_INTENT_PICTURE_SECURE:
-                            handleIntentPictureResult();
-                            break;
-                        case STAGE_INTENT_VIDEO:
-                            handleIntentVideoResult();
-                            break;
-                        default:
-                            return;
-                    }
-                }
+
+            if (mState != STATE_FAILED
+                && getStageIndex() == STAGE_INTENT_PICTURE) {
+                handleIntentPictureResult();
             }
         }
     }
@@ -460,7 +301,7 @@ implements OnClickListener, SurfaceHolder.Callback {
         }
         try {
             if (!mImageTarget.exists() || mImageTarget.length() == 0) {
-                Log.d(TAG, "Image target does not exist or is empty");
+                Log.d(TAG, "Image target does not exist or it is empty");
                 mState = STATE_FAILED;
                 return;
             }
@@ -474,14 +315,8 @@ implements OnClickListener, SurfaceHolder.Callback {
                     mState = STATE_FAILED;
                     return;
                 }
-
-                float[] latLong = new float[2];
-                if (exif.getLatLong(latLong)) {
-                    Log.d(TAG, "Should not contain location information");
-                    mState = STATE_FAILED;
-                    return;
-                }
-                mActionSuccess = true;
+                mState = STATE_SUCCESSFUL;
+                setPassButton(true);
             } catch (IOException ex) {
                 Log.e(TAG, "Failed to verify Exif", ex);
                 mState = STATE_FAILED;
@@ -490,31 +325,6 @@ implements OnClickListener, SurfaceHolder.Callback {
         } finally {
             mImageTarget.delete();
         }
-    }
-
-    private void handleIntentVideoResult() {
-        if (mVideoTarget == null) {
-            Log.d(TAG, "Video target was not set");
-            return;
-        }
-        /**
-         * Check that there is no location data in video.
-         */
-        MediaMetadataRetriever mediaRetriever = new MediaMetadataRetriever();
-        mediaRetriever.setDataSource(mVideoTarget.toString());
-        if (mediaRetriever.extractMetadata(METADATA_KEY_HAS_VIDEO) == null ||
-            mediaRetriever.extractMetadata(METADATA_KEY_LOCATION) != null) {
-            mState = STATE_FAILED;
-        } else {
-            mVideoTarget.delete();
-        }
-        Log.d(TAG, "METADATA_KEY_HAS_VIDEO: " +
-              mediaRetriever.extractMetadata(METADATA_KEY_HAS_VIDEO) +
-              " METADATA_KEY_LOCATION: " +
-              mediaRetriever.extractMetadata(METADATA_KEY_LOCATION));
-        mediaRetriever.release();
-        /* successful, unless we get the URI trigger back at some point later on. */
-        mActionSuccess = true;
     }
 
     private boolean checkExifAttribute(ExifInterface exif, String tag) {
@@ -527,45 +337,47 @@ implements OnClickListener, SurfaceHolder.Callback {
         return mReportBuilder.toString();
     }
 
+    private void setPassButton(Boolean pass) {
+        mPassButton.setEnabled(pass);
+        mFailButton.setEnabled(!pass);
+    }
+
     private class WaitForTriggerTask extends AsyncTask<Void, Void, Boolean> {
         protected Boolean doInBackground(Void... param) {
             try {
                 boolean executed = mTestEnv.awaitExecution();
-                synchronized(mLock) {
-                    // Check latest test param
-                    if (executed && mState == STATE_STARTED) {
+                // Check latest test param
+                if (executed && mState == STATE_STARTED) {
 
-                        // this can happen if..
-                        //  the camera apps intent finishes,
-                        //  user returns to cts verifier,
-                        //  user leaves cts verifier and tries to fake receiver intents
-                        if (mDetectCheating) {
-                            Log.w(TAG, "Cheating attempt suppressed");
-                            mState = STATE_FAILED;
-                        }
+                    // this can happen if..
+                    //  the camera apps intent finishes,
+                    //  user returns to cts verifier,
+                    //  user leaves cts verifier and tries to fake receiver intents
+                    if (mDetectCheating) {
+                        Log.w(TAG, "Cheating attempt suppressed");
+                        mState = STATE_FAILED;
+                    }
 
-                        // For STAGE_INTENT_PICTURE test, if EXTRA_OUTPUT is not assigned in intent,
-                        // file should NOT be saved so triggering this is a test failure.
-                        if (getStageIndex() == STAGE_INTENT_PICTURE ||
-                            getStageIndex() == STAGE_INTENT_PICTURE_SECURE) {
-                            Log.e(TAG, "FAIL: STAGE_INTENT_PICTURE or STAGE_INTENT_PICTURE_SECURE test should not create file");
-                            mState = STATE_FAILED;
-                        }
+                    // For STAGE_INTENT_PICTURE test, if EXTRA_OUTPUT is not assigned in intent,
+                    // file should NOT be saved so triggering this is a test failure.
+                    if (getStageIndex() == STAGE_INTENT_PICTURE) {
+                        Log.e(TAG, "FAIL: STAGE_INTENT_PICTURE test should not create file");
+                        mState = STATE_FAILED;
+                    }
 
-                        if (mState != STATE_FAILED) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                    if (mState != STATE_FAILED) {
+                        mState = STATE_SUCCESSFUL;
+                        return true;
+                    } else {
+                        return false;
                     }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            if (getStageIndex() == STAGE_INTENT_PICTURE ||
-                getStageIndex() == STAGE_INTENT_PICTURE_SECURE) {
-                // STAGE_INTENT_PICTURE or STAGE_INTENT_PICTURE_SECURE should timeout
+            if (getStageIndex() == STAGE_INTENT_PICTURE) {
+                // STAGE_INTENT_PICTURE should timeout
                 return true;
             } else {
                 Log.e(TAG, "FAIL: timeout waiting for URI trigger");
@@ -574,9 +386,12 @@ implements OnClickListener, SurfaceHolder.Callback {
         }
 
         protected void onPostExecute(Boolean pass) {
-            synchronized(mLock) {
-                mUriSuccess = pass;
-                updateSuccessState();
+            if (pass) {
+                mPassButton.setEnabled(true);
+                mFailButton.setEnabled(false);
+            } else {
+                mPassButton.setEnabled(false);
+                mFailButton.setEnabled(true);
             }
         }
     }
@@ -586,17 +401,12 @@ implements OnClickListener, SurfaceHolder.Callback {
         Log.v(TAG, "Click detected");
 
         final int stageIndex = getStageIndex();
-        if (view == mSettingsButton) {
-            Log.v(TAG, "Opening up Settings app");
-            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-        }
 
         if (view == mStartTestButton) {
             Log.v(TAG, "Starting testing... ");
 
+
             mState = STATE_STARTED;
-            mUriSuccess = false;
-            mActionSuccess = false;
 
             JobScheduler jobScheduler = (JobScheduler) getSystemService(
                     Context.JOB_SCHEDULER_SERVICE);
@@ -606,24 +416,13 @@ implements OnClickListener, SurfaceHolder.Callback {
 
             mTestEnv.setUp();
 
-            /**
-             * Video intents do not need to wait on a ContentProvider broadcast since we're starting
-             * the intent activity with EXTRA_OUTPUT set
-             */
-            if (stageIndex != STAGE_INTENT_VIDEO &&
-                stageIndex != STAGE_INTENT_PICTURE &&
-                stageIndex != STAGE_INTENT_PICTURE_SECURE) {
-                JobInfo job = makeJobInfo(TEST_JOB_TYPES[stageIndex]);
-                jobScheduler.schedule(job);
-                new WaitForTriggerTask().execute();
-            }
+            JobInfo job = makeJobInfo(TEST_JOB_TYPES[stageIndex]);
+            jobScheduler.schedule(job);
 
-            /* we can allow user to fail immediately if location is on, otherwise they must
-             * enable location */
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-                mFailButton.setEnabled(true);
-            }
+            new WaitForTriggerTask().execute();
+
+            /* we can allow user to fail immediately */
+            mFailButton.setEnabled(true);
 
             /* trigger an ACTION_IMAGE_CAPTURE intent
                 which will run the camera app itself */
@@ -632,44 +431,39 @@ implements OnClickListener, SurfaceHolder.Callback {
             if (stageIndex == STAGE_INTENT_PICTURE) {
                 intentStr = android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
             }
-            else if (stageIndex == STAGE_INTENT_PICTURE_SECURE) {
-                intentStr = android.provider.MediaStore.ACTION_IMAGE_CAPTURE_SECURE;
-            }
             else if (stageIndex == STAGE_INTENT_VIDEO) {
                 intentStr = android.provider.MediaStore.ACTION_VIDEO_CAPTURE;
             }
 
             if (intentStr != null) {
                 cameraIntent = new Intent(intentStr);
-                mDebugFolder = new File(this.getFilesDir(), "debug");
-                mDebugFolder.mkdirs();
-                if (!mDebugFolder.exists()) {
-                    Toast.makeText(this, R.string.ci_directory_creation_error,
-                            Toast.LENGTH_SHORT).show();
-                    Log.v(TAG, "Could not create directory");
-                    return;
-                }
-
-                File targetFile;
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 switch (stageIndex) {
                     case STAGE_INTENT_PICTURE:
-                    case STAGE_INTENT_PICTURE_SECURE:
+                        mDebugFolder = new File(this.getFilesDir(), "debug");
+                        mDebugFolder.mkdirs();
+                        if (!mDebugFolder.exists()) {
+                            Toast.makeText(this, R.string.ci_directory_creation_error,
+                                    Toast.LENGTH_SHORT).show();
+                            Log.v(TAG, "Could not create directory");
+                            return;
+                        }
+
+                        File targetFile;
+                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                         mImageTarget = new File(mDebugFolder, timeStamp + "capture.jpg");
                         targetFile = mImageTarget;
-                        break;
-                    case STAGE_INTENT_VIDEO:
-                        mVideoTarget = new File(mDebugFolder, timeStamp  + "video.mp4");
-                        targetFile = mVideoTarget;
-                        break;
-                    default:
-                        Log.wtf(TAG, "Unexpected stage index to send intent with extras");
-                        return;
-                }
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this,
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this,
                               "com.android.cts.verifier.managedprovisioning.fileprovider",
                               targetFile));
-                startActivityForResult(cameraIntent, 1337 + getStageIndex());
+                        startActivityForResult(cameraIntent, 1337 + getStageIndex());
+                        break;
+                    case STAGE_INTENT_VIDEO:
+                        startActivityForResult(cameraIntent, 1337 + getStageIndex());
+                        break;
+                    default:
+                        Log.wtf(TAG, "Unexpected stage index to send intent");
+                        return;
+                }
             }
 
             mStartTestButton.setEnabled(false);

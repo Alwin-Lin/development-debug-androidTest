@@ -36,7 +36,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class BatchingTestActivity extends SensorCtsVerifierTestActivity {
     public BatchingTestActivity() {
-        super(BatchingTestActivity.class, true);
+        super(BatchingTestActivity.class);
+        mEnableRetry = true;
     }
 
     private static final int SENSOR_BATCHING_RATE_US = SensorManager.SENSOR_DELAY_FASTEST;
@@ -121,8 +122,10 @@ public class BatchingTestActivity extends SensorCtsVerifierTestActivity {
 
     private String runBatchTest(int sensorType, int maxBatchReportLatencySec, int instructionsResId)
             throws Throwable {
-
-        setFirstExecutionInstruction(instructionsResId);
+        if (!mShouldRetry) {
+            getTestLogger().logInstructions(instructionsResId);
+            waitForUserToBegin();
+        }
 
         int maxBatchReportLatencyUs = (int) TimeUnit.SECONDS.toMicros(maxBatchReportLatencySec);
         TestSensorEnvironment environment = new TestSensorEnvironment(
@@ -139,8 +142,10 @@ public class BatchingTestActivity extends SensorCtsVerifierTestActivity {
 
     private String runFlushTest(int sensorType, int maxBatchReportLatencySec, int instructionsResId)
             throws Throwable {
-
-        setFirstExecutionInstruction(instructionsResId);
+        if (!mShouldRetry) {
+            getTestLogger().logInstructions(instructionsResId);
+            waitForUserToBegin();
+        }
 
         int maxBatchReportLatencyUs = (int) TimeUnit.SECONDS.toMicros(maxBatchReportLatencySec);
         TestSensorEnvironment environment = new TestSensorEnvironment(
