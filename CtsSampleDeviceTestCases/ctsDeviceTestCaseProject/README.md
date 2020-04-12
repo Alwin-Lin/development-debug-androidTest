@@ -8,7 +8,7 @@ This is an template and can be reused, you only need to change the Project varia
 
  Unless you are using this for a different project, you don't need to change anyhting
 
-* Project Variables.
+* Project Variables and their curent value.
     * ```appID``` = 'android.sample.cts'
     * ```srcRoot``` = '../ctsSource/tests/sample'
     * ```appSrc``` = srcRoot + '/src/android/sample'
