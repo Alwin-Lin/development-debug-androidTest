@@ -5,20 +5,6 @@ Tools to accelerate Android device test development and debug.
 - Developing Android device test takes a long time.
 # Tips
 ## Debug CTS test APK with [Android Studio](https://developer.android.com/studio)
-### Setup CTS to run on Windows 10
-* Download [CTS](https://source.android.com/compatibility/cts/downloads)
-    * Android 9 ARM is used in this
-* Add in [CTS.bat](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/debugCTSTestAPK/android-cts/tools)
-    * CTS.bat file, it is coppied from [here](https://scottj.idv.tw/blog/2017/05/07/android-cts-v2-under-windows/), and [here](https://github.com/northbright/Notes/blob/master/Android/cts/Run_CTS_under_Windows.md)
-* Edit the following variables in CTS.bat
-    * ```SDK_ROOT``` Set this to SDK location, i.e. ```C:\Users\[User_ID]\AppData\Local\Android\Sdk``` 
-    * ```CTS_ROOT``` Set this to CTS source
-* Add CTS to path in windows
-    * Windows key> "config" > Control panle > System > Advance System Setting > Enviroment Variables
-    * Under Path, add in the following
-       * ```C:\Users\[User_ID]\AppData\Local\Android\Sdk\build-tools\28.0.2```
-       * ```D:\Google cloud SDK\google-cloud-sdk\bin```
-* Check if all those work with by launching CTS.bat
 ### Debugging in Android studio without source 
 Android Studio allows debuging an APK without the source. Before you start, make sure you have Setup CTS to run. 
 
