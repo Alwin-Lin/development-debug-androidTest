@@ -1,7 +1,7 @@
 # Modified CTS Test Modules 
 The files under [cts](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases/ctsSource/tests/sample/src/android/sample/cts) folder has been modified. Without these changes, we can not build in Android Studio.
-* Downloaded CtsSampleDeviceTestCases source from [Pi AOSP Git](https://android.googlesource.com/platform/cts/+/refs/heads/pie-cts-release/tests/sample/), click tgz and unzip to your workspace.
-* Modified files are as follows :
+1. Download CtsSampleDeviceTestCases source from [Pi AOSP Git](https://android.googlesource.com/platform/cts/+/refs/heads/pie-cts-release/tests/sample/), click tgz and unzip to your workspace.
+2. Modify files as follows :
     1. SampleDeviceResultTest.java
        * Change to use activityRule insdead of ```extends ActivityInstrumentationTestCase2```
        * Remove unnessasary dependencies, such as ```SampleDeviceResultTest()```
