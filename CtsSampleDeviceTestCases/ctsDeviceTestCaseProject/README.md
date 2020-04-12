@@ -1,6 +1,8 @@
 # Createing An Android Studio Project
 A [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsSampleDeviceTestCases/ctsDeviceTestCaseProject/build.gradle) file is the easiest way to create Android Studio project, because Android Studio will generate all nessasary files acordingly. 
 
+To create a project, open build.gradle using android studio
+
 ## Build Configuration File - build.gradle 
 This is an template and can be reused, you only need to change the Project variables. To learn more check out [The top-level build file](https://developer.android.com/studio/build#top-level)
 
