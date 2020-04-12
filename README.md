@@ -1,6 +1,7 @@
 # Intorduction
 Tools to accelerate Android device test development and debug.
 # Problems
+1. Cannot run CTS on Windows 10. Try this [script](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/debugCTSTestAPK/android-cts/tools/README.md)
 - Android device [CTS test](https://source.android.com/compatibility/cts)  is hard.
 - Developing Android device test takes a long time.
 # Tips
