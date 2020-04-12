@@ -55,9 +55,5 @@ A [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob
       * For ```tearDown()```, change to public, and anotate ```@After```
     3. For SampleJUnit4DeviceTest.java and SampleDeviceReportLogTest.java, similar to 1.
     4. Refrence [JUnit4 rules](https://developer.android.com/training/testing/junit-rules).
-### Libs
-   * CTS module depends on compatibility-device-util-axt.jar
-   * It is [built from CTS](https://source.android.com/compatibility/cts/development)
-   * This [libary](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/developCTSTestModule/libs) can be used in case you can't build CTS.
 ## Other examples
  * [CtsCarTestCase](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCases)
