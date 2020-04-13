@@ -1,9 +1,11 @@
 # Intorduction
-Tools to accelerate Android device test development and debug.
+Android device [CTS test](https://source.android.com/compatibility/cts)  is hard. Developing Android device test takes a long time. Here are some tools and instructions to accelerate Android device test development and debug.
+
 # Problems
 1. Cannot run CTS on Windows 10. Try this [script](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/debugCTSTestAPK/android-cts/tools/README.md)
-- Android device [CTS test](https://source.android.com/compatibility/cts)  is hard.
-- Developing Android device test takes a long time.
+2. No good IDE for CTS test module, and build CTS takes long time. Create an Android Studio project for a CTS test module, e.g. [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases) to develop build and debug.
+3. Some CTS tests have a short run time, makeing manualy atatching debugger impossible. We can [manual run test and attatch debugger](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCases) using command lines
+4. CTS Verifiers needs manual debugging and cannot be triggered by command line. We will provide it with the nessesary source code and set breakpoints in Java code.
 # Tips
 ## Debug CTS test APK with [Android Studio](https://developer.android.com/studio)
 ### Debugging in Android studio without building 
