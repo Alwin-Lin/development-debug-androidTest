@@ -1,1 +1,0 @@
-[{"outputType":{"type":"INSTANT_APP_MANIFEST"},"apkData":{"type":"MAIN","splits":[],"versionCode":5,"versionName":"9.0_r12","enabled":true,"outputFile":"ctsVProj-debug.apk","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.android.cts.verifier","split":"","minSdkVersion":"23"}}]
