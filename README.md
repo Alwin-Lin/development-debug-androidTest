@@ -49,4 +49,4 @@ The following is a visualisation of a project
    * Branch for 2.0
      * Tag 2.0.1 ...
      
- If one just clones the release files, they could end up with a different tag, leading to more problems
+ If one just clones the release files, they could end up with a different tag, leading to more problems. Hence the need to specify CTS 9.0_R11 
