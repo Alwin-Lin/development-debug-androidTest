@@ -33,9 +33,9 @@ Here is what it looks like after it's built
 ![Image of source](https://user-images.githubusercontent.com/22556115/79082733-9fde8b00-7cdd-11ea-8375-c484732a313b.png)
 
 # Get CTS source
-Here are links to downloading source files in this project
-* [CtsDeviceTestCase](https://android.googlesource.com/platform/cts/+/refs/heads/pie-cts-release/tests/sample/)
-* [CtsVerifier](https://dl.google.com/dl/android/cts/android-cts-verifier-9.0_r11-linux_x86-arm.zip)
-* [CtsCarTestCase](https://android.googlesource.com/platform/cts/+/refs/heads/pie-cts-release/tests/tests/car/)
+Here are links to downloading source files in this project. The following are all CTS 9.0_R11
+* [CtsDeviceTestCase](https://android.googlesource.com/platform/cts/+/refs/tags/android-cts-9.0_r11/tests/sample/)
+* [CtsVerifier](https://android.googlesource.com/platform/cts/+/refs/heads/pie-cts-release/apps/CtsVerifier/)
+* [CtsCarTestCase](https://android.googlesource.com/platform/cts/+/refs/tags/android-cts-9.0_r11/tests/tests/car/)
 
 To download, click tgz and unzip to your workspace
