@@ -15,7 +15,15 @@ CtsCarTestCase is a testing module for automotives. To make it work on Android S
  4. Now you can use Android Studio IDE to explore the project
  
  # Manually run a test case to allow manually attatch debugger
- The whole test modle only takes a few seconds to run. There is not enought time to manually attatch debugger. Alternativly you can manual run test and attatch debugger. In command line:
+ 
+ Before you run:
+ * Is the app debuggable?
+    * The default is not debuggable. For apps to be debuggable, you need to see ```android:debuggable=["true"]``` in Android manifest
+ * Check device avalibility by typing ```adb shell getprop``` and look for [ro.vendor.build.fingerprint]
+    * If it's user/release-keys, add ```android:debuggable=["true"]```
+    * If it's userdebug/dev-keys, no action needed
+ 
+The whole test modle only takes a few seconds to run. There is not enought time to manually attatch debugger. Alternativly you can manual run test and attatch debugger. In command line:
  1. ``` adb install %cts_Location%\android-cts\testcases\CtsCarTestCases.apk ```
  2. Run a test case and wait for debugger ``` adb shell am instrument -w -r -e debug true -e class 'android.car.cts.CarTest' android.car.cts/androidx.test.runner.AndroidJUnitRunner ```
     * This is useful because normally a test will be over before you have time to attatch debugger.
