@@ -21,7 +21,8 @@ CtsCarTestCase is a testing module for automotives. To make it work on Android S
     * The default is not debuggable. For apps to be debuggable, you need to see ```android:debuggable=["true"]``` in Android manifest
  * Check device avalibility by typing ```adb shell getprop``` and look for [ro.vendor.build.fingerprint]
     * If it's user/release-keys, add ```android:debuggable=["true"]```
-    * If it's userdebug/dev-keys, no action needed
+       * In Android Studio, the provided automotive emulators are user/release-key
+    * If it's userdebug/dev-keys, no action needed 
  
 The whole test modle only takes a few seconds to run. There is not enought time to manually attatch debugger. Alternativly you can manual run test and attatch debugger. In command line:
  1. ``` adb install %cts_Location%\android-cts\testcases\CtsCarTestCases.apk ```
