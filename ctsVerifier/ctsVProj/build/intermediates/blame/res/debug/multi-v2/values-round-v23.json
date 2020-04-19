@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVProj\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-round-v23\\values-round-v23.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVSrc\\res\\values-round\\styles.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "57",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "616"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "607"
+                    }
+                }
+            ]
+        }
+    ]
+}

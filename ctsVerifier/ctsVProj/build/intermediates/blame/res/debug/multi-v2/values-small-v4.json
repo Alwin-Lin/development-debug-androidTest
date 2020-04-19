@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVProj\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-small-v4\\values-small-v4.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVSrc\\res\\values-small\\integers.xml",
+                    "from": {
+                        "startLines": "16",
+                        "startColumns": "4",
+                        "startOffsets": "702",
+                        "endColumns": "61",
+                        "endOffsets": "759"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "61",
+                        "endOffsets": "112"
+                    }
+                }
+            ]
+        }
+    ]
+}

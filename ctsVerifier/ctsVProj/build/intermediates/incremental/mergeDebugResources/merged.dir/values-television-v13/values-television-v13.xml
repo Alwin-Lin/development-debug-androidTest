@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="disabled_tests">
+        <item>com.android.cts.verifier.notifications.NotificationAttentionManagementVerifierActivity</item>
+        <item>com.android.cts.verifier.notifications.NotificationListenerVerifierActivity</item>
+        <item>com.android.cts.verifier.widget.WidgetTestActivity</item>
+    </string-array>
+</resources>

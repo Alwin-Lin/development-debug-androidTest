@@ -1,0 +1,47 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVProj\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-watch-v20\\values-watch-v20.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVSrc\\res\\values-watch\\styles.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "57",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "616"
+                    },
+                    "to": {
+                        "startLines": "42",
+                        "startColumns": "4",
+                        "startOffsets": "2952",
+                        "endLines": "49",
+                        "endColumns": "12",
+                        "endOffsets": "3504"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVSrc\\res\\values-watch\\strings.xml",
+                    "from": {
+                        "startLines": "17,27,37,52,45,22,61",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "754,1311,1940,2985,2611,1026,3533",
+                        "endLines": "20,35,43,60,50,25,61",
+                        "endColumns": "19,13,13,13,13,13,169",
+                        "endOffsets": "1018,1932,2603,3527,2977,1303,3698"
+                    },
+                    "to": {
+                        "startLines": "2,6,15,22,31,37,41",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,321,939,1601,2137,2503,2782",
+                        "endLines": "5,14,21,30,36,40,41",
+                        "endColumns": "19,13,13,13,13,13,169",
+                        "endOffsets": "316,934,1596,2132,2498,2777,2947"
+                    }
+                }
+            ]
+        }
+    ]
+}

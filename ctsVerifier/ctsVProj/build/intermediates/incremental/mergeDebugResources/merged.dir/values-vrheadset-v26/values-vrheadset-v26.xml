@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="disabled_tests">
+        <item>com.android.cts.verifier.car.CarDockActivity</item>
+        <item>com.android.cts.verifier.car.CarDockTestActivity</item>
+        <item>com.android.cts.verifier.deskclock.DeskClockTestsActivity</item>
+        <item>com.android.cts.verifier.screenpinning.ScreenPinningTestActivity</item>
+        <item>com.android.cts.verifier.notifications.ShortcutThrottlingResetActivity</item>
+        <item>com.android.cts.verifier.vr.VrListenerVerifierActivity</item>
+    </string-array>
+</resources>

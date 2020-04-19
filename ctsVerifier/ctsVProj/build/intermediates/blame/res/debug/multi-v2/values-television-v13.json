@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVProj\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-television-v13\\values-television-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\alwin\\ws\\development-debug-androidTest\\ctsVerifier\\ctsVSrc\\res\\values-television\\strings.xml",
+                    "from": {
+                        "startLines": "17",
+                        "startColumns": "4",
+                        "startOffsets": "758",
+                        "endLines": "21",
+                        "endColumns": "19",
+                        "endOffsets": "1095"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "19",
+                        "endOffsets": "388"
+                    }
+                }
+            ]
+        }
+    ]
+}
