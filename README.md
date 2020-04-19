@@ -39,3 +39,13 @@ Here are links to downloading source files in this project. The following are al
 * [CtsCarTestCase](https://android.googlesource.com/platform/cts/+/refs/tags/android-cts-9.0_r11/tests/tests/car/)
 
 To download, click tgz and unzip to your workspace
+## Side notes, branch and tags
+The following is a visualisation of a project
+* Master
+   * Branch for 1.0
+     * Tag 1.0.1
+     * Tag 1.0.3
+     * Tag 1.0.4
+   * Branch for 2.0
+     * Tag 2.0.1 ...
+ If one just clones the release files, they could end up with a different tag, leading to more problems
