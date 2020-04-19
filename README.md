@@ -6,9 +6,12 @@ Android device [CTS test](https://source.android.com/compatibility/cts)  is hard
 2. No good IDE for CTS test module, and build CTS takes long time. Create an Android Studio project for a CTS test module, e.g. [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases) to develop build and debug.
 3. Some CTS tests have a short run time, makeing manualy atatching debugger impossible. We can [manual run test and attatch debugger](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCases) using command lines
 4. CTS Verifiers needs manual debugging and cannot be triggered by command line. We will provide it with the nessesary source code and set breakpoints in Java code.
-# Tips
-## Debug CTS test APK with [Android Studio](https://developer.android.com/studio)
-### Debugging in Android studio without building 
+# Debug CTS test APK with [Android Studio](https://developer.android.com/studio)
+1. Debug with the APK directly.
+2. Create debug the Android Studio project.
+3. [Build and debug the Android Studio project.](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsSampleDeviceTestCases)
+4. [Manually run a test case to allow manually attatch debugger.](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsCarTestCases/README.md)
+## Debug with the APK directly 
 Android Studio allows debuging an APK without the building. Before you start, make sure you have Setup CTS to run. 
 
 Open Android Studio, File> Profile or debug APK. Pick an APK form the testcases folder, and let Android Studio do it's work. After that is done, go to the activity that you want to debug and click on the atatch java/kolin source
@@ -19,7 +22,7 @@ After that is done, you should be able to set a breakpoint and debug the Java co
 
 ![Debug Java](https://user-images.githubusercontent.com/22556115/79084017-7118e280-7ce6-11ea-9e03-eab803d36aad.png)
 
-## Develop a CTS test module in Android Studio
+## Create debug the Android Studio project
 It is easier to develope and debug with Android Studio. [CTS](https://cs.android.com/android/platform/superproject/+/master:cts/;l=1?q=cts) is open source, it is possible to do so. However, CTS uses [a different build system](https://source.android.com/setup/build). You can create Android Studio [Build configuration file](https://developer.android.com/studio/build#build-files) to develope and debug the test module.
 
 Here is what it looks like after it's built
