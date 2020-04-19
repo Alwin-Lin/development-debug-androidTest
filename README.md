@@ -31,7 +31,3 @@ Examples:
 
 Here is what it looks like after it's built
 ![Image of source](https://user-images.githubusercontent.com/22556115/79082733-9fde8b00-7cdd-11ea-8375-c484732a313b.png)
-
-
-## Other examples
- * [CtsCarTestCase](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCases)
