@@ -5,5 +5,6 @@
 * Create [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/releaseParser/releaseParserProj/build.gradle), which can be opened by Android Studio File> Open ...
 * To build, click on the green triangle next to ```jar {``` in build.gradle
 	* Output can be found under releaseParserProj/build/libs
+* In Android Studio Add Configuration> Gradle> Gradle Project> releaseParserProj. Under Task> Run. Then apply
 ## Run the program
 * In comand line ```java -jar .\releaseParserProj\build\libs\releaseParserProj.jar```
