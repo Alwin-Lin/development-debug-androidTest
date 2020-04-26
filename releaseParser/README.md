@@ -6,5 +6,6 @@
 * To build, click on the green triangle next to ```jar {``` in build.gradle
 	* Output can be found under releaseParserProj/build/libs
 * In Android Studio Add Configuration> Gradle> Gradle Project> releaseParserProj. Under Task> Run. Then apply
+	* To run, Run> Run...
 ## Run the program
 * In comand line ```java -jar .\releaseParserProj\build\libs\releaseParserProj.jar```
