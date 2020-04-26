@@ -1,0 +1,68 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.0-beta05'
+        // https://github.com/google/protobuf-gradle-plugin
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.12'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+}
+
+// https://docs.gradle.org/current/userguide/custom_plugins.html#sec:custom_plugins_standalone_project
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'com.google.protobuf'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+// These are variables that needs to be changed bassed on your project.
+def srcRoot = '../releaseParserSrc'
+def javSrc = srcRoot + '/src/com/android/cts/releaseparser'
+def protoSrc = srcRoot + '/proto'
+def libRoot = '../libs'
+// Customize https://guides.gradle.org/building-java-libraries/
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Main-Class': 'com.android.cts.releaseparser.Main'
+        )
+    }
+    sourceSets {
+        main {
+            java.srcDirs = [javSrc]
+            proto {
+                // In addition to the default 'src/main/proto'
+                srcDir protoSrc
+            }
+        }
+    }
+
+    protobuf {
+        // Configure the protoc executable
+        protoc {
+            // Download from repositories
+            artifact = 'com.google.protobuf:protoc:3.11.0'
+        }
+    }
+
+    dependencies {
+        compile 'com.google.protobuf:protobuf-java:3.11.0'
+        compile fileTree(dir: libRoot, include: ["*.jar"])
+    }
+}
