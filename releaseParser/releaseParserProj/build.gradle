@@ -33,16 +33,15 @@ java {
 // These are variables that needs to be changed bassed on your project.
 def srcRoot = '../releaseParserSrc'
 def javSrc = srcRoot + '/src/com/android/cts/releaseparser'
+def testSrc = srcRoot + '/tests/src'
+def testResource = srcRoot + '/tests/resources'
 def protoSrc = srcRoot + '/proto'
 def libRoot = '../libs'
+
+defaultTasks 'uberJar'
+
 // Customize https://guides.gradle.org/building-java-libraries/
 jar {
-    manifest {
-        attributes('Implementation-Title': project.name,
-                'Implementation-Version': project.version,
-                'Main-Class': 'com.android.cts.releaseparser.Main'
-        )
-    }
     sourceSets {
         main {
             java.srcDirs = [javSrc]
@@ -50,6 +49,11 @@ jar {
                 // In addition to the default 'src/main/proto'
                 srcDir protoSrc
             }
+        }
+// C:\Program Files\Java\jdk-14.0.1 for local
+        test {
+            java.srcDirs = [testSrc]
+            resources.srcDirs = [testResource]
         }
     }
 
@@ -60,9 +64,25 @@ jar {
             artifact = 'com.google.protobuf:protoc:3.11.0'
         }
     }
+}
 
-    dependencies {
-        compile 'com.google.protobuf:protobuf-java:3.11.0'
-        compile fileTree(dir: libRoot, include: ["*.jar"])
+// Create \releaseParserProj\build\libs\releaseParserProj.jar
+task uberJar(type: Jar) {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Main-Class': 'com.android.cts.releaseparser.Main'
+        )
+    }
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
     }
 }
+
+dependencies {
+    compile 'com.google.protobuf:protobuf-java:3.11.0'
+    compile fileTree(dir: libRoot, include: ["*.jar"])
+}
+
