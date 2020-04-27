@@ -9,8 +9,8 @@
 	* To run, Run> Run...
 ## Run the program
 * In comand line ```java -jar .\releaseParserProj\build\libs\releaseParserProj.jar```
-## Run a test
+## Run/Debug a test
 * Install Java 9
-* Click on one of the test in the Test folder> right click the green triangle next to the test> debug
+* Click on one of the test in the test folder under one of the test >right click the green triangle next to the test> run/debug
 # ToDo
 * Make java 9 the defualt path.
