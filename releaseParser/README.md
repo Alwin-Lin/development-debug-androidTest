@@ -11,6 +11,8 @@
 * In comand line ```java -jar .\releaseParserProj\build\libs\releaseParserProj.jar```
 ## Run/Debug a test
 * Install Java 9
-* Click on one of the test in the test folder under one of the test >right click the green triangle next to the test> run/debug
+* Right click on com.android.cts.releaseparser> Run
+* Open Edit Run/Debug configuration dialoge> Edit configuration...> Set JRE to Java 9
+* Run the test again
 # ToDo
-* Make java 9 the defualt path.
+* Fix error: java.util.regex.PatternSyntaxException: Unexpected internal error near index 1
