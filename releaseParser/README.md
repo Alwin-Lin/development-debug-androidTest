@@ -15,7 +15,9 @@
 * Open Edit Run/Debug configuration dialoge> Edit configuration... e.g. ApkParserTest.testSoApk
 * Set JRE to Java 9 e.g. C:\Program Files\Java\jdk-14.0.1
 * Run the test again
+## Run from Gradle
+* Install Java 9
+* Right click on com.android.cts.releaseparser> Run
 # ToDo
 * Fix error: java.util.regex.PatternSyntaxException: Unexpected internal error near index 1
-* Set releaseParserProj test run config to Java 9
-	* Right click on com.android.cts.releaseparser> Run
+* Fix the remaining 6 test
