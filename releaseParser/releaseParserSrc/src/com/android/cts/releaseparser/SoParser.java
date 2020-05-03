@@ -99,7 +99,13 @@ public class SoParser extends FileParser {
     }
 
     public void setPackageName(String name) {
-        String[] subStr = name.split(File.separator);
+        String[] subStr;
+        try {
+            subStr = name.split(File.separator);
+        } catch (Exception e) {
+            // Windows file separator is "/", different from "\" in zip file
+            subStr = name.split("/");
+        }
         mPackageName = subStr[subStr.length - 1];
     }
 
