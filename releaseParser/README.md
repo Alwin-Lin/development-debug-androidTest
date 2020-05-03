@@ -9,15 +9,17 @@
 	* To run, Run> Run...
 ## Run the program
 * In comand line ```java -jar .\releaseParserProj\build\libs\releaseParserProj.jar```
-## Run/Debug a single test
+## Run/Debug test
+### Run a single test, class, or package.
 * Install Java 9
-* Select and run a single test by clicking on the green triangle found next to a test case, e.g. testSoApk
+* Select and run a single test by clicking on the green triangle found next to a package, class or test case, e.g. testSoApk
 * Open Edit Run/Debug configuration dialoge> Edit configuration... e.g. ApkParserTest.testSoApk
 * Set JRE to Java 9 e.g. C:\Program Files\Java\jdk-14.0.1
 * Run the test again
-## Run from Gradle
-* Install Java 9
-* Right click on com.android.cts.releaseparser> Run
+### Run and debug test from build.gradle
+In build.gradle
+* Set ```testExecutePath``` to your JRE, e.g. C:\Program Files\Java\jdk-14.0.1\bin\java.exe
+* Click on the green triangle next to test
 # ToDo
 * Fix error: java.util.regex.PatternSyntaxException: Unexpected internal error near index 1
 * Fix the remaining 6 test
