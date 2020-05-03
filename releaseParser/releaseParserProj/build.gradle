@@ -37,6 +37,7 @@ def testSrc = srcRoot + '/tests/src'
 def testResource = srcRoot + '/tests/resources'
 def protoSrc = srcRoot + '/proto'
 def libRoot = '../libs'
+def testExecutePath = 'C:\\Program Files\\Java\\jdk-14.0.1\\bin\\java.exe'
 
 defaultTasks 'uberJar'
 
@@ -50,7 +51,6 @@ jar {
                 srcDir protoSrc
             }
         }
-// C:\Program Files\Java\jdk-14.0.1 for local
         test {
             java.srcDirs = [testSrc]
             resources.srcDirs = [testResource]
@@ -64,6 +64,12 @@ jar {
             artifact = 'com.google.protobuf:protoc:3.11.0'
         }
     }
+}
+
+test {
+    // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
+    // executable('C:\\Program Files\\Java\\jdk-14.0.1\\bin\\java.exe')
+    executable testExecutePath
 }
 
 // Create \releaseParserProj\build\libs\releaseParserProj.jar
