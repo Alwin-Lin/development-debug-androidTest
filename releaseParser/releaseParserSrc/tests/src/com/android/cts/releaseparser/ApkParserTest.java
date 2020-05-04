@@ -73,23 +73,27 @@ public class ApkParserTest {
     }
 
     private void testApkParser(String fileName) throws Exception {
-        File apkFile = ClassUtils.getResrouceFile(getClass(), fileName);
-        ApkParser aParser = new ApkParser(apkFile);
+        // 1. Get a test APK from resource, pass and store in an Entry. E.g. CtsJniTestCases.apk
+        File apkFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
+        com.android.cts.releaseparser.ApkParser aParser = new com.android.cts.releaseparser.ApkParser(apkFile);
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
-
         Entry fileEntry = fileEntryBuilder.build();
-        Entry.Builder expectedfileEntryBuilder = Entry.newBuilder();
 
+        // 2. Create expected result Entry. E.g. CtsJniTestCases.apk.pb.txt
+        Entry.Builder expectedfileEntryBuilder = Entry.newBuilder();
         String txtProtobufFileName = fileName + PB_TXT;
         TextFormat.getParser()
                 .merge(
-                        ClassUtils.openResourceAsStreamReader(getClass(), txtProtobufFileName),
+                        com.android.cts.releaseparser.ClassUtils.openResourceAsStreamReader(getClass(), txtProtobufFileName),
                         expectedfileEntryBuilder);
+        Entry expectedfileEntry = expectedfileEntryBuilder.build();
+
+        // Compare if 1 and 2 are the same.
         assertTrue(
                 String.format(
                         "ApkParser does not return the same Entry of %s as %s.\n%s",
                         fileName, txtProtobufFileName, TextFormat.printToString(fileEntry)),
-                fileEntry.equals(expectedfileEntryBuilder.build()));
+                fileEntry.equals(expectedfileEntry));
     }
 }
