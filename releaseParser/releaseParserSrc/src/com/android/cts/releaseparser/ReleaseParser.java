@@ -95,8 +95,10 @@ class ReleaseParser {
             Entry.Builder fBuilder = parseFolder(mFolderPath);
             if (mRelContentBuilder.getName().equals("")) {
                 System.err.println("Release Name unknown!");
-                mRelContentBuilder.setName(mFolderPath);
-                mRelContentBuilder.setFullname(mFolderPath);
+                String[] tokens = mFolderPath.split(File.separator);
+                String name = tokens[tokens.length-1];
+                mRelContentBuilder.setName(name);
+                mRelContentBuilder.setFullname(name);
             }
             fBuilder.setRelativePath(ROOT_FOLDER_TAG);
             String relId = getReleaseId(mRelContentBuilder.build());
@@ -126,7 +128,7 @@ class ReleaseParser {
             if (file.isFile()) {
                 String fileRelativePath =
                         mRootPath.relativize(Paths.get(file.getAbsolutePath())).toString();
-                FileParser fParser = FileParser.getParser(file);
+                com.android.cts.releaseparser.FileParser fParser = com.android.cts.releaseparser.FileParser.getParser(file);
                 Entry.Builder fileEntryBuilder = fParser.getFileEntryBuilder();
                 fileEntryBuilder.setRelativePath(fileRelativePath);
 
@@ -140,7 +142,7 @@ class ReleaseParser {
                 switch (eType) {
                     case TEST_SUITE_TRADEFED:
                         mRelContentBuilder.setTestSuiteTradefed(fileRelativePath);
-                        TestSuiteTradefedParser tstParser = (TestSuiteTradefedParser) fParser;
+                        com.android.cts.releaseparser.TestSuiteTradefedParser tstParser = (com.android.cts.releaseparser.TestSuiteTradefedParser) fParser;
                         // get [cts]-known-failures.xml
                         mRelContentBuilder.addAllKnownFailures(tstParser.getKnownFailureList());
                         mRelContentBuilder.setName(tstParser.getName());
@@ -151,7 +153,7 @@ class ReleaseParser {
                         mRelContentBuilder.setReleaseType(ReleaseType.TEST_SUITE);
                         break;
                     case BUILD_PROP:
-                        BuildPropParser bpParser = (BuildPropParser) fParser;
+                        com.android.cts.releaseparser.BuildPropParser bpParser = (com.android.cts.releaseparser.BuildPropParser) fParser;
                         try {
                             mRelContentBuilder.setReleaseType(ReleaseType.DEVICE_BUILD);
                             mRelContentBuilder.setName(bpParser.getName());
@@ -228,10 +230,14 @@ class ReleaseParser {
             PrintWriter pWriter = new PrintWriter(fWriter);
             // Header
             pWriter.printf(
-                    "release,type,name,size,relative_path,content_id,parent_folder,code_id,architecture,bits,dependencies,dynamic_loading_dependencies,services\n");
+                    "release,type,name,size,relative_path,content_id,parent_folder,code_id,architecture,bits,dependencies,dynamic_loading_dependencies,services,package\n");
             for (Entry entry : getFileEntries()) {
+                String pkgName = "";
+                if (entry.getType() == Entry.EntryType.APK) {
+                    pkgName = entry.getAppInfo().getPackageName();
+                }
                 pWriter.printf(
-                        "%s,%s,%s,%d,%s,%s,%s,%s,%s,%d,%s,%s,%s\n",
+                        "%s,%s,%s,%d,%s,%s,%s,%s,%s,%d,%s,%s,%s,%s\n",
                         relNameVer,
                         entry.getType(),
                         entry.getName(),
@@ -244,7 +250,8 @@ class ReleaseParser {
                         entry.getAbiBits(),
                         String.join(" ", entry.getDependenciesList()),
                         String.join(" ", entry.getDynamicLoadingDependenciesList()),
-                        RcParser.toString(entry.getServicesList()));
+                        com.android.cts.releaseparser.RcParser.toString(entry.getServicesList()),
+                        pkgName);
             }
             pWriter.flush();
             pWriter.close();
