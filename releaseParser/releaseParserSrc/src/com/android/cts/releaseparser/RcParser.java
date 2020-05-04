@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RcParser extends FileParser {
+public class RcParser extends com.android.cts.releaseparser.FileParser {
     private static String OPTION_CLASS = "class ";
     private static String OPTION_USER = "user ";
     private static String OPTION_GROUP = "group ";
@@ -64,10 +64,15 @@ public class RcParser extends FileParser {
         }
 
         Map<String, Integer> dependencies = new HashMap<>();
-        for (Service service : mServices) {
-            // skip /, e.g. /system/bin/sh
-            String file = service.getFile().substring(1);
-            dependencies.put(file, 1);
+        try {
+            for (Service service : mServices) {
+                // skip /, e.g. /system/bin/sh
+                String file = service.getFile().substring(1);
+                dependencies.put(file, 1);
+            }
+        } catch (Exception e) {
+            System.err.println("Service dependencies:" + getFileName());
+            System.err.println(e.getMessage());
         }
 
         for (String importRc : mImportRc) {
