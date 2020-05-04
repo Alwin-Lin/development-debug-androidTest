@@ -33,6 +33,7 @@ java {
 // These are variables that needs to be changed bassed on your project.
 def srcRoot = '../releaseParserSrc'
 def javSrc = srcRoot + '/src/com/android/cts/releaseparser'
+def generatedSrc = './build/generated/source'
 def testSrc = srcRoot + '/tests/src'
 def testResource = srcRoot + '/tests/resources'
 def protoSrc = srcRoot + '/proto'
@@ -45,9 +46,9 @@ defaultTasks 'uberJar'
 jar {
     sourceSets {
         main {
-            java.srcDirs = [javSrc]
+            java.srcDirs = [javSrc , generatedSrc]
             proto {
-                // In addition to the default 'src/main/proto'
+                // Adds .proto files under protSrc to srcDir
                 srcDir protoSrc
             }
         }
@@ -89,6 +90,7 @@ task uberJar(type: Jar) {
 
 dependencies {
     compile 'com.google.protobuf:protobuf-java:3.11.0'
+    // Include every .jav under libRoot
     compile fileTree(dir: libRoot, include: ["*.jar"])
 }
 
