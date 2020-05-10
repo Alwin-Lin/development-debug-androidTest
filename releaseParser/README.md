@@ -24,6 +24,7 @@ In build.gradle
 * Fix error: java.util.regex.PatternSyntaxException: Unexpected internal error near index 1
 * Fix the remaining 6 test
 * Error on FileParserTest
+	* Cause: Differnce in Windows and Linux new line byte size
 	* Expected: android.hardware.vulkan.version.xml. Size : 902
 	* Acctual: android.hardware.vulkan.version.xml.pb.txt. Size : 923
 	* Checked in FileParser.java line 205, size: 923
