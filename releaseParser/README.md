@@ -23,3 +23,7 @@ In build.gradle
 # ToDo
 * Fix error: java.util.regex.PatternSyntaxException: Unexpected internal error near index 1
 * Fix the remaining 6 test
+* Error on FileParserTest
+	* Cannot change file size, caused by building in windows instead of linux
+	* Expected 902, got 932
+	* Have tried adding ```System.setProperty( "line.separator", "\n" );```, did not fix the problem
