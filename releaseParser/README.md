@@ -28,6 +28,6 @@ In build.gradle
 	* Expected: android.hardware.vulkan.version.xml. Size : 902
 	* Acctual: android.hardware.vulkan.version.xml.pb.txt. Size : 923
 	* Checked in FileParser.java line 205, size: 923
-	* Atempted:
+	* Atempted and failed:
 		* adding ```System.setProperty( "line.separator", "\n" );``` in FileParser and FileParserTest
 		* Top left, edit configuration... > VM options: > ```-Dline.separator=$'\n```
