@@ -25,5 +25,5 @@ In build.gradle
 * Fix the remaining 6 test
 * Error on FileParserTest
 	* Cannot change file size, caused by building in windows instead of linux
-	* Expected 902, got 932
+	* Expected 902 B, got 923 B
 	* Have tried adding ```System.setProperty( "line.separator", "\n" );```, did not fix the problem
