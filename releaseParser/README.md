@@ -24,6 +24,9 @@ In build.gradle
 * Fix error: java.util.regex.PatternSyntaxException: Unexpected internal error near index 1
 * Fix the remaining 6 test
 * Error on FileParserTest
-	* Cannot change file size, caused by building in windows instead of linux
-	* Expected 902 B, got 923 B
-	* Have tried adding ```System.setProperty( "line.separator", "\n" );```, did not fix the problem
+	* Expected: android.hardware.vulkan.version.xml. Size : 902
+	* Acctual: android.hardware.vulkan.version.xml.pb.txt. Size : 923
+	* Checked in FileParser.java line 205, size: 923
+	* Atempted:
+		* adding ```System.setProperty( "line.separator", "\n" );``` in FileParser and FileParserTest
+		* Top left, edit configuration... > VM options: > ```-Dline.separator=$'\n```
