@@ -28,7 +28,7 @@ In build.gradle
 	* Cause: Differnce in Windows and Linux new line byte size
 	* Expected: android.hardware.vulkan.version.xml. Size : 902. Linux
 	* Acctual: android.hardware.vulkan.version.xml.pb.txt. Size : 923. Windows 10
-	* Atempted and failed:
+	* Tried the following, still got size 923:
 		* Adding ```System.setProperty( "line.separator", "\n" );``` in FileParser and FileParserTest
 		* Top left, edit configuration... > VM options: > ```-Dline.separator=$'\n'```
-		* Files.[size](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#size-java.nio.file.Path-)
+		* java.nio.file.Files.[size](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#size-java.nio.file.Path-)
