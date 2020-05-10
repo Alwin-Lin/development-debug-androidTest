@@ -31,3 +31,4 @@ In build.gradle
 	* Atempted and failed:
 		* Adding ```System.setProperty( "line.separator", "\n" );``` in FileParser and FileParserTest
 		* Top left, edit configuration... > VM options: > ```-Dline.separator=$'\n'```
+		* Files.[size](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#size-java.nio.file.Path-)
