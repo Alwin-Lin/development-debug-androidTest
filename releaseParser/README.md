@@ -32,3 +32,4 @@ In build.gradle
 		* Adding ```System.setProperty( "line.separator", "\n" );``` in FileParser and FileParserTest
 		* Top left, edit configuration... > VM options: > ```-Dline.separator=$'\n'```
 		* java.nio.file.Files.[size](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#size-java.nio.file.Path-)
+		* Adding fis.available() in FileParser, line 137.
