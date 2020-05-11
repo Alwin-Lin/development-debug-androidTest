@@ -122,7 +122,7 @@ public class FileParser {
         return mFile.getName();
     }
 
-    public Entry.Builder getFileEntryBuilder() throws IOException {
+    public Entry.Builder getFileEntryBuilder() {
         if (mFileEntryBuilder == null) {
             parse();
         }
@@ -203,7 +203,7 @@ public class FileParser {
         }
     }
 
-    private void parse() throws IOException {
+    private void parse() {
         mFileEntryBuilder = Entry.newBuilder();
         mFileEntryBuilder.setName(getFileName());
         mFileEntryBuilder.setSize(getFileSize());
