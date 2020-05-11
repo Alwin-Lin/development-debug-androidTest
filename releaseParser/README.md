@@ -21,6 +21,9 @@ In build.gradle
 * Set ```testExecutePath``` to your JRE, e.g. C:\Program Files\Java\jdk-14.0.1\bin\java.exe
 * Click on the green triangle next to test
 # ToDo
+* Aline source folder path with package
+# Fixed Issues:
+:crab: :crab: :crab:  Error is no more :crab: :crab: :crab: 
 * Fix error: java.util.regex.PatternSyntaxException: Unexpected internal error near index 1
 * Fix the remaining 6 test
 * Error on FileParserTest
