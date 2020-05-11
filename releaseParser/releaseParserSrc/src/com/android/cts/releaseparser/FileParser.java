@@ -25,6 +25,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -32,7 +35,7 @@ import java.util.List;
 
 public class FileParser {
     private static final String NO_ID = "";
-    protected static final int READ_BLOCK_SIZE = 1024;
+    protected static final int READ_BLOCK_SIZE = 4096;
 
     // Target File Extensions
     public static final String APK_EXT_TAG = ".apk";
@@ -62,38 +65,38 @@ public class FileParser {
         String fName = file.getName();
         // Starts with SymbolicLink
         if (isSymbolicLink(file)) {
-            return new SymbolicLinkParser(file);
+            return new com.android.cts.releaseparser.SymbolicLinkParser(file);
         } else if (fName.endsWith(APK_EXT_TAG)) {
-            return new ApkParser(file);
+            return new com.android.cts.releaseparser.ApkParser(file);
         } else if (fName.endsWith(CONFIG_EXT_TAG)) {
-            return new TestModuleConfigParser(file);
+            return new com.android.cts.releaseparser.TestModuleConfigParser(file);
         } else if (fName.endsWith(TEST_SUITE_TRADEFED_TAG)) {
-            return new TestSuiteTradefedParser(file);
+            return new com.android.cts.releaseparser.TestSuiteTradefedParser(file);
         } else if (fName.endsWith(JAR_EXT_TAG)) {
             // keeps this after TEST_SUITE_TRADEFED_TAG to avoid missing it
-            return new JarParser(file);
+            return new com.android.cts.releaseparser.JarParser(file);
         } else if (fName.endsWith(SO_EXT_TAG)) {
-            return new SoParser(file);
+            return new com.android.cts.releaseparser.SoParser(file);
         } else if (fName.endsWith(ART_EXT_TAG)) {
-            return new ArtParser(file);
+            return new com.android.cts.releaseparser.ArtParser(file);
         } else if (fName.endsWith(OAT_EXT_TAG)) {
-            return new OatParser(file);
+            return new com.android.cts.releaseparser.OatParser(file);
         } else if (fName.endsWith(ODEX_EXT_TAG)) {
-            return new OdexParser(file);
+            return new com.android.cts.releaseparser.OdexParser(file);
         } else if (fName.endsWith(VDEX_EXT_TAG)) {
-            return new VdexParser(file);
+            return new com.android.cts.releaseparser.VdexParser(file);
         } else if (fName.endsWith(BUILD_PROP_EXT_TAG)) {
             // ToDo prop.default & etc in system/core/init/property_service.cpp
-            return new BuildPropParser(file);
+            return new com.android.cts.releaseparser.BuildPropParser(file);
         } else if (fName.endsWith(RC_EXT_TAG)) {
-            return new RcParser(file);
+            return new com.android.cts.releaseparser.RcParser(file);
         } else if (fName.endsWith(XML_EXT_TAG)) {
             return new XmlParser(file);
         } else if (fName.endsWith(IMG_EXT_TAG)) {
-            return new ImgParser(file);
+            return new com.android.cts.releaseparser.ImgParser(file);
         } else if (ReadElf.isElf(file)) {
             // keeps this in the end as no Exe Ext name
-            return new ExeParser(file);
+            return new com.android.cts.releaseparser.ExeParser(file);
         } else {
             // Common File Parser
             return new FileParser(file);
@@ -111,11 +114,15 @@ public class FileParser {
         return mFile;
     }
 
+    public long getFileSize() {
+        return mFile.length();
+    }
+
     public String getFileName() {
         return mFile.getName();
     }
 
-    public Entry.Builder getFileEntryBuilder() {
+    public Entry.Builder getFileEntryBuilder() throws IOException {
         if (mFileEntryBuilder == null) {
             parse();
         }
@@ -196,10 +203,10 @@ public class FileParser {
         }
     }
 
-    private void parse() {
+    private void parse() throws IOException {
         mFileEntryBuilder = Entry.newBuilder();
         mFileEntryBuilder.setName(getFileName());
-        mFileEntryBuilder.setSize(getFile().length());
+        mFileEntryBuilder.setSize(getFileSize());
         mFileEntryBuilder.setContentId(getFileContentId());
         mFileEntryBuilder.setCodeId(getCodeId());
         mFileEntryBuilder.setType(getType());

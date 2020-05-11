@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.File;
+import java.io.InputStreamReader;
 
 import static org.junit.Assert.*;
 
@@ -54,8 +55,8 @@ public class FileParserTest {
     @Test
     public void testVdex() throws Exception {
         String fileName = TEST_VDEX;
-        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
-        VdexParser aParser = new VdexParser(aFile);
+        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
+        com.android.cts.releaseparser.VdexParser aParser = new com.android.cts.releaseparser.VdexParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -70,8 +71,8 @@ public class FileParserTest {
     @Test
     public void testArt() throws Exception {
         String fileName = TEST_ART;
-        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
-        ArtParser aParser = new ArtParser(aFile);
+        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
+        com.android.cts.releaseparser.ArtParser aParser = new com.android.cts.releaseparser.ArtParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -86,8 +87,8 @@ public class FileParserTest {
     @Test
     public void testOat() throws Exception {
         String fileName = TEST_OAT;
-        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
-        OatParser aParser = new OatParser(aFile);
+        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
+        com.android.cts.releaseparser.OatParser aParser = new com.android.cts.releaseparser.OatParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -102,8 +103,8 @@ public class FileParserTest {
     @Test
     public void testOdex() throws Exception {
         String fileName = TEST_ODEX;
-        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
-        OdexParser aParser = new OdexParser(aFile);
+        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
+        com.android.cts.releaseparser.OdexParser aParser = new com.android.cts.releaseparser.OdexParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -118,8 +119,8 @@ public class FileParserTest {
     @Test
     public void testBuildProp() throws Exception {
         String fileName = TEST_BUILD_PROP;
-        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
-        BuildPropParser aParser = new BuildPropParser(aFile);
+        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
+        com.android.cts.releaseparser.BuildPropParser aParser = new com.android.cts.releaseparser.BuildPropParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -141,13 +142,14 @@ public class FileParserTest {
      *
      * @throws Exception
      */
+
     @Test
     public void testFeatureXml() throws Exception {
         testXmlParser(TEST_DEVICE_FEATURE_XML);
     }
 
     private void testXmlParser(String fileName) throws Exception {
-        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
+        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
         XmlParser aParser = new XmlParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
@@ -156,19 +158,21 @@ public class FileParserTest {
     }
 
     private void testFileParser(String fileName, Entry fileEntry) throws Exception {
+        // Reads fileName + PB_TXT from resource to create an expected entry object.
         Entry.Builder expectedEntryBuilder = Entry.newBuilder();
         String txtProtobufFileName = fileName + PB_TXT;
-        TextFormat.getParser()
-                .merge(
-                        ClassUtils.openResourceAsStreamReader(getClass(), txtProtobufFileName),
-                        expectedEntryBuilder);
+        InputStreamReader streamReader;
+        streamReader =  com.android.cts.releaseparser.ClassUtils.openResourceAsStreamReader(getClass(), txtProtobufFileName);
+        TextFormat.getParser().merge(streamReader, expectedEntryBuilder);
+        Entry expectFileEntry = expectedEntryBuilder.build();
+        // Checks if fileEntry and expectFileEntry are the same.
         assertTrue(
                 String.format(
                         "Parser does not return the same Entry message of %s with %s.\n%s\n%s",
                         fileName,
                         txtProtobufFileName,
                         TextFormat.printToString(fileEntry),
-                        TextFormat.printToString(expectedEntryBuilder)),
-                fileEntry.equals(expectedEntryBuilder.build()));
+                        TextFormat.printToString(expectFileEntry)),
+                fileEntry.equals(expectFileEntry));
     }
 }
