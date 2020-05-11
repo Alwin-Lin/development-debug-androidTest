@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class BuildPropParser extends FileParser {
+public class BuildPropParser extends com.android.cts.releaseparser.TextFileParser {
     private Entry.EntryType mType;
     private HashMap<String, String> mProp;
 
@@ -119,7 +119,7 @@ public class BuildPropParser extends FileParser {
 
     public static void main(String[] args) {
         try {
-            ArgumentParser argParser = new ArgumentParser(args);
+            com.android.cts.releaseparser.ArgumentParser argParser = new com.android.cts.releaseparser.ArgumentParser(args);
             String fileName = argParser.getParameterElement("i", 0);
             String outputFileName = argParser.getParameterElement("of", 0);
 

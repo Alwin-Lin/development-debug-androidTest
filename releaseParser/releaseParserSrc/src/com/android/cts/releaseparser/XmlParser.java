@@ -34,56 +34,14 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-public class XmlParser extends com.android.cts.releaseparser.FileParser {
-    protected static final int INVALID_SIZE = -1;
+public class XmlParser extends com.android.cts.releaseparser.TextFileParser {
     private com.android.cts.releaseparser.XmlHandler mHandler;
     private HashMap<String, PermissionList> mPermissions;
-    protected int mFileSize;
 
     public XmlParser(File file) {
         super(file);
-        mFileSize = INVALID_SIZE;
     }
 
-    @Override
-    public long getFileSize() {
-        if (INVALID_SIZE == mFileSize) {
-            getFileContentId();
-        }
-        return mFileSize;
-    }
-
-    @Override
-    public String getFileContentId() {
-        if (NO_ID.equals(mContentId)) {
-            try {
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                FileInputStream fis = new FileInputStream(mFile);
-                DataInputStream in = new DataInputStream(
-                        new BufferedInputStream(fis));
-                byte[] dataBytes = new byte[READ_BLOCK_SIZE];
-                int nread = 0;
-                String line;
-                int fileSize = 0;
-                while ((line = in.readLine()) != null) {
-                    line = line + '\n';
-                    dataBytes = line.getBytes();
-                    nread = line.length();
-                    md.update(dataBytes, 0, nread);
-                    fileSize = fileSize + nread;
-                }
-                mFileSize = fileSize;
-                // Converts to Base64 String
-                mContentId = Base64.getEncoder().encodeToString(md.digest());
-            } catch (IOException e) {
-                System.err.println("IOException:" + e.getMessage());
-            } catch (NoSuchAlgorithmException e) {
-                System.err.println("NoSuchAlgorithmException:" + e.getMessage());
-            }
-        }
-        return mContentId;
-    }
-    
     @Override
     public Entry.EntryType getType() {
         return Entry.EntryType.XML;
