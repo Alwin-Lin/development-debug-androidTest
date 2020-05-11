@@ -34,7 +34,7 @@ import java.util.Base64;
 import java.util.List;
 
 public class FileParser {
-    private static final String NO_ID = "";
+    protected static final String NO_ID = "";
     protected static final int READ_BLOCK_SIZE = 4096;
 
     // Target File Extensions
