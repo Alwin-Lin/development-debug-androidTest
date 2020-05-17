@@ -1,7 +1,7 @@
 #
 # Build the project
 #
-- name: 'gcr.io/$PROJECT_ID/android:29-ndk-r17b'
+- name: 'gcr.io/$PROJECT_ID'
   id: build
   args: ["./gradlew", "assembleDebug"]
   env:
