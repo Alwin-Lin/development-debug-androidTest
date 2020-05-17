@@ -74,8 +74,8 @@ public class ApkParserTest {
 
     private void testApkParser(String fileName) throws Exception {
         // 1. Get a test APK from resource, pass and store in an Entry. E.g. CtsJniTestCases.apk
-        File apkFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
-        com.android.cts.releaseparser.ApkParser aParser = new com.android.cts.releaseparser.ApkParser(apkFile);
+        File apkFile = ClassUtils.getResrouceFile(getClass(), fileName);
+        ApkParser aParser = new ApkParser(apkFile);
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
         Entry fileEntry = fileEntryBuilder.build();
@@ -85,7 +85,7 @@ public class ApkParserTest {
         String txtProtobufFileName = fileName + PB_TXT;
         TextFormat.getParser()
                 .merge(
-                        com.android.cts.releaseparser.ClassUtils.openResourceAsStreamReader(getClass(), txtProtobufFileName),
+                        ClassUtils.openResourceAsStreamReader(getClass(), txtProtobufFileName),
                         expectedfileEntryBuilder);
         Entry expectedfileEntry = expectedfileEntryBuilder.build();
 

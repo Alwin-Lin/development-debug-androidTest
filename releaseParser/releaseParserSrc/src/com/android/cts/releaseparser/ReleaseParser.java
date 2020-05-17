@@ -128,7 +128,7 @@ class ReleaseParser {
             if (file.isFile()) {
                 String fileRelativePath =
                         mRootPath.relativize(Paths.get(file.getAbsolutePath())).toString();
-                com.android.cts.releaseparser.FileParser fParser = com.android.cts.releaseparser.FileParser.getParser(file);
+                FileParser fParser = FileParser.getParser(file);
                 Entry.Builder fileEntryBuilder = fParser.getFileEntryBuilder();
                 fileEntryBuilder.setRelativePath(fileRelativePath);
 
@@ -142,7 +142,7 @@ class ReleaseParser {
                 switch (eType) {
                     case TEST_SUITE_TRADEFED:
                         mRelContentBuilder.setTestSuiteTradefed(fileRelativePath);
-                        com.android.cts.releaseparser.TestSuiteTradefedParser tstParser = (com.android.cts.releaseparser.TestSuiteTradefedParser) fParser;
+                        TestSuiteTradefedParser tstParser = (TestSuiteTradefedParser) fParser;
                         // get [cts]-known-failures.xml
                         mRelContentBuilder.addAllKnownFailures(tstParser.getKnownFailureList());
                         mRelContentBuilder.setName(tstParser.getName());
@@ -153,7 +153,7 @@ class ReleaseParser {
                         mRelContentBuilder.setReleaseType(ReleaseType.TEST_SUITE);
                         break;
                     case BUILD_PROP:
-                        com.android.cts.releaseparser.BuildPropParser bpParser = (com.android.cts.releaseparser.BuildPropParser) fParser;
+                        BuildPropParser bpParser = (BuildPropParser) fParser;
                         try {
                             mRelContentBuilder.setReleaseType(ReleaseType.DEVICE_BUILD);
                             mRelContentBuilder.setName(bpParser.getName());
@@ -250,7 +250,7 @@ class ReleaseParser {
                         entry.getAbiBits(),
                         String.join(" ", entry.getDependenciesList()),
                         String.join(" ", entry.getDynamicLoadingDependenciesList()),
-                        com.android.cts.releaseparser.RcParser.toString(entry.getServicesList()),
+                        RcParser.toString(entry.getServicesList()),
                         pkgName);
             }
             pWriter.flush();

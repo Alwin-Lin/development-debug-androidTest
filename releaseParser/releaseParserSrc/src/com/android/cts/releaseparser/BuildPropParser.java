@@ -119,7 +119,7 @@ public class BuildPropParser extends TextFileParser {
 
     public static void main(String[] args) {
         try {
-            com.android.cts.releaseparser.ArgumentParser argParser = new com.android.cts.releaseparser.ArgumentParser(args);
+            ArgumentParser argParser = new ArgumentParser(args);
             String fileName = argParser.getParameterElement("i", 0);
             String outputFileName = argParser.getParameterElement("of", 0);
 

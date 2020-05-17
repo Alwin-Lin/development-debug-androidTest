@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class XmlParser extends TextFileParser {
-    private com.android.cts.releaseparser.XmlHandler mHandler;
+    private XmlHandler mHandler;
     private HashMap<String, PermissionList> mPermissions;
 
     public XmlParser(File file) {
@@ -66,7 +66,7 @@ public class XmlParser extends TextFileParser {
     // for Feature set
     private void parse() {
         try {
-            mHandler = new com.android.cts.releaseparser.XmlHandler(getFileName());
+            mHandler = new XmlHandler(getFileName());
             XMLReader xmlReader = XMLReaderFactory.createXMLReader();
             xmlReader.setContentHandler(mHandler);
             FileReader fileReader = new FileReader(getFile());
@@ -90,7 +90,7 @@ public class XmlParser extends TextFileParser {
 
     public static void main(String[] args) {
         try {
-            com.android.cts.releaseparser.ArgumentParser argParser = new com.android.cts.releaseparser.ArgumentParser(args);
+            ArgumentParser argParser = new ArgumentParser(args);
             String fileName = argParser.getParameterElement("i", 0);
             String outputFileName = argParser.getParameterElement("of", 0);
 

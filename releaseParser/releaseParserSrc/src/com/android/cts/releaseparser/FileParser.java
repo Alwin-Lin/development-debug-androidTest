@@ -65,38 +65,38 @@ public class FileParser {
         String fName = file.getName();
         // Starts with SymbolicLink
         if (isSymbolicLink(file)) {
-            return new com.android.cts.releaseparser.SymbolicLinkParser(file);
+            return new SymbolicLinkParser(file);
         } else if (fName.endsWith(APK_EXT_TAG)) {
-            return new com.android.cts.releaseparser.ApkParser(file);
+            return new ApkParser(file);
         } else if (fName.endsWith(CONFIG_EXT_TAG)) {
-            return new com.android.cts.releaseparser.TestModuleConfigParser(file);
+            return new TestModuleConfigParser(file);
         } else if (fName.endsWith(TEST_SUITE_TRADEFED_TAG)) {
-            return new com.android.cts.releaseparser.TestSuiteTradefedParser(file);
+            return new TestSuiteTradefedParser(file);
         } else if (fName.endsWith(JAR_EXT_TAG)) {
             // keeps this after TEST_SUITE_TRADEFED_TAG to avoid missing it
-            return new com.android.cts.releaseparser.JarParser(file);
+            return new JarParser(file);
         } else if (fName.endsWith(SO_EXT_TAG)) {
-            return new com.android.cts.releaseparser.SoParser(file);
+            return new SoParser(file);
         } else if (fName.endsWith(ART_EXT_TAG)) {
-            return new com.android.cts.releaseparser.ArtParser(file);
+            return new ArtParser(file);
         } else if (fName.endsWith(OAT_EXT_TAG)) {
-            return new com.android.cts.releaseparser.OatParser(file);
+            return new OatParser(file);
         } else if (fName.endsWith(ODEX_EXT_TAG)) {
-            return new com.android.cts.releaseparser.OdexParser(file);
+            return new OdexParser(file);
         } else if (fName.endsWith(VDEX_EXT_TAG)) {
-            return new com.android.cts.releaseparser.VdexParser(file);
+            return new VdexParser(file);
         } else if (fName.endsWith(BUILD_PROP_EXT_TAG)) {
             // ToDo prop.default & etc in system/core/init/property_service.cpp
-            return new com.android.cts.releaseparser.BuildPropParser(file);
+            return new BuildPropParser(file);
         } else if (fName.endsWith(RC_EXT_TAG)) {
-            return new com.android.cts.releaseparser.RcParser(file);
+            return new RcParser(file);
         } else if (fName.endsWith(XML_EXT_TAG)) {
             return new XmlParser(file);
         } else if (fName.endsWith(IMG_EXT_TAG)) {
-            return new com.android.cts.releaseparser.ImgParser(file);
+            return new ImgParser(file);
         } else if (ReadElf.isElf(file)) {
             // keeps this in the end as no Exe Ext name
-            return new com.android.cts.releaseparser.ExeParser(file);
+            return new ExeParser(file);
         } else {
             // Common File Parser
             return new FileParser(file);

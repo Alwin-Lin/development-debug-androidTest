@@ -33,7 +33,7 @@ java {
 // These are variables that needs to be changed bassed on your project.
 def srcRoot = '../releaseParserSrc'
 def javSrc = srcRoot + '/src'
-def generatedSrc = './build/generated/source'
+def generatedSrc = './build/generated/source/proto/main/java'
 def testSrc = srcRoot + '/tests/src'
 def testResource = srcRoot + '/tests/resources'
 def protoSrc = srcRoot + '/proto'

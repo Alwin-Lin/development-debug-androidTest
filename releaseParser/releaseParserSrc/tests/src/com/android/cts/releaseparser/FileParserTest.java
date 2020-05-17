@@ -55,8 +55,8 @@ public class FileParserTest {
     @Test
     public void testVdex() throws Exception {
         String fileName = TEST_VDEX;
-        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
-        com.android.cts.releaseparser.VdexParser aParser = new com.android.cts.releaseparser.VdexParser(aFile);
+        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
+        VdexParser aParser = new VdexParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -71,8 +71,8 @@ public class FileParserTest {
     @Test
     public void testArt() throws Exception {
         String fileName = TEST_ART;
-        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
-        com.android.cts.releaseparser.ArtParser aParser = new com.android.cts.releaseparser.ArtParser(aFile);
+        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
+        ArtParser aParser = new ArtParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -87,8 +87,8 @@ public class FileParserTest {
     @Test
     public void testOat() throws Exception {
         String fileName = TEST_OAT;
-        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
-        com.android.cts.releaseparser.OatParser aParser = new com.android.cts.releaseparser.OatParser(aFile);
+        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
+        OatParser aParser = new OatParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -103,8 +103,8 @@ public class FileParserTest {
     @Test
     public void testOdex() throws Exception {
         String fileName = TEST_ODEX;
-        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
-        com.android.cts.releaseparser.OdexParser aParser = new com.android.cts.releaseparser.OdexParser(aFile);
+        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
+        OdexParser aParser = new OdexParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -119,8 +119,8 @@ public class FileParserTest {
     @Test
     public void testBuildProp() throws Exception {
         String fileName = TEST_BUILD_PROP;
-        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
-        com.android.cts.releaseparser.BuildPropParser aParser = new com.android.cts.releaseparser.BuildPropParser(aFile);
+        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
+        BuildPropParser aParser = new BuildPropParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
         fileEntryBuilder.setName(fileName);
@@ -149,7 +149,7 @@ public class FileParserTest {
     }
 
     private void testXmlParser(String fileName) throws Exception {
-        File aFile = com.android.cts.releaseparser.ClassUtils.getResrouceFile(getClass(), fileName);
+        File aFile = ClassUtils.getResrouceFile(getClass(), fileName);
         XmlParser aParser = new XmlParser(aFile);
 
         Entry.Builder fileEntryBuilder = aParser.getFileEntryBuilder();
@@ -162,7 +162,7 @@ public class FileParserTest {
         Entry.Builder expectedEntryBuilder = Entry.newBuilder();
         String txtProtobufFileName = fileName + PB_TXT;
         InputStreamReader streamReader;
-        streamReader =  com.android.cts.releaseparser.ClassUtils.openResourceAsStreamReader(getClass(), txtProtobufFileName);
+        streamReader =  ClassUtils.openResourceAsStreamReader(getClass(), txtProtobufFileName);
         TextFormat.getParser().merge(streamReader, expectedEntryBuilder);
         Entry expectFileEntry = expectedEntryBuilder.build();
         // Checks if fileEntry and expectFileEntry are the same.
