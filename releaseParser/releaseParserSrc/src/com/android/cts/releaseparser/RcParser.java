@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RcParser extends com.android.cts.releaseparser.FileParser {
+public class RcParser extends FileParser {
     private static String OPTION_CLASS = "class ";
     private static String OPTION_USER = "user ";
     private static String OPTION_GROUP = "group ";

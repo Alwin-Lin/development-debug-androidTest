@@ -27,7 +27,7 @@ import java.util.Base64;
 
 // TextFileParser can handle text file with different newline control characters in Windows and Linux.
 // This converts to \n, Linux.
-public class TextFileParser extends com.android.cts.releaseparser.FileParser {
+public class TextFileParser extends FileParser {
     protected static final int INVALID_SIZE = -1;
     protected static final char NEWLINE_CONTROL_CHAR = '\n';
     protected int mFileSize;

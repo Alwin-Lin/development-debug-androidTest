@@ -32,7 +32,7 @@ java {
 
 // These are variables that needs to be changed bassed on your project.
 def srcRoot = '../releaseParserSrc'
-def javSrc = srcRoot + '/src/com/android/cts/releaseparser'
+def javSrc = srcRoot + '/src'
 def generatedSrc = './build/generated/source'
 def testSrc = srcRoot + '/tests/src'
 def testResource = srcRoot + '/tests/resources'

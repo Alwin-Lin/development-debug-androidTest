@@ -34,7 +34,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-public class XmlParser extends com.android.cts.releaseparser.TextFileParser {
+public class XmlParser extends TextFileParser {
     private com.android.cts.releaseparser.XmlHandler mHandler;
     private HashMap<String, PermissionList> mPermissions;
 

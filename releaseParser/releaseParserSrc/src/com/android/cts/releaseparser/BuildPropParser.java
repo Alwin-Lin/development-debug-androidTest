@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class BuildPropParser extends com.android.cts.releaseparser.TextFileParser {
+public class BuildPropParser extends TextFileParser {
     private Entry.EntryType mType;
     private HashMap<String, String> mProp;
 
