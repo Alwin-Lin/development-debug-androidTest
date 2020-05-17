@@ -22,17 +22,3 @@ In build.gradle
 * Click on the green triangle next to test
 # ToDo
 * Aline source folder path with package
-# Fixed Issues:
-:crab: :crab: :crab:  Error is no more :crab: :crab: :crab: 
-* Fix error: java.util.regex.PatternSyntaxException: Unexpected internal error near index 1
-* Fix the remaining 6 test
-* Error on FileParserTest
-	* FileParser, Line 210: setSize.
-	* Cause: Differnce in Windows and Linux new line byte size
-	* Expected: android.hardware.vulkan.version.xml. Size : 902. Linux
-	* Acctual: android.hardware.vulkan.version.xml.pb.txt. Size : 923. Windows 10
-	* Tried the following, still got size 923:
-		* Adding ```System.setProperty( "line.separator", "\n" );``` in FileParser and FileParserTest
-		* Top left, edit configuration... > VM options: > ```-Dline.separator=$'\n'```
-		* java.nio.file.Files.[size](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#size-java.nio.file.Path-)
-		* Adding fis.available() in FileParser, line 137.
