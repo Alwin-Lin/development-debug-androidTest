@@ -24,5 +24,3 @@
 In build.gradle
 * Set ```testExecutePath``` to your JRE, e.g. C:\Program Files\Java\jdk-14.0.1\bin\java.exe
 * Click on the green triangle next to test
-# ToDo
-* Aline source folder path with package
