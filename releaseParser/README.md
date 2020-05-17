@@ -2,7 +2,8 @@
 * Put it at [releaseParserSrc](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/releaseParser/releaseParserSrc) folder
 
 ## Configuring build.gradle
-* ```javSrc```  is set to ```'../releaseParserSrc/src'```, if altered the project will not reconize some packages in the source. 
+* ```javSrc```  is set to ```'../releaseParserSrc/src'```, if altered the project will not reconize some packages in the source.
+	* Set only to ```/src``` instead of ```com/android/cts/releaseparser```, com/android... is a part of the package name, don't set it as src root.
 
 
 # Create a new Android Studio project at [releaseParserProj](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/releaseParser/releaseParserProj)
