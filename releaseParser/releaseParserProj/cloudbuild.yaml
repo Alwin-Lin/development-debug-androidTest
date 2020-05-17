@@ -48,34 +48,6 @@ steps:
     path: '/build_cache'
 
 #
-# Save the APKs
-#
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['-q', 'cp', '-r', 'app/build/outputs/apk', 'gs://${_ARTIFACT_BUCKET}/$BRANCH_NAME-$BUILD_ID/']
-  waitFor: ['build']
-
-#
-# Cleanup
-#
-
-# Compress the gradle build cache
-- name: 'gcr.io/$PROJECT_ID/tar'
-  id: compress_cache
-  args: ['cpvzf', '/build_cache/cache.tgz', '-C', '/build_cache', '/build_cache/.gradle']
-  waitFor: ['build']
-  volumes:
-  - name: 'build_cache'
-    path: '/build_cache'
-
-# Store the build cache
-- name: gcr.io/cloud-builders/gsutil
-  args: ['cp', '/build_cache/cache.tgz', 'gs://${_CACHE_BUCKET}/cache.tgz']
-  waitFor: ['compress_cache']
-  volumes:
-  - name: 'build_cache'
-    path: '/build_cache'
-
-#
 # Option
 #
 
