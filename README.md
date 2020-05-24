@@ -37,6 +37,8 @@ Here are links to downloading source files in this project. The following are al
 * [CtsDeviceTestCase](https://android.googlesource.com/platform/cts/+/refs/tags/android-cts-9.0_r11/tests/sample/)
 * [CtsVerifier](https://android.googlesource.com/platform/cts/+/refs/heads/pie-cts-release/apps/CtsVerifier/)
 * [CtsCarTestCase](https://android.googlesource.com/platform/cts/+/refs/tags/android-cts-9.0_r11/tests/tests/car/)
+* [bt](https://android.googlesource.com/platform/packages/apps/Bluetooth/+/refs/tags/android-vts-9.0_r10)
+* [btUnit](https://android.googlesource.com/platform/packages/apps/Bluetooth/+/refs/tags/android-vts-9.0_r10/tests/unit/)
 
 To download, click tgz and unzip to your workspace
 ## Side notes, branch and tags
