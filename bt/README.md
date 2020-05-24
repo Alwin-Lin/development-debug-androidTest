@@ -13,4 +13,5 @@ btSrc
 3. Sync and build
 
 ## ToDo:
-Allow this to run with all the values files from download
+* Fix bugs, 100 in total
+* Allow this to run with all the values files from download
