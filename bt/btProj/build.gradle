@@ -21,7 +21,7 @@ apply plugin: 'com.android.application'
 // These are variables that needs to be changed bassed on your project.
 def appID = 'com.android.bluetooth'
 def srcRoot = '../btSrc'
-def appSrc = srcRoot + '/com/android/bluetooth'
+def appSrc = srcRoot + '/src/com/android/bluetooth'
 def testSrc = './btSrc/test'
 def compatibilitylib = './lib'
 def appRes = srcRoot + '/res'
@@ -57,7 +57,7 @@ android {
             // This looks for the manifest source
             manifest.srcFile srcRoot + '/AndroidManifest.xml'
             // This looks for the Java source, gets SampleDeviceActivity
-            java.srcDirs = [srcRoot + '/src/android/sample']
+            java.srcDirs = [appSrc]
             res.srcDirs = [appRes]
         }
         androidTest {
