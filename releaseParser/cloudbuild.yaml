@@ -1,0 +1,26 @@
+steps:
+
+#
+# Extract the cache
+#
+# The gradle build cache is stored as a tarball in Google Cloud Storage to
+# make builds faster.
+#
+# After extracting the cache to the /build_cache directory, we need to supply
+# that to gradle, and include the volume in steps that require the cache.
+#
+#
+# Build the project
+#
+
+- name: 'gcr.io/contbuild-263903/android:29-ndk-r17b'
+  id: build
+  args: ["./gradlew", "uberJar"]
+  env:
+  - 'TERM=dumb'
+  - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
+  - 'GRADLE_USER_HOME=/build_cache/.gradle'
+  - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=32 -Dkotlin.incremental=false -Dorg.gradle.caching=true"'
+  - 'BRANCH_NAME=$BRANCH_NAME'
+  dir: 'releaseParserProj'
+  timeout: 1800s

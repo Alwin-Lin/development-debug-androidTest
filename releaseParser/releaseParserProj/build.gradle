@@ -74,6 +74,7 @@ test {
 }
 
 // Create \releaseParserProj\build\libs\releaseParserProj.jar
+// https://docs.gradle.org/current/userguide/working_with_files.html#sec:creating_uber_jar_example
 task uberJar(type: Jar) {
     manifest {
         attributes('Implementation-Title': project.name,
@@ -81,6 +82,7 @@ task uberJar(type: Jar) {
                 'Main-Class': 'com.android.cts.releaseparser.Main'
         )
     }
+    archiveFileName = "releaseParser.jar"
     from sourceSets.main.output
     dependsOn configurations.runtimeClasspath
     from {
