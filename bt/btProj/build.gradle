@@ -21,8 +21,8 @@ apply plugin: 'com.android.application'
 // These are variables that needs to be changed bassed on your project.
 def appID = 'com.android.bluetooth'
 def srcRoot = '../btSrc'
-def appSrc = srcRoot + '/src/com/android/bluetooth'
-def testSrc = './btSrc/test'
+def appSrc = srcRoot + '/src'
+def testSrc = srcRoot+ '/tests/unit'
 def compatibilitylib = './lib'
 def appRes = srcRoot + '/res'
 
