@@ -1,11 +1,11 @@
-# BlueTooth
+# Android Bluetooth app
+This is typicly built within Android tree. Without a good IDE, it is difficult to develope. This shows you how to setup Android Studio project to help you write and debug the app.
+## Folders 
+### btProj
+Open this folder by Android Studio
 
-## Contents 
-btProj
-* Open this folder by Android Studio
-
-btSrc
-
+### btSrc
+This is souce code of Android Bluetooth app com.android.bluetooth
 There are two ways to add source code.
 1. Download Android Bluetooth app source from [AOSP](https://android.googlesource.com/platform/packages/apps/Bluetooth/+/refs/tags/android-vts-9.0_r10)
    * All value files are deleated besides the original one as it caused alot of errors
