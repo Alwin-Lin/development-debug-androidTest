@@ -25,6 +25,7 @@ def appSrc = srcRoot + '/src'
 def testSrc = srcRoot+ '/tests/unit'
 def compatibilitylib = './lib'
 def appRes = srcRoot + '/res'
+def jniSrc = srcRoot+ '/jni'
 
 // Android APK Build Configuration File 
 // Check details: https://developer.android.com/studio/build#top-level
@@ -59,6 +60,7 @@ android {
             // This looks for the Java source, gets SampleDeviceActivity
             java.srcDirs = [appSrc]
             res.srcDirs = [appRes]
+            jniLibs.srcDirs = [jniSrc]
         }
         androidTest {
             // This looks for the 4 test we have
