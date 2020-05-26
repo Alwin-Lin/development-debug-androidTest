@@ -22,10 +22,20 @@ There are two ways to add source code.
    * You can edit source by Android Studio IDE
    * To biuld the device image within Andorid tree, e.g. [Building AVD images](https://source.android.com/setup/create/avd#building_avd_images) 
    * This app has a unit test, [BluetoothInstrumentationTests](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/bt/btSrc/tests/unit)
-   * To build and run the test, use [Atest](https://source.android.com/compatibility/tests/development/atest)
-      * E.g. ```atest BluetoothInstrumentationTests```
+   * To build and run the test, use [Atest](https://source.android.com/compatibility/tests/development/atest) E.g. 
+      * ```$ atest BluetoothInstrumentationTests```
 5. [Manually run a test case to allow manually attatch debugger](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/CtsCarTestCases#manually-run-a-test-case-to-allow-manually-attatch-debugger)
-
+   * Prepare a Device Under Test. E.g.
+      * ```$ emulator&```
+   * Install APK onto DUT
+      * ```$ adb install -r $ANDROID_PRODUCT_OUT/testcases/BluetoothInstrumentationTests/x86_64/BluetoothInstrumentationTests.apk```
+   * Run a test in concern
+      * ```$ adb shell am instrument -w -r -e debug true -e class 'com.android.bluetooth.avrcpcontroller.AvrcpControllerServiceTest#testInitialize' com.android.bluetooth.tests/androidx.test.runner.AndroidJUnitRunner``` 
+   * Create a debug configuration
+      * ![Debug config](https://user-images.githubusercontent.com/22556115/82858920-15876a80-9eca-11ea-8b6d-86fa34ca2530.png)
+   * Set breakpoints and [attatch the debugger](https://developer.android.com/studio/debug#attach-debugger) in Android Studio
+     
+    
 
 ## ToDo:
 * Fix bugs, 100 in total
