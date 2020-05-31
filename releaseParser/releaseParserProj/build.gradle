@@ -38,7 +38,10 @@ def testSrc = srcRoot + '/tests/src'
 def testResource = srcRoot + '/tests/resources'
 def protoSrc = srcRoot + '/proto'
 def libRoot = '../libs'
-def testExecutePath = 'C:\\Program Files\\Java\\jdk-14.0.1\\bin\\java.exe'
+// Java version must be greater than Java 9
+// For Windows 
+ext.java_home = System.getenv('JAVA_HOME') 
+def testExecutePath = java_home + '/bin/java'
 
 defaultTasks 'uberJar'
 

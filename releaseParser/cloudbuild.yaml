@@ -25,13 +25,27 @@ steps:
   dir: 'releaseParserProj'
 
 #
-# Save the APKs
+# Run test
+#
+- name: 'gcr.io/contbuild-263903/android:29-ndk-r17b'
+  id: test
+  args: ["./gradlew", "test"]
+  env:
+  - 'TERM=dumb'
+  - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
+  - 'GRADLE_USER_HOME=/build_cache/.gradle'
+  - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=32 -Dkotlin.incremental=false -Dorg.gradle.caching=true"'
+  - 'BRANCH_NAME=$BRANCH_NAME'
+  dir: 'releaseParserProj'
+
+#
+# Save the Jar
 #
 
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['-q', 'cp', '-r', 'releaseParserProj/build/libs/releaseParser.jar', 'gs://parser-jar-artifacts']
-  waitFor: ['build']
-#
+  waitFor: ['test']
+
 # Option
 #
 timeout: 1800s
