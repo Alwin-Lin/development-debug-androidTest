@@ -4,7 +4,8 @@
 ## Configuring build.gradle
 * ```javSrc```  is set to ```'../releaseParserSrc/src'```, if altered the project will not reconize some packages in the source.
 	* Set only to ```/src``` instead of ```com/android/cts/releaseparser```, com/android... is a part of the package name, don't set it as src root.
-
+* ```testExecutePath``` is set to ```java_home + '/bin/java'```, for this to work you must have JAVA_HOME setup as an environmetal variable.
+	* Here is how to [setup JAVA_HOME](https://docs.oracle.com/cd/E19182-01/821-0917/inst_jdk_javahome_t/index.html)
 
 # Create a new Android Studio project at [releaseParserProj](https://github.com/Alwin-Lin/development-debug-androidTest/tree/master/releaseParser/releaseParserProj)
 * Create [build.gradle](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/releaseParser/releaseParserProj/build.gradle), which can be opened by Android Studio File> Open ...
