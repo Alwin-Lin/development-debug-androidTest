@@ -26,3 +26,10 @@
 In build.gradle
 * Set ```testExecutePath``` to your JRE, e.g. C:\Program Files\Java\jdk-14.0.1\bin\java.exe
 * Click on the green triangle next to test
+
+# Google Cloud Build
+This peoject can be adapted for Google Cloud Build with the following steps:
+* Clone the project onto Google Cloud Shell
+* Create JRE container immages with [Google Cloud Build community images](https://github.com/Alwin-Lin/cloud-builders-community)
+* Setup buckets
+* Build ```gcloud builds submit --config=cloudbuild-ndk-jre14.yaml --substitutions=_ANDROID_VERSION=29```
