@@ -8,7 +8,13 @@ steps:
 #
 # After extracting the cache to the /build_cache directory, we need to supply
 # that to gradle, and include the volume in steps that require the cache.
+
 #
+#
+#
+#
+
+
 #
 # Build the project
 #
@@ -27,12 +33,13 @@ steps:
 #
 # Run test
 #
-- name: 'gcr.io/contbuild-263903/android:29-ndk-r17b'
+- name: 'gcr.io/contbuild-263903/android:29-ndk-r17b-jre14'
   id: test
   args: ["./gradlew", "test"]
   env:
   - 'TERM=dumb'
   - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
+  - 'JAVA_HOME=/usr/lib/jvm/jdk-14'
   - 'GRADLE_USER_HOME=/build_cache/.gradle'
   - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=32 -Dkotlin.incremental=false -Dorg.gradle.caching=true"'
   - 'BRANCH_NAME=$BRANCH_NAME'
