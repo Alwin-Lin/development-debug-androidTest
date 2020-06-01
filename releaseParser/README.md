@@ -33,3 +33,15 @@ This peoject can be adapted for Google Cloud Build with the following steps:
 * Create JRE container immages with [Google Cloud Build community images](https://github.com/Alwin-Lin/cloud-builders-community)
 * Setup buckets
 * Build ```gcloud builds submit --config=cloudbuild-ndk-jre14.yaml --substitutions=_ANDROID_VERSION=29```
+## interacting with images in GCP
+Here are some command lines that can be used for testing docker image
+* docker image inspect <ID>
+	* Checks the image with ID <ID>
+* docker run -t -d --rm --name sdk <ID> bash
+	* Runs <ID> docker immage
+* docker exec -ti sdk sh -c "<COMMAND_PROMP>"
+	* Executes <COMMAND_PROMP> on the running docker image
+* docker stop <CONTAINER_ID>
+	* Stops the running docker
+* docker ps
+	* Checks the running docker status 
