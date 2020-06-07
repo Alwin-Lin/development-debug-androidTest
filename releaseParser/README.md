@@ -28,11 +28,14 @@ In build.gradle
 * Click on the green triangle next to test
 
 # Google Cloud Build
+## Build in Google Cloud Consoule
 This peoject can be adapted for Google Cloud Build with the following steps:
-* Clone the project onto Google Cloud Shell
-* Create JRE container immages with [Google Cloud Build community images](https://github.com/Alwin-Lin/cloud-builders-community)
+* Clone this project in Google Cloud Shell
+* Create a new JRE Docker image
+	* Clone [Google Cloud Build community images](https://github.com/Alwin-Lin/cloud-builders-community) 
 	* ``` gcloud builds submit --config=cloudbuild-ndk-jre11.yaml --substitutions=_ANDROID_VERSION=29``` 
 	* Builds image with cloudbuild-ndk-jre11.yaml
+* Pull the built image to local 
 * Setup buckets
 * Build ```gcloud builds submit --config=cloudbuild-ndk-jre11.yaml --substitutions=_ANDROID_VERSION=29```
 	* ```./testCloudBuildLocal.sh``` does the same thing.
