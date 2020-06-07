@@ -31,12 +31,16 @@ In build.gradle
 This peoject can be adapted for Google Cloud Build with the following steps:
 * Clone the project onto Google Cloud Shell
 * Create JRE container immages with [Google Cloud Build community images](https://github.com/Alwin-Lin/cloud-builders-community)
+	* ``` gcloud builds submit --config=cloudbuild-ndk-jre11.yaml --substitutions=_ANDROID_VERSION=29``` 
+	* Builds image with cloudbuild-ndk-jre11.yaml
 * Setup buckets
-* Build ```gcloud builds submit --config=cloudbuild-ndk-jre14.yaml --substitutions=_ANDROID_VERSION=29```
+* Build ```gcloud builds submit --config=cloudbuild-ndk-jre11.yaml --substitutions=_ANDROID_VERSION=29```
+	* ```./testCloudBuildLocal.sh``` does the same thing.
 ## interacting with images in GCP
 Here are some command lines that can be used for testing docker image
 * docker image inspect <ID>
-	* Checks the image with ID <ID>
+	* Inspects the image
+	* Used for chekcing if the paths inside are setup correctly
 * docker run -t -d --rm --name sdk <ID> bash
 	* Runs <ID> docker immage
 * docker exec -ti sdk sh -c "<COMMAND_PROMP>"
