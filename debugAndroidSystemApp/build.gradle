@@ -35,13 +35,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId appPackage
         minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 29
         // As far as of right now, the only one needed
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
