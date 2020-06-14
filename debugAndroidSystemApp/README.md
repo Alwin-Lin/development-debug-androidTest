@@ -35,3 +35,4 @@ Generic steps to debug Android system apps by Android Studio.
 ## Make an app debuggable
 * Set [android:debuggable="true"](https://developer.android.com/guide/topics/manifest/application-element#debug) in the AndroidManifest.xml
 ## [Manuall debug a test run](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsCarTestCases/README.md#manually-run-a-test-case-to-allow-manually-attatch-debugger)
+* You can also use this to settup a project for test case and debug it.
