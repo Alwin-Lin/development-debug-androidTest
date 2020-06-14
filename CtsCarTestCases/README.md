@@ -30,6 +30,7 @@ The whole test modle only takes a few seconds to run. There is not enought time 
  * To use it for others:
     * Change android.car.cts.CarTest to the class in concern, the format is package.className
     * Change android.car.cts to the package name, found in [AndroidManifest.xml](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsCarTestCases/ctsSource/AndroidManifest.xml#L18)
+    * If it can not find the runner, "androidx.test.runner.AndroidJUnitRunner". Check the instrumentation setting in [AndroidManifest](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsCarTestCases/ctsSource/AndroidManifest.xml#L36)
  3. Attatch debugger with in Android Studio
     * There is a function to [view and configure breakpoints](https://developer.android.com/studio/debug#breakPointsView) in order to catch exceptions.
 
