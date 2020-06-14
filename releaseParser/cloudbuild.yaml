@@ -53,6 +53,14 @@ steps:
   args: ['-q', 'cp', '-r', 'releaseParserProj/build/libs/releaseParser.jar', 'gs://parser-jar-artifacts']
   waitFor: ['test']
 
+  
+#
+# Save the test results
+#
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['-q', 'cp', '-r', 'releaseParserProj/build/reports/tests/test/index.html', 'gs://parser-jar-artifacts']
+  waitFor: ['test']
+
 # Option
 #
 timeout: 1800s
