@@ -20,7 +20,7 @@ Generic steps to debug Android system apps by Android Studio.
   * Need to install manualy by [ADB](https://developer.android.com/studio/command-line/adb#pm) because you cannot build the APK in Android studio without resolve all dependencies. 
    
 *  Debug the code in concern
-   * Have a test device ready. There are two ways to make it debugable
+   * Have a test device ready and [debuggable]. There are two ways to make it debugable
      * The test device is debugable
         * E.g. An Android Emulator, x86 image, target Android 10.
         * Note: Target Android 10(Google Play) is not debugable
@@ -32,6 +32,13 @@ Generic steps to debug Android system apps by Android Studio.
      * E.g. Break point set on [line 46](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/SystemUI/src/com/android/systemui/volume/Util.java;l=46), trigger by setting volume to 0
      ![YEET](https://user-images.githubusercontent.com/22556115/83983637-e539c600-a8e4-11ea-85a3-667233f7cfb0.png)
 # Tips
+## Make it debuggable
+ * Is the app debuggable?
+    * The default is not debuggable. For apps to be debuggable, you need to see ```android:debuggable=["true"]``` in Android manifest
+ * Check device avalibility by typing ```adb shell getprop``` and look for [ro.vendor.build.fingerprint]
+    * If it's user/release-keys, add ```android:debuggable=["true"]```
+       * In Android Studio, the provided automotive emulators are user/release-key
+    * If it's userdebug/dev-keys, no action needed 
 ## Make an app debuggable
 * Set [android:debuggable="true"](https://developer.android.com/guide/topics/manifest/application-element#debug) in the AndroidManifest.xml
 ## [Manuall debug a test run](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsCarTestCases/README.md#manually-run-a-test-case-to-allow-manually-attatch-debugger)
