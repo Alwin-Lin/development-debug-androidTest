@@ -33,7 +33,7 @@ The whole test modle only takes a few seconds to run. There is not enought time 
     * If it can not find the runner, "androidx.test.runner.AndroidJUnitRunner". Check the instrumentation setting in [AndroidManifest](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsCarTestCases/ctsSource/AndroidManifest.xml#L36)
  3. Attatch debugger with in Android Studio
     * There is a function to [view and configure breakpoints](https://developer.android.com/studio/debug#breakPointsView) in order to catch exceptions.
-
+ * goDebug.bat can be used, swap out the APK different project.
  
  # ToDo:
  1. The test module is not [debuggable](https://developer.android.com/guide/topics/manifest/application-element), therefore manual attatch only works on an user debug build. e.g. AVD target Android 9.0(Google APIs)
