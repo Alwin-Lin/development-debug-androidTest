@@ -16,17 +16,16 @@ CtsCarTestCase is a testing module for automotives. To make it work on Android S
  
  # Manually run a test case to allow manually attatch debugger
  
- Before you run:
- * Is the app debuggable?
-    * The default is not debuggable. For apps to be debuggable, you need to see ```android:debuggable=["true"]``` in Android manifest
- * Check device avalibility by typing ```adb shell getprop``` and look for [ro.vendor.build.fingerprint]
-    * If it's user/release-keys, add ```android:debuggable=["true"]```
-       * In Android Studio, the provided automotive emulators are user/release-key
-    * If it's userdebug/dev-keys, no action needed 
+The whole test modle only takes a few seconds to run. There is not enought time to manually attatch debugger. Alternativly you can manual run test and attatch debugger, assuming it is [debuggable](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/debugAndroidSystemApp/README.md#make-it-debuggable). E.g.
+ 1. Install the app
  
-The whole test modle only takes a few seconds to run. There is not enought time to manually attatch debugger. Alternativly you can manual run test and attatch debugger. In command line:
- 1. ``` adb install %cts_Location%\android-cts\testcases\CtsCarTestCases.apk ```
- 2. Run a test case and wait for debugger ``` adb shell am instrument -w -r -e debug true -e class 'android.car.cts.CarTest' android.car.cts/androidx.test.runner.AndroidJUnitRunner ```
+ ``` adb install -g %cts_Location%\android-cts\testcases\CtsCarTestCases.apk ```
+ * use -g to [Grant all permissions listed in the app manifest.]((https://developer.android.com/studio/command-line/adb#pm))
+ * To check the app permission ```adb shell dumpsys package android.car.cts``` and check grantedPermissions section at the bottom of the output.
+ 2. Run a test case and wait for debugger
+ 
+ ``` adb shell am instrument -w -r -e debug true -e class 'android.car.cts.CarTest' android.car.cts/androidx.test.runner.AndroidJUnitRunner ```
+ 
     * This is useful because normally a test will be over before you have time to attatch debugger.
  3. Attatch debugger with in Android Studio
     * There is a function to [view and configure breakpoints](https://developer.android.com/studio/debug#breakPointsView) in order to catch exceptions.
