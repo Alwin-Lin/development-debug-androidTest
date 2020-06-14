@@ -20,13 +20,16 @@ The whole test modle only takes a few seconds to run. There is not enought time 
  1. Install the app
  
  ``` adb install -g %cts_Location%\android-cts\testcases\CtsCarTestCases.apk ```
- * use -g to [Grant all permissions listed in the app manifest.]((https://developer.android.com/studio/command-line/adb#pm))
+ * This uses "-g" to [Grant all permissions listed in the app manifest.]((https://developer.android.com/studio/command-line/adb#pm))
  * To check the app permission ```adb shell dumpsys package android.car.cts``` and check grantedPermissions section at the bottom of the output.
  2. Run a test case and wait for debugger
  
  ``` adb shell am instrument -w -r -e debug true -e class 'android.car.cts.CarTest' android.car.cts/androidx.test.runner.AndroidJUnitRunner ```
- 
-    * This is useful because normally a test will be over before you have time to attatch debugger.
+ * This is useful because normally a test will be over before you have time to attatch debugger.
+ * This uses "-e debug true" to make it wait for debugger. Check [am instrument options](https://developer.android.com/studio/test/command-line#AMOptionsSyntax)
+ * To use it for others:
+    * Change android.car.cts.CarTest to the class in concern, the format is package.className
+    * Change android.car.cts to the package name, found in [AndroidManifest.xml](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsCarTestCases/ctsSource/AndroidManifest.xml#L18)
  3. Attatch debugger with in Android Studio
     * There is a function to [view and configure breakpoints](https://developer.android.com/studio/debug#breakPointsView) in order to catch exceptions.
 
