@@ -1,0 +1,87 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:17:1-42:12
+INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:17:1-42:12
+INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:17:1-42:12
+	package
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:18:5-30
+		INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+		INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:17:11-69
+uses-feature#android.hardware.type.automotive
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:19:5-69
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:19:19-66
+uses-permission#android.car.permission.CAR_EXTERIOR_ENVIRONMENT
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:20:5-87
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:20:22-84
+uses-permission#android.car.permission.CAR_INFO
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:21:5-71
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:21:22-68
+uses-permission#android.car.permission.CAR_POWERTRAIN
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:22:5-77
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:22:22-74
+uses-permission#android.car.permission.CAR_SPEED
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:23:5-72
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:23:22-69
+uses-permission#android.permission.BLUETOOTH
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:24:5-68
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:24:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:25:5-74
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:25:22-71
+application
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:26:5-34:19
+uses-library#android.test.runner
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:27:9-60
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:27:23-57
+activity#android.car.cts.drivingstate.DistractionOptimizedActivity
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:28:9-30:20
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:28:19-76
+meta-data#distractionOptimized
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:13-82
+	android:value
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:60-80
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:24-59
+activity#android.car.cts.drivingstate.NonDistractionOptimizedActivity
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:31:9-33:20
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:31:19-79
+instrumentation
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:36:5-41:23
+	android:label
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:38:22-62
+	android:targetPackage
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:37:22-61
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:36:22-76
+meta-data#listener
+ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:39:9-40:73
+	android:value
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:40:13-70
+	android:name
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:39:20-43
+uses-sdk
+INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+		INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+		ADDED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+		INJECTED from C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml

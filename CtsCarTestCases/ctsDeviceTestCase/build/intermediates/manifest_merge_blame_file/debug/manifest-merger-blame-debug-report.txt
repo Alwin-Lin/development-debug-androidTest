@@ -1,0 +1,93 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3 Copyright (C) 2016 The Android Open Source Project
+4
+5     Licensed under the Apache License, Version 2.0 (the "License");
+6     you may not use this file except in compliance with the License.
+7     You may obtain a copy of the License at
+8
+9          http://www.apache.org/licenses/LICENSE-2.0
+10
+11     Unless required by applicable law or agreed to in writing, software
+12     distributed under the License is distributed on an "AS IS" BASIS,
+13     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+14     See the License for the specific language governing permissions and
+15     limitations under the License.
+16-->
+17<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+18    package="android.car.cts" >
+19
+20    <uses-sdk
+21        android:minSdkVersion="28"
+21-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+22        android:targetSdkVersion="29" />
+22-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml
+23
+24    <uses-feature android:name="android.hardware.type.automotive" />
+24-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:19:5-69
+24-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:19:19-66
+25
+26    <uses-permission android:name="android.car.permission.CAR_EXTERIOR_ENVIRONMENT" />
+26-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:20:5-87
+26-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:20:22-84
+27    <uses-permission android:name="android.car.permission.CAR_INFO" />
+27-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:21:5-71
+27-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:21:22-68
+28    <uses-permission android:name="android.car.permission.CAR_POWERTRAIN" />
+28-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:22:5-77
+28-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:22:22-74
+29    <uses-permission android:name="android.car.permission.CAR_SPEED" />
+29-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:23:5-72
+29-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:23:22-69
+30    <uses-permission android:name="android.permission.BLUETOOTH" />
+30-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:24:5-68
+30-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:24:22-65
+31    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+31-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:25:5-74
+31-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:25:22-71
+32
+33    <instrumentation
+33-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:36:5-41:23
+34        android:name="androidx.test.runner.AndroidJUnitRunner"
+34-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:36:22-76
+35        android:label="CTS tests for Automotive"
+35-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:38:22-62
+36        android:targetPackage="android.car.cts" >
+36-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:37:22-61
+37        <meta-data
+37-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:39:9-40:73
+38            android:name="listener"
+38-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:39:20-43
+39            android:value="com.android.cts.runner.CtsTestRunListener" />
+39-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:40:13-70
+40    </instrumentation>
+41
+42    <application android:debuggable="true" >
+42-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:26:5-34:19
+43        <uses-library android:name="android.test.runner" />
+43-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:27:9-60
+43-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:27:23-57
+44
+45        <activity android:name="android.car.cts.drivingstate.DistractionOptimizedActivity" >
+45-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:28:9-30:20
+45-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:28:19-76
+46            <meta-data
+46-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:13-82
+47                android:name="distractionOptimized"
+47-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:24-59
+48                android:value="true" />
+48-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:60-80
+49        </activity>
+50        <activity android:name="android.car.cts.drivingstate.NonDistractionOptimizedActivity" >
+50-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:31:9-33:20
+50-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:31:19-79
+51            <meta-data
+51-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:13-82
+52                android:name="distractionOptimized"
+52-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:24-59
+53                android:value="false" />
+53-->C:\Users\alwin\ws\20200614\development-debug-androidTest\CtsCarTestCases\ctsSource\AndroidManifest.xml:29:60-80
+54        </activity>
+55    </application>
+56
+57</manifest>
