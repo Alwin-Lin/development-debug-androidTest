@@ -24,9 +24,9 @@ Generic steps to debug Android system apps by Android Studio.
      * The test device is debugable
         * E.g. An Android Emulator, x86 image, target Android 10.
         * Note: Target Android 10(Google Play) is not debugable
-     *  The app is debugable
-        * 
-   * Click on Attatch Debugger To Android Process and select the process to atatch to.
+     *  [The app is debugable](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/debugAndroidSystemApp/README.md#make-an-app-debuggable)
+   * Attatch to the app process.
+     * Click on Attatch Debugger To Android Process and select the process to atatch to.
      * E.g. com.Android.systemUi![attatchPic](https://user-images.githubusercontent.com/22556115/83983639-e834b680-a8e4-11ea-9a7a-91f7b42a224a.png)
    * Set a breakpoint and trigger by the UI.
      * E.g. Break point set on [line 46](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/SystemUI/src/com/android/systemui/volume/Util.java;l=46), trigger by setting volume to 0
@@ -34,3 +34,4 @@ Generic steps to debug Android system apps by Android Studio.
 # Tips
 ## Make an app debuggable
 * Set [android:debuggable="true"](https://developer.android.com/guide/topics/manifest/application-element#debug) in the AndroidManifest.xml
+## [Manuall debug a test run](https://github.com/Alwin-Lin/development-debug-androidTest/blob/master/CtsCarTestCases/README.md#manually-run-a-test-case-to-allow-manually-attatch-debugger)
