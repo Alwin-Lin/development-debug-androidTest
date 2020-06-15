@@ -27,6 +27,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
+    MainTest.class,
     ApkParserTest.class,
     SoParserTest.class,
     FileParserTest.class,

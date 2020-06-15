@@ -44,8 +44,12 @@ public class Main {
             // parse a release folder
             ReleaseParser relParser = new ReleaseParser(relFolder);
             String relNameVer = relParser.getReleaseId();
+            // Write releaseContentCsvFile
             relParser.writeRelesaeContentCsvFile(
                     relNameVer, getPathString(outputPath, "%s-ReleaseContent.csv", relNameVer));
+            // Write releaseContentApkFile
+            relParser.writeApkCsvFile(
+                    relNameVer, getPathString(outputPath, "%s-Apk.csv", relNameVer));
 
             // write release content JSON file
             JsonPrinter jPrinter =

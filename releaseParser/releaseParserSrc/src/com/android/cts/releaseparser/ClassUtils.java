@@ -17,6 +17,7 @@
 package com.android.cts.releaseparser;
 
 import com.android.cts.releaseparser.ReleaseProto.*;
+import com.android.utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -121,6 +122,34 @@ public class ClassUtils {
             }
         }
         return tempFile;
+    }
+
+
+    public static String getResrouceDir(Class clazz) throws IOException {
+        // create the tempDir
+        String resourceDirPath;
+        boolean bool = false;
+        File directory = new File(System.getProperty("java.io.tmpdir"), "MainTest");
+        bool = directory.mkdirs();
+        resourceDirPath = directory.getAbsolutePath();
+        directory.deleteOnExit();
+        // Copy jar resource files to temp dir
+        // ToDo: To copy all resource files.
+        String TEST_SO_APK = "CtsJniTestCases.apk";
+        File apkFile = ClassUtils.getResrouceFile(clazz, TEST_SO_APK);
+        FileUtils.copyFileToDirectory(apkFile,directory );
+        return resourceDirPath;
+    }
+
+    public static String getTempDir(Class clazz, String tmpDir) throws IOException {
+        // create the tempDir
+        String getTempDir;
+        boolean bool = false;
+        File directory = new File(System.getProperty("java.io.tmpdir"), tmpDir);
+        bool = directory.mkdirs();
+        getTempDir = directory.getAbsolutePath();
+        directory.deleteOnExit();
+        return getTempDir;
     }
 
     /**

@@ -95,8 +95,8 @@ class ReleaseParser {
             Entry.Builder fBuilder = parseFolder(mFolderPath);
             if (mRelContentBuilder.getName().equals("")) {
                 System.err.println("Release Name unknown!");
-                String[] tokens = mFolderPath.split(File.separator);
-                String name = tokens[tokens.length-1];
+                File file = new File(mFolderPath);
+                String name = file.getName();
                 mRelContentBuilder.setName(name);
                 mRelContentBuilder.setFullname(name);
             }
@@ -225,6 +225,42 @@ class ReleaseParser {
 
     // writes releaes content to a CSV file
     public void writeRelesaeContentCsvFile(String relNameVer, String csvFile) {
+        try {
+            FileWriter fWriter = new FileWriter(csvFile);
+            PrintWriter pWriter = new PrintWriter(fWriter);
+            // Header
+            pWriter.printf(
+                    "release,type,name,size,relative_path,content_id,parent_folder,code_id,architecture,bits,dependencies,dynamic_loading_dependencies,services,package\n");
+            for (Entry entry : getFileEntries()) {
+                String pkgName = "";
+                if (entry.getType() == Entry.EntryType.APK) {
+                    pkgName = entry.getAppInfo().getPackageName();
+                }
+                pWriter.printf(
+                        "%s,%s,%s,%d,%s,%s,%s,%s,%s,%d,%s,%s,%s,%s\n",
+                        relNameVer,
+                        entry.getType(),
+                        entry.getName(),
+                        entry.getSize(),
+                        entry.getRelativePath(),
+                        entry.getContentId(),
+                        entry.getParentFolder(),
+                        entry.getCodeId(),
+                        entry.getAbiArchitecture(),
+                        entry.getAbiBits(),
+                        String.join(" ", entry.getDependenciesList()),
+                        String.join(" ", entry.getDynamicLoadingDependenciesList()),
+                        RcParser.toString(entry.getServicesList()),
+                        pkgName);
+            }
+            pWriter.flush();
+            pWriter.close();
+        } catch (IOException e) {
+            System.err.println("IOException:" + e.getMessage());
+        }
+    }
+    // Writes apk content to save as CSV file
+    public void writeApkCsvFile(String relNameVer, String csvFile) {
         try {
             FileWriter fWriter = new FileWriter(csvFile);
             PrintWriter pWriter = new PrintWriter(fWriter);
