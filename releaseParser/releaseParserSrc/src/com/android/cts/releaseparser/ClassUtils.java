@@ -30,6 +30,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class ClassUtils {
     public static final char PACKAGE_SEPARATOR = '/';
     public static final char INNER_CLASS_SEPARATOR = '$';
@@ -111,7 +112,8 @@ public class ClassUtils {
      * @return the File object of a tmp file
      */
     public static File getResrouceFile(Class clazz, String fileName) throws IOException {
-        File tempFile = File.createTempFile(fileName, "");
+        // ToDo: Replace prefix
+        File tempFile = File.createTempFile( "123", fileName);
         tempFile.deleteOnExit();
         try (InputStream input = openResourceAsStream(clazz, fileName);
                 OutputStream output = new FileOutputStream(tempFile)) {
@@ -131,13 +133,14 @@ public class ClassUtils {
         boolean bool = false;
         File directory = new File(System.getProperty("java.io.tmpdir"), "MainTest");
         bool = directory.mkdirs();
+        FileUtils.deleteDirectoryContents(directory);
         resourceDirPath = directory.getAbsolutePath();
         directory.deleteOnExit();
         // Copy jar resource files to temp dir
         // ToDo: To copy all resource files.
         String TEST_SO_APK = "CtsJniTestCases.apk";
         File apkFile = ClassUtils.getResrouceFile(clazz, TEST_SO_APK);
-        FileUtils.copyFileToDirectory(apkFile,directory );
+        FileUtils.copyFileToDirectory(apkFile,directory);
         return resourceDirPath;
     }
 
@@ -147,6 +150,7 @@ public class ClassUtils {
         boolean bool = false;
         File directory = new File(System.getProperty("java.io.tmpdir"), tmpDir);
         bool = directory.mkdirs();
+        FileUtils.deleteDirectoryContents(directory);
         getTempDir = directory.getAbsolutePath();
         directory.deleteOnExit();
         return getTempDir;

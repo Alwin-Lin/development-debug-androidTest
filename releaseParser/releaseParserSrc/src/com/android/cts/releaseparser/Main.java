@@ -47,10 +47,9 @@ public class Main {
             // Write releaseContentCsvFile
             relParser.writeRelesaeContentCsvFile(
                     relNameVer, getPathString(outputPath, "%s-ReleaseContent.csv", relNameVer));
-            // Write releaseContentApkFile
+            // Write apk so information in a csv file
             relParser.writeApkCsvFile(
                     relNameVer, getPathString(outputPath, "%s-Apk.csv", relNameVer));
-
             // write release content JSON file
             JsonPrinter jPrinter =
                     new JsonPrinter(

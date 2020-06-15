@@ -261,33 +261,39 @@ class ReleaseParser {
     }
     // Writes apk content to save as CSV file
     public void writeApkCsvFile(String relNameVer, String csvFile) {
+        // Find the apk directory
+        // Feed location to this
         try {
             FileWriter fWriter = new FileWriter(csvFile);
             PrintWriter pWriter = new PrintWriter(fWriter);
             // Header
             pWriter.printf(
-                    "release,type,name,size,relative_path,content_id,parent_folder,code_id,architecture,bits,dependencies,dynamic_loading_dependencies,services,package\n");
+                    "apk_name,package_name,apk_size,so_name,so_size\n");
+            // Iterate all file entry in a release
             for (Entry entry : getFileEntries()) {
                 String pkgName = "";
+                AppInfo appinfo;
                 if (entry.getType() == Entry.EntryType.APK) {
-                    pkgName = entry.getAppInfo().getPackageName();
+                    appinfo = entry.getAppInfo();
+                } else {
+                    continue;
                 }
-                pWriter.printf(
-                        "%s,%s,%s,%d,%s,%s,%s,%s,%s,%d,%s,%s,%s,%s\n",
-                        relNameVer,
-                        entry.getType(),
+                // gets apk_name,package_name,apk_size
+                String apkCVS3 = String.format("%s,%s,%d",
                         entry.getName(),
-                        entry.getSize(),
-                        entry.getRelativePath(),
-                        entry.getContentId(),
-                        entry.getParentFolder(),
-                        entry.getCodeId(),
-                        entry.getAbiArchitecture(),
-                        entry.getAbiBits(),
-                        String.join(" ", entry.getDependenciesList()),
-                        String.join(" ", entry.getDynamicLoadingDependenciesList()),
-                        RcParser.toString(entry.getServicesList()),
-                        pkgName);
+                        appinfo.getPackageName(),
+                        entry.getSize());
+                // get so_name,so_size
+                Collection < Entry > subEntries = appinfo.getPackageFileContent().getEntries().values();
+                for (Entry subEntry : subEntries) {
+                    if(subEntry.getName().endsWith(".so")) {
+                        pWriter.printf(
+                                "%s,%s,%d\n",
+                                apkCVS3,
+                                subEntry.getName(),
+                                subEntry.getSize());
+                    }
+                }
             }
             pWriter.flush();
             pWriter.close();
