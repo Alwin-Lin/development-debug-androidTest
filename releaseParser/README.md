@@ -39,6 +39,9 @@ This peoject can be adapted for Google Cloud Build with the following steps:
 * Setup buckets
 * Build ```gcloud builds submit --config=cloudbuild-ndk-jre11.yaml --substitutions=_ANDROID_VERSION=29```
 	* ```./testCloudBuildLocal.sh``` does the same thing.
+### test.sh and releaseParser.sh 
+releaseParser.sh helps you run releaseParser
+test.sh is an example of releaseParser.sh
 ## interacting with images in GCP
 Here are some command lines that can be used for testing docker image
 * docker image inspect <ID>
