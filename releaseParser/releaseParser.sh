@@ -25,7 +25,7 @@ which aapt
 echo Need aapt in the PATH
 
 $JAVA -version
-echo Need Java version >=9
+echo "Need Java version >=9"
 
 echo Clean up $OUTDIR
 rm -rf $OUTDIR
