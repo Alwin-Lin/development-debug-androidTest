@@ -21,12 +21,16 @@ import com.android.utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,7 +117,7 @@ public class ClassUtils {
      */
     public static File getResrouceFile(Class clazz, String fileName) throws IOException {
         // ToDo: Replace prefix
-        File tempFile = File.createTempFile( "123", fileName);
+        File tempFile = File.createTempFile("tmp", fileName);
         tempFile.deleteOnExit();
         try (InputStream input = openResourceAsStream(clazz, fileName);
                 OutputStream output = new FileOutputStream(tempFile)) {
@@ -123,7 +127,10 @@ public class ClassUtils {
                 output.write(buffer, 0, length);
             }
         }
-        return tempFile;
+        String newFilePath = tempFile.getPath().replace(tempFile.getName(), fileName);
+        File newFile = new File(newFilePath);
+        boolean b = tempFile.renameTo(newFile);
+        return newFile;
     }
 
 
@@ -175,6 +182,27 @@ public class ClassUtils {
             }
         }
 
+        return stringBuilder.toString();
+    }
+
+    /**
+     * Gets Resource file content as a String
+     *
+     * @param clazz the Class contins resrouce files
+     * @param fileName of a resource file
+     * @return a String of the resrouce file content
+     */
+    public static String getFileContentString(Class clazz, String fileName) throws IOException {
+        File initialFile = new File(fileName);
+        InputStream inStream = new FileInputStream(initialFile);
+        StringBuilder stringBuilder = new StringBuilder();
+        String line = null;
+        try (BufferedReader bufferedReader =
+                     new BufferedReader(new InputStreamReader(inStream, Charset.forName("UTF-8")))) {
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        }
         return stringBuilder.toString();
     }
 

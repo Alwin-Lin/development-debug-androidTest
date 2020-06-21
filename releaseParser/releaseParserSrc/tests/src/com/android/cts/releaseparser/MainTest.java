@@ -22,6 +22,7 @@ import com.google.protobuf.TextFormat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 
@@ -42,13 +43,31 @@ public class MainTest {
     // android/development/samples/HelloActivity/AndroidManifest.xml
     private static final String TEST_SO_APK = "CtsJniTestCases.apk";
 
+    private static final String EXPECTED_MAIN_TEST_APK_CVS = "ExpectedMainTestApk.csv";
+
+
 
     @Test
     // ToDo: Validate testReleaseParserReport
     public void testReleaseParser() throws Exception {
+        // Prepare a test folder
         String resourceDirPATH = ClassUtils.getResrouceDir(getClass());
         String outputFilePATH = ClassUtils.getTempDir(getClass(), "testReleaseParserReport");
+        // Parse the test folder
+        // java -jar releaseparser.jar -i resourceDirPATH -o testReleaseParserReport
+        // E.g. java -jar releaseparser.jar -i [Temp/dir]/MainTest -o [Temp/dir]/testReleaseParserReport
         String [] argArr ={"-i",resourceDirPATH, "-o", outputFilePATH};
         Main.main(argArr);
+        // Validate the parsed result and expected result.
+        String expectedCvsString = ClassUtils.getResrouceContentString(getClass(), EXPECTED_MAIN_TEST_APK_CVS);
+        String parsedCvsString = ClassUtils.getFileContentString(getClass(), outputFilePATH + "/MainTest---Apk.csv");
+        File parseCvsFile = new File(outputFilePATH + "/MainTest---Apk.csv");
+        boolean isTwoEqual = expectedCvsString.equals(parsedCvsString);
+        assertTrue(
+                String.format(
+                        "Expected %s\n" +
+                                "Parsed %s.\n",
+                        expectedCvsString, parsedCvsString),
+                isTwoEqual);
     }
 }
