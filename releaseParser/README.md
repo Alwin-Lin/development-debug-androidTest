@@ -40,7 +40,7 @@ This peoject can be adapted for Google Cloud Build with the following steps:
 * Build ```gcloud builds submit --config=cloudbuild-ndk-jre11.yaml --substitutions=_ANDROID_VERSION=29```
 	* ```./testCloudBuildLocal.sh``` does the same thing.
 ### Checking result(s)
-Results are stored inside bucket gs://<bucket-ID>, this includes releaseParser.jar and index.html.
+Results are stored inside bucket gs://* your_bucket_ID *, this includes releaseParser.jar and index.html.
 ### test.sh and releaseParser.sh 
 releaseParser.sh helps you run releaseParser
 test.sh is an example of releaseParser.sh
