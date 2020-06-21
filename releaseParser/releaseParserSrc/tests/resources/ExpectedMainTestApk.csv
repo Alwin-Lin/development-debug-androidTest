@@ -1,0 +1,17 @@
+apk_name,package_name,apk_size,so_name,so_size
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/arm64-v8a/libjninamespacea2.so,11272
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/arm64-v8a/libjninamespaceb.so,11272
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/armeabi-v7a/libc++_shared.so,657000
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/arm64-v8a/libc++_shared.so,1058904
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/arm64-v8a/libjninamespacea1.so,11272
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/armeabi-v7a/libjni_test_dlclose.so,20192
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/armeabi-v7a/libjnitest.so,677128
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/arm64-v8a/libjnitest.so,1036840
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/armeabi-v7a/libjninamespacea2.so,20284
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/arm64-v8a/libjnicommon.so,11224
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/armeabi-v7a/libjninamespacea1.so,20288
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/armeabi-v7a/libjnicommon.so,20228
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/armeabi-v7a/libnativehelper_compat_libc++.so,205044
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/arm64-v8a/libnativehelper_compat_libc++.so,332808
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/armeabi-v7a/libjninamespaceb.so,20288
+CtsJniTestCases.apk,android.jni.cts,4436499,lib/arm64-v8a/libjni_test_dlclose.so,11000
