@@ -18,6 +18,11 @@ public class MyAction extends AnAction {
     }
 
     @Override
+    public void update(AnActionEvent e) {
+        // Using the event, evaluate the context, and enable or disable the action.
+    }
+
+    @Override
     public void actionPerformed(AnActionEvent e) {
         notify(e.getProject(), "todo Action");
     }
