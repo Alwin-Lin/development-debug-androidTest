@@ -15,6 +15,18 @@
        on how to target different products -->
   <depends>com.intellij.modules.lang</depends>
 
+  <actions>
+    <group id="MyPlugin.TopMenu"
+        text="_MyPlugin"
+        description="MyPlugin Toolbar Menu">
+      <add-to-group group-id="MainMenu" anchor="last"/>
+      <action id="MyAction"
+          class="com.alwin.asap.MyAction"
+          text="_MyAction"
+          description="MyAction"/>
+    </group>
+  </actions>
+
   <project-components>
     <component>
       <implementation-class>com.alwin.asap.TestProjectComponent</implementation-class>
