@@ -1,15 +1,14 @@
 <idea-plugin>
   <id>com.alwin.asap</id>
   <name>android_sys_app_plugin</name>
-  <vendor email="alwin001@gmail.com" url="http://github.com/Alwin-Lin/development-debug-androidTest">Android system app plugin</vendor>
+  <vendor email="alwin001@gmail.com">Android system app plugin</vendor>
 
-  <description><![CDATA[
+  <description>
       Android system app plugin
-    ]]></description>
+  </description>
 
-  <change-notes><![CDATA[
+  <change-notes>
       Release notes here
-    ]]>
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
