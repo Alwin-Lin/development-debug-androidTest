@@ -1,0 +1,79 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+// These are variables that needs to be changed bassed on your project.
+def appPackage = 'APP_PACKAGE_NAME'
+def appRoot = 'PATH_TO_SOURCE'
+def appSrc = appRoot + '/src'
+def testSrc = appRoot+ '/tests'
+def appRes = appRoot + '/res'
+def jniSrc = appRoot+ '/jni'
+
+// Android APK Build Configuration File 
+// Check details: https://developer.android.com/studio/build#top-level
+android {
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    compileSdkVersion 29
+
+    defaultConfig {
+        applicationId appPackage
+        minSdkVersion 23
+        targetSdkVersion 29
+        // As far as of right now, the only one needed
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    sourceSets {
+        main {
+            // This looks for the manifest source
+            manifest.srcFile appRoot + '/AndroidManifest.xml'
+            // This looks for the Java source, gets SampleDeviceActivity
+            java.srcDirs = [appSrc]
+            res.srcDirs = [appRes]
+            jniLibs.srcDirs = [jniSrc]
+        }
+        androidTest {
+            // This looks for the 4 test we have
+            // DeviceReportLog, DeviceResult, DeviceActivity, JUnit4Device
+            java.srcDir testSrc
+        }
+    }
+}
+
+dependencies {
+    // Your might already have other librarires/dependencies here you should leave them
+    // as they are and just add your on new line
+    //noinspection GradlePath
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+}

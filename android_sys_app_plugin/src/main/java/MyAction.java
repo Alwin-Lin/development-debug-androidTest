@@ -25,5 +25,7 @@ public class MyAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         notify(e.getProject(), "todo Action");
+        com.alwin.asap.GradleFileGenerator gradleFileGenerator = new com.alwin.asap.GradleFileGenerator("C:/Users/alwin/ws/20200621/development-debug-androidTest/bt/btSrc", "C:/Users/alwin/ws/20200621/development-debug-androidTest/android_sys_app_plugin/pluggingTesting", "build.gradle");
+        gradleFileGenerator.createBuildGradleFile();
     }
 }
