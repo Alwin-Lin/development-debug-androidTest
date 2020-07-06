@@ -8,6 +8,8 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 
+import javax.swing.JButton;
+
 public class MyAction extends AnAction {
     private final NotificationGroup NOTIFICATION_GROUP = new NotificationGroup("android_sys_app_plugin", NotificationDisplayType.BALLOON, true);
 
@@ -25,7 +27,13 @@ public class MyAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         notify(e.getProject(), "todo Action");
-        com.alwin.asap.GradleFileGenerator gradleFileGenerator = new com.alwin.asap.GradleFileGenerator("C:/Users/alwin/ws/20200621/development-debug-androidTest/bt/btSrc", "C:/Users/alwin/ws/20200621/development-debug-androidTest/android_sys_app_plugin/pluggingTesting", "build.gradle");
-        gradleFileGenerator.createBuildGradleFile();
+        com.alwin.asap.DialogBox dlg = new com.alwin.asap.DialogBox();
+        dlg.show();
+        if (dlg.isOK()){
+            String outputPath = dlg.getOutputPath();
+            String appSourcePath = dlg.getAppSourcePath();
+            com.alwin.asap.GradleFileGenerator gradleFileGenerator = new com.alwin.asap.GradleFileGenerator(appSourcePath, outputPath, "build.gradle");
+            gradleFileGenerator.createBuildGradleFile();
+        }
     }
 }
