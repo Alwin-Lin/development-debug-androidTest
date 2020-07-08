@@ -29,7 +29,7 @@
 
   <project-components>
     <component>
-      <implementation-class>com.alwin.asap.TestProjectComponent</implementation-class>
+      <implementation-class>com.alwin.asap.MyAction</implementation-class>
     </component>
   </project-components>
 
