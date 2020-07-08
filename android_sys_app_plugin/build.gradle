@@ -28,6 +28,7 @@ intellij {
     pluginName 'android_sys_app_plugin'
     plugins 'android'
     updateSinceUntilBuild false
+    alternativeIdePath "C:\\Users\\alwin\\android-studio-ide-201.6466190-windows\\android-studio"
 }
 
 dependencies {
