@@ -4,7 +4,7 @@
   <vendor email="alwin001@gmail.com">Android system app plugin</vendor>
 
   <description>
-      Android system app plugin
+      Create a new project from an Android system app source directory.
   </description>
 
   <change-notes>
@@ -17,19 +17,19 @@
 
   <actions>
     <group id="MyPlugin.TopMenu"
-        text="_MyPlugin"
+        text="Android sys app"
         description="MyPlugin Toolbar Menu">
       <add-to-group group-id="MainMenu" anchor="last"/>
-      <action id="MyAction"
-          class="com.alwin.asap.MyAction"
-          text="_MyAction"
-          description="MyAction"/>
+      <action id="AndroidSystemApp"
+          class="com.alwin.asap.OpenAndroidSystemAppProject"
+          text="_AndroidSystemApp"
+          description="Create a new project from an Android system app source directory."/>
     </group>
   </actions>
 
   <project-components>
     <component>
-      <implementation-class>com.alwin.asap.MyAction</implementation-class>
+      <implementation-class>com.alwin.asap.OpenAndroidSystemAppProject</implementation-class>
     </component>
   </project-components>
 

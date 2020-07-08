@@ -1,6 +1,7 @@
 package com.alwin.asap;
 
 import com.android.tools.idea.gradle.project.importing.GradleProjectImporter;
+import com.intellij.ide.actions.OpenFileAction;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
@@ -8,13 +9,11 @@ import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ex.ProjectManagerEx;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.ide.impl.ProjectUtil;
 
 import java.io.File;
 
-public class MyAction extends AnAction {
+public class OpenAndroidSystemAppProject extends AnAction {
     private final NotificationGroup NOTIFICATION_GROUP = new NotificationGroup("android_sys_app_plugin", NotificationDisplayType.BALLOON, true);
 
     public Notification notify(Project project, String content) {
@@ -45,13 +44,9 @@ public class MyAction extends AnAction {
             gradleFileGenerator.createBuildGradleFile();
             // Open the built project
             try{
-                ProjectManagerEx pm = ProjectManagerEx.getInstanceEx();
-                Project project = pm.loadProject(outputPath);
-                File buildGradleFile = new File(outputPath + "/build.gradle");
-                VirtualFile projectFile = LocalFileSystem.getInstance().findFileByIoFile(buildGradleFile);
-                // Build.gradle in outputPath, want project
-                GradleProjectImporter gradleImporter = GradleProjectImporter.getInstance();
-                gradleImporter.importProjectCore(projectFile,project);
+                // AnAction openFileAction = new OpenFileAction();
+                // openFileAction.actionPerformed(actionEvent);
+                Project openedProject = ProjectUtil.openOrImport(outputDir.getPath(), actionEvent.getProject(), false);
             } catch (Exception excp) {
                 notify(actionEvent.getProject(), "Fail to open project" + excp.getMessage());
             }
