@@ -17,12 +17,12 @@
 
   <actions>
     <group id="MyPlugin.TopMenu"
-        text="Android sys app"
-        description="MyPlugin Toolbar Menu">
+        text="AndroidSysApp"
+        description="AndroidSysApp Toolbar Menu">
       <add-to-group group-id="MainMenu" anchor="last"/>
-      <action id="AndroidSystemApp"
+      <action id="Open"
           class="com.alwin.asap.OpenAndroidSystemAppProject"
-          text="_AndroidSystemApp"
+          text="_Open"
           description="Create a new project from an Android system app source directory."/>
     </group>
   </actions>
