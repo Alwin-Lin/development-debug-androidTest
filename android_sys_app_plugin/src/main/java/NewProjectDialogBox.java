@@ -3,25 +3,22 @@ import android.annotation.Nullable;
 
 import com.intellij.openapi.ui.DialogWrapper;
 
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.io.File;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class NewProjectDialogBox extends DialogWrapper {
-    private com.alwin.asap.JFilePicker mAppSourceDirPicker;
-    private com.alwin.asap.JFilePicker mOutputDirPicker;
+    private com.alwin.asap.FilePicker mAppSourceDirPicker;
+    private com.alwin.asap.FilePicker mOutputDirPicker;
     private String mDefaultSourcePath;
     private String mDefaultProjectPath;
     public NewProjectDialogBox(String defaultSourcePath, String defaultProjectPath) {
-        super(true); // use current window as parent
+        super(true);
+        // From OASAP.java, defaultProjectPath & defaultSourcePath = C:\\
         mDefaultProjectPath = defaultProjectPath;
         mDefaultSourcePath = defaultSourcePath;
         mAppSourceDirPicker = null;
@@ -33,16 +30,17 @@ public class NewProjectDialogBox extends DialogWrapper {
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
-        JPanel dialogPanel = new JPanel(new FlowLayout());
-        mAppSourceDirPicker = new com.alwin.asap.JFilePicker("Pick the source dir", "Browse...");
+        JPanel dialogPanel = new JPanel();
+        dialogPanel.setLayout(new BoxLayout(dialogPanel, BoxLayout.PAGE_AXIS));
+        mAppSourceDirPicker = new com.alwin.asap.FilePicker("Source dir", "Browse...");
         mAppSourceDirPicker.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        mAppSourceDirPicker.setMode(com.alwin.asap.JFilePicker.MODE_SAVE);
+        mAppSourceDirPicker.setMode(com.alwin.asap.FilePicker.MODE_OPEN);
         mAppSourceDirPicker.setFilePath(mDefaultSourcePath);
         dialogPanel.add(mAppSourceDirPicker);
 
-        mOutputDirPicker = new com.alwin.asap.JFilePicker("Pick the output dir", "Browse...");
+        mOutputDirPicker = new com.alwin.asap.FilePicker("Project dir", "Browse...");
         mOutputDirPicker.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        mOutputDirPicker.setMode(com.alwin.asap.JFilePicker.MODE_SAVE);
+        mOutputDirPicker.setMode(com.alwin.asap.FilePicker.MODE_OPEN);
         mOutputDirPicker.setFilePath(mDefaultProjectPath);
         dialogPanel.add(mOutputDirPicker);
 
@@ -57,4 +55,5 @@ public class NewProjectDialogBox extends DialogWrapper {
     public String getOutputPath(){
         return mOutputDirPicker.getFilePath();
     }
+
 }

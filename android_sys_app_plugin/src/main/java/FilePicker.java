@@ -3,6 +3,7 @@ package com.alwin.asap;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -10,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class JFilePicker extends JPanel {
+public class FilePicker extends JPanel implements ActionListener {
     private String textFieldLabel;
     private String buttonLabel;
 
@@ -24,26 +25,17 @@ public class JFilePicker extends JPanel {
     public static final int MODE_OPEN = 1;
     public static final int MODE_SAVE = 2;
 
-    public JFilePicker(String textFieldLabel, String buttonLabel) {
+    public FilePicker(String textFieldLabel, String buttonLabel) {
         this.textFieldLabel = textFieldLabel;
         this.buttonLabel = buttonLabel;
-
         fileChooser = new JFileChooser();
-
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
         // creates the GUI
         label = new JLabel(textFieldLabel);
-
         textField = new JTextField(30);
         button = new JButton(buttonLabel);
-
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                buttonActionPerformed(evt);
-            }
-        });
+        button.addActionListener(this);
 
         add(label);
         add(textField);
@@ -55,8 +47,10 @@ public class JFilePicker extends JPanel {
         fileChooser.setFileSelectionMode(mode);
     }
 
-    private void buttonActionPerformed(ActionEvent evt) {
+    @Override
+    public void actionPerformed(ActionEvent evt) {
         if (mode == MODE_OPEN) {
+            fileChooser.setCurrentDirectory(new File(textField.getText()));
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 textField.setText(fileChooser.getSelectedFile().getAbsolutePath());
             }
@@ -82,7 +76,7 @@ public class JFilePicker extends JPanel {
 
     public void setFilePath(String filePath) {
         textField.setText(filePath);
-
+        fileChooser.setCurrentDirectory(new File(filePath));
     }
 
     public JFileChooser getFileChooser() {

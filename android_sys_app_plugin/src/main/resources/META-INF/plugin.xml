@@ -33,4 +33,12 @@
     </component>
   </project-components>
 
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService serviceImplementation="com.alwin.asap.SettingState"/>
+    <applicationConfigurable parentId="tools" instance="com.alwin.asap.SettingConfigurable"
+        id="com.alwin.asap.SettingConfigurable"
+        displayName="ASAP: Android system plugin"/>
+  </extensions>
+
+
 </idea-plugin>
