@@ -1,19 +1,13 @@
 package com.alwin.asap;
+
 import android.annotation.Nullable;
 
 import com.intellij.openapi.ui.DialogWrapper;
 
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.io.File;
-
-import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class NewProjectDialogBox extends DialogWrapper {
     private com.alwin.asap.JFilePicker mAppSourceDirPicker;
