@@ -40,6 +40,7 @@ public class SettingConfigurable implements Configurable {
         com.alwin.asap.SettingState settings = com.alwin.asap.SettingState.getInstance();
         boolean modified = !mySettingsComponent.getSourcePath().equals(settings.sorucePath);
         modified |= !mySettingsComponent.getProjectPath().equals(settings.projectPath);
+        modified |= !mySettingsComponent.getBuildGradleTemplate().equals(settings.buildGradleTemplate);
         return modified;
     }
 
@@ -48,6 +49,7 @@ public class SettingConfigurable implements Configurable {
         com.alwin.asap.SettingState settings = com.alwin.asap.SettingState.getInstance();
         settings.sorucePath = mySettingsComponent.getSourcePath();
         settings.projectPath = mySettingsComponent.getProjectPath();
+        settings.buildGradleTemplate = mySettingsComponent.getBuildGradleTemplate();
     }
 
     @Override
@@ -55,6 +57,7 @@ public class SettingConfigurable implements Configurable {
         com.alwin.asap.SettingState settings = com.alwin.asap.SettingState.getInstance();
         mySettingsComponent.setSourcePath(settings.sorucePath);
         mySettingsComponent.setProjectPath(settings.projectPath);
+//        mySettingsComponent.setBuildGradleTemplate(settings.buildGradleTemplate);
     }
 
     @Override

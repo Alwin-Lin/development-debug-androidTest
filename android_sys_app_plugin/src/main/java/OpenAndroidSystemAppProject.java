@@ -9,7 +9,13 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.ide.impl.ProjectUtil;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 public class OpenAndroidSystemAppProject extends AnAction {
     public String mUsersLastProjPath;
@@ -56,7 +62,12 @@ public class OpenAndroidSystemAppProject extends AnAction {
             mDefaltProjPath = outputPath;
             settings.sorucePath = mDefaltSrcPath;
             settings.projectPath = mDefaltProjPath;
-            com.alwin.asap.GradleFileGenerator gradleFileGenerator = new com.alwin.asap.GradleFileGenerator(mDefaltSrcPath, mDefaltProjPath, "build.gradle");
+            String buildGradleTemplate = settings.buildGradleTemplate;
+            if (buildGradleTemplate.isEmpty()){
+                buildGradleTemplate = getBuildGradleTemplate();
+                settings.buildGradleTemplate = buildGradleTemplate;
+            }
+            com.alwin.asap.GradleFileGenerator gradleFileGenerator = new com.alwin.asap.GradleFileGenerator(mDefaltSrcPath, mDefaltProjPath, buildGradleTemplate);
             gradleFileGenerator.createBuildGradleFile();
             // Open the built project
             try{
@@ -65,5 +76,32 @@ public class OpenAndroidSystemAppProject extends AnAction {
                 notify(actionEvent.getProject(), "Fail to open project" + excp.getMessage());
             }
         }
+    }
+
+    public static InputStream openResourceAsStream(Class clazz, String fileName) {
+        InputStream input = clazz.getResourceAsStream("/" + fileName);
+        return input;
+    }
+
+    public static InputStreamReader openResourceAsStreamReader(Class clazz, String fileName) {
+        return new InputStreamReader(
+                openResourceAsStream(clazz, fileName), Charset.forName("UTF-8"));
+    }
+
+    public String getBuildGradleTemplate() {
+        // Looks for build.gradle in resource
+        String line = null;
+        InputStreamReader buildFileInputStringReader = openResourceAsStreamReader(getClass(), "build.gradle");
+        BufferedReader buildFileBufferReader = new BufferedReader(buildFileInputStringReader);
+        StringBuilder outputStringBuilder = new StringBuilder().append(System.lineSeparator());
+        try{
+            while ((line = buildFileBufferReader.readLine()) != null) {
+                outputStringBuilder.append(line + System.lineSeparator());
+            }
+            buildFileInputStringReader.close();
+        }catch (Exception e){
+            System.err.println("Error: " + e.getMessage());
+        }
+        return outputStringBuilder.toString();
     }
 }

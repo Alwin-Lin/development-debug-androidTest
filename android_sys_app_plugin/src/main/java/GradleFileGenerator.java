@@ -19,16 +19,13 @@ import java.util.regex.Pattern;
 public class GradleFileGenerator {
     private String mSourcePath;
     private String mOutputPath;
-    private String mGradleFileTemplate;
-    private String mAppName;
     private String mPackageName;
-    private String mBuildFileName;
+    private String mBuildGradleTemplate;
 
-    public GradleFileGenerator(String sourcePath, String outputPath, String gradleFileTemplate) {
+    public GradleFileGenerator(String sourcePath, String outputPath, String buildGradleTemplate) {
         mSourcePath = sourcePath;
         mOutputPath = outputPath;
-        mGradleFileTemplate = gradleFileTemplate;
-        mBuildFileName = "build.gradle";
+        mBuildGradleTemplate = buildGradleTemplate;
     }
 
     public String getPackageName() {
@@ -63,46 +60,18 @@ public class GradleFileGenerator {
         return mSourcePath;
     }
 
-    public static InputStream openResourceAsStream(Class clazz, String fileName) {
-        InputStream input = clazz.getResourceAsStream("/" + fileName);
-        return input;
-    }
-
-    public static InputStreamReader openResourceAsStreamReader(Class clazz, String fileName) {
-        return new InputStreamReader(
-                openResourceAsStream(clazz, fileName), Charset.forName("UTF-8"));
-    }
 
     // Generate a build.gradle file to mOutputPath, with correct AppPackageName and SourceCodePath
     public void createBuildGradleFile() {
-
-        // Looks for build.gradle in resource
-        File gradleFileTemplate = new File(getClass().getClassLoader().getResource(mBuildFileName).getFile());
-        File appGradleFile = new File(mOutputPath + "/" + mBuildFileName);
-        String line = null;
-
-        InputStreamReader buildFileInputStringReadre = openResourceAsStreamReader(getClass(), mBuildFileName);
-        BufferedReader buildFileBufferReader = new BufferedReader(buildFileInputStringReadre);
-        StringBuilder outputStringBuilder = new StringBuilder();
+        File appGradleFile = new File(mOutputPath + "/build.gradle");
+        String newBuildGradle = mBuildGradleTemplate.replaceFirst("APP_PACKAGE_NAME", getPackageName());
+        newBuildGradle =  newBuildGradle.replaceFirst("PATH_TO_SOURCE", getSourceCodePath());
         try{
-            while ((line = buildFileBufferReader.readLine()) != null) {
-                // Finds [APP.PACKAGE.NAME] and replaces it with mPackageName
-                String textToEdit1 = "APP_PACKAGE_NAME";
-                String newLine = line.replaceFirst(textToEdit1, getPackageName());
-
-                // Finds [PATH/TO/SOURCE] and replaces it with mInputPath
-                String textToEdit2 = "PATH_TO_SOURCE";
-                newLine = newLine.replaceFirst(textToEdit2, getSourceCodePath());
-
-                outputStringBuilder.append(newLine + System.lineSeparator());
-            }
-
-            // Writes outputStringBuilder content to build.gradle
+            // Writes newBuildGradle content to build.gradle
             FileWriter fstream = new FileWriter(appGradleFile);
             BufferedWriter outobj = new BufferedWriter(fstream);
-            outobj.write(outputStringBuilder.toString());
+            outobj.write(newBuildGradle);
             outobj.close();
-
         // Prints error if exist
         }catch (Exception e){
             System.err.println("Error: " + e.getMessage());

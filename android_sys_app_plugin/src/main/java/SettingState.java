@@ -23,6 +23,7 @@ public class SettingState implements PersistentStateComponent<SettingState> {
 
     public String sorucePath = "";
     public String projectPath = "";
+    public String buildGradleTemplate = "";
 
     public static SettingState getInstance() {
         return ServiceManager.getService(SettingState.class);
