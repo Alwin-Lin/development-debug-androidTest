@@ -90,8 +90,7 @@ public class SettingsComponent {
         return mBuildGradleEditor.getDocument().getText();
     }
 
-//    public void setBuildGradleTemplate(@NotNull String buildGradleTemplate) {
-//        mBuildGradleEditor.getDocument().setText(buildGradleTemplate);
-//    }
-
+    public void setBuildGradleTemplate(@NotNull String buildGradleTemplate) {
+        mBuildGradleEditor.getDocument().setText(getStringForEditor(buildGradleTemplate));
+    }
 }

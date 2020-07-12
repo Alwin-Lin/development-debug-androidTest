@@ -57,7 +57,7 @@ public class SettingConfigurable implements Configurable {
         com.alwin.asap.SettingState settings = com.alwin.asap.SettingState.getInstance();
         mySettingsComponent.setSourcePath(settings.sorucePath);
         mySettingsComponent.setProjectPath(settings.projectPath);
-//        mySettingsComponent.setBuildGradleTemplate(settings.buildGradleTemplate);
+        mySettingsComponent.setBuildGradleTemplate(settings.buildGradleTemplate);
     }
 
     @Override
