@@ -74,7 +74,8 @@ dependencies {
 
     // compatibility-device-util-axt.jar needs to be added for all this
     api files(compatibilitylib)
-
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'

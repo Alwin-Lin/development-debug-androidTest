@@ -89,9 +89,6 @@
             android:largeHeap="true"
             android:theme="@android:style/Theme.DeviceDefault">
 
-        <provider android:name="android.location.cts.MmsPduProvider"
-                android:authorities="emergencycallverifier"
-                android:grantUriPermissions="true" />
         <uses-library android:name="android.test.runner" />
 
         <meta-data android:name="SuiteName" android:value="CTS_VERIFIER" />
@@ -2712,8 +2709,8 @@
         </activity>
 
         <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.android.cts.verifier.managedprovisioning.fileprovider"
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.unity.fileprovider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
