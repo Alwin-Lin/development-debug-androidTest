@@ -27,4 +27,4 @@ Similar to [CtsSampleDeviceTestCases](https://github.com/Alwin-Lin/development-d
        3. Run CTS Verifier.
 
  # ToDo:
- 1. Curently there are around 100 dependecy issues to fix
+1. The app can be built, however the manifest needs to be cleaned up to prevent crashing
